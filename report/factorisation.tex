@@ -1,0 +1,116 @@
+\documentclass[french, 12pt, titlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage[colorlinks,linkcolor=grey, urlcolor=gray, citecolor=red, breaklinks, pagebackref]{hyperref}
+\usepackage{graphicx}
+\usepackage{listings} %for code citations
+\usepackage{fancyhdr} %for footers / headers
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{pdfpages}
+\newenvironment{itemH}[0]{\begin{itemize}[label=$\bullet$, font=\color{black} \large]}{\end{itemize}}
+
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\definecolor{grey}{rgb}{0.3,0.5,0.5}
+
+\lstset{language=C, frame=shadowbox, basicstyle=\small, backgroundcolor=\color{white}, rulesepcolor=\color{gray}, breaklines=true, morecomment=[l]{//}, numbers=left, numberstyle=\tiny}
+
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\ppcm}{ppcm}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newtheorem{definition}{D{\'e}finition}
+\newtheorem{theoreme}{Th{\'e}or{\`e}me}
+\newtheorem{these}{Th{\`e}se}
+\newtheorem{ep}{Esquisse de preuve}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Exemple}
+
+\begin{document}
+\title{Factorisation des entiers}
+\author{Vincent Dalsheimer \and
+	Gaëtan Pradel}
+\date{Année 2016 - Semestre 10}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+\begin{theoreme}[Théorème fondamental de l'arithmétique]
+  Tout entier strictement positif peut être écrit comme un produit de nombres premiers d'une unique façon, à l'ordre près des facteurs.
+\end{theoreme}
+
+
+\begin{theoreme}
+  Il existe une infinité de nombres premiers.
+\end{theoreme}
+
+
+\section{Rappels sur l'utilité des nombres premiers en cryptographie}
+En cryptographie, les nombres premiers sont très utilisés et très utiles car ils apportent, grâce à leurs propriétés, de la sécurité.
+
+\subsection{Chiffrement RSA}
+En effet, présentons l'algorithme RSA qui les utilise.
+
+Tout d'abord, le chiffrement RSA est un chiffrement asymétrique, c'est-à-dire qu'il utilise une paire de clés, qui sont des nombres entiers, composée d'une clé publique pour chiffrer et d'une clé privée pour déchiffrer.
+La clé privée peut être aussi utilisée pour signer un message.
+
+\subsubsection{Création des clés}
+
+\begin{itemH}
+\item Choisir $p$ et $q$, deux nombres premiers entiers distincts ;
+\item calculer leur produit $n = p*q$
+\item calculer $\phi (n) = (p - 1)(q - 1)$ qui est la valeur de l'indicatrice d'Euler en n ;
+\item choisir un entier naturel $e$ premier avec $\phi (n)$ et strictement inférieur à $\phi (n)$ ;
+\item calculer l'entier naturel $d$, inverse de $e$ modulo $ \phi (n)$, et strictement inférieur à $\phi (n)$ ; $d$ peut se calculer efficacement par l'algorithme d'Euclide étendu.
+\end{itemH}
+
+Le couple $(n, e)$ est la clé publique et le triplet $(p, q, d)$ est la clé privée.
+
+La sécurité de cet algorithme repose sur le fait que la factorisation (de grands nombres) est un problème difficile, c'est-à-dire qu'on ne peut pas le résoudre en temps polynomial.
+
+\subsubsection{Chiffrement}
+Soit $m$ un message à chiffrer. Le message chiffré $c$ de $m$ sera :
+\[ m \equiv m^e \pmod n .\]
+\subsubsection{Déchiffrement}
+
+Soit le message chiffré $c$ comme ci-dessus. Pour retrouver le message $m$ on fait:
+\[ c^d \equiv m^{e*d} \equiv m \pmod n.\]
+
+\subsubsection{Justification}
+
+La démonstration repose sur le petit théorème de Fermat, à savoir que comme $p$ et $q$ sont deux nombres premiers, si $m$ n'est pas un multiple de $p$ on a la première égalité, et la seconde s'il n'est pas un multiple de $q$ :
+\[ m^{p-1} \equiv 1 \pmod p\ ,\ \ m^{q-1} \equiv 1 \pmod q.\]
+En effet
+\[ c^d \equiv (m^e)^d \equiv m^{ed} \pmod n.\]
+Or
+\[ed \equiv 1 \pmod{(p-1)(q-1)}\]
+ce qui signifie que pour un entier $k$
+\[ed = 1 + k(p-1)(q-1),\]
+donc, si $m$ n'est pas multiple de $p$ d'après le petit théorème de Fermat
+\[m^{ed} \equiv m^{1+k(p-1)(q-1) }\equiv m\cdot \left(m^{p-1}\right)^{k(q-1)}\equiv m \pmod p\]
+et de même, si $m$ n'est pas multiple de $q$
+\[m^{ed}\equiv m \pmod q.\]
+
+\section{Méthode naïve de la factorisation}
+
+Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle consiste à faire les divisions euclidiennes successives de $n$ par $2$ (autant de fois que l'on peut), puis $3$, etc ... jusqu'à la partie entière de $\sqrt[2]{n}$.
+
+
+\section{L'algorithme $p-1$ de Pollard}
+
+\section{Crible $x \equiv x + N \text{ mod } N$}
+
+
+\end{document}

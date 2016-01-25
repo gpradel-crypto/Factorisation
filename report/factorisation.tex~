@@ -1,0 +1,59 @@
+\documentclass[french, 12pt, titlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage[colorlinks,linkcolor=grey, urlcolor=gray, citecolor=red, breaklinks, pagebackref]{hyperref}
+\usepackage{graphicx}
+\usepackage{listings} %for code citations
+\usepackage{fancyhdr} %for footers / headers
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{pdfpages}
+\newenvironment{itemH}[0]{\begin{itemize}[label=$\bullet$, font=\color{black} \large]}{\end{itemize}}
+
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\definecolor{grey}{rgb}{0.3,0.5,0.5}
+
+\lstset{language=C, frame=shadowbox, basicstyle=\small, backgroundcolor=\color{white}, rulesepcolor=\color{gray}, breaklines=true, morecomment=[l]{//}, numbers=left, numberstyle=\tiny}
+
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\ppcm}{ppcm}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newtheorem{definition}{D{\'e}finition}
+\newtheorem{theoreme}{Th{\'e}or{\`e}me}
+\newtheorem{these}{Th{\`e}se}
+\newtheorem{ep}{Esquisse de preuve}
+\newtheorem{preuve}{Preuve}
+\newtheorem{notation}{Notation}
+
+\begin{document}
+\title{Factorisation des entiers}
+\author{Vincent Dalsheimer \and
+	Gaëtan Pradel}
+\date{Année 2016 - Semestre 10}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+\section{Rappels sur l'utilité des nombres premier}
+
+\section{Méthode naïve de la factorisation}
+
+\section{L'algorithme $p-1$ de Pollard}
+
+\section{Crible $x \equiv x + N \text{ mod } N$}
+
+
+\end{document}
