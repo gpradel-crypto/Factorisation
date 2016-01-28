@@ -111,6 +111,11 @@ while(a != 1) // à modifier
   return l;
 }
 */
+
+
+// Problème de segmentation avec l'entier 49392123903
+
+
 int
 main(int argc, char *argv[])
 {
