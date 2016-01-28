@@ -5,7 +5,7 @@ OBJS = $(SRC:.c=.o)
 
 # Compilation flags
 CFLAGS = -Wall -Wextra -std=c99 -g -fprofile-arcs -ftest-coverage
-LDFLAGS = -L/usr/local/lib/ -lgmp
+LDFLAGS = -L/usr/local/lib/ -lgmp -lm
 
 # Special rules and targets
 .PHONY : clean help all superclean
@@ -24,12 +24,15 @@ help :
 	@echo "all : compile factorisation"
 	@echo "help : display this help"
 	@echo "clean : delete all temporary files"
+	@echo "softclean : delete all temporary files except the executable"
 
-clean :
-	rm -rf $(EXE)
+softclean :
 	rm -rf $(OBJS)
 	rm -rf *~
 	rm -rf \#*\#
 	rm -rf *.h.gch
 	rm -rf *.gcno
 	rm -rf *.gcda
+
+clean : softclean
+	rm -rf $(EXE)		

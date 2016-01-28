@@ -2,21 +2,60 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 #include <gmp.h>
 
-
+#define TAILLE 10000
 /*int*
 crible_erat()
 {
-  int* tab = malloc(TAILLE*sizeof(int));
-  for(int i = 0; i < TAILLE; i++)
-    {
-      
-    }
-}
-*/
+  int* tab = calloc(TAILLE*sizeof(int));
 
+  for(int i = 2; i < TAILLE; i++)
+    {
+      if(tab[i] == 0)
+	{
+	  tab[i] = 1;
+	  for(int j = i*2; j < TAILLE; j+i)
+	    tab[j] = -1;
+	}
+    }
+  
+  return tab;
+  }*/
+
+int*
+crible_erat()
+{
+  int* tab = calloc(TAILLE, sizeof(int));
+  int* tab2 = malloc(TAILLE*sizeof(int));
+  int k = 0;
+  
+  for(int i = 2; i < TAILLE; i++)
+    {
+      if(tab[i] == 0)
+	{
+	  tab[i] = 1;
+	  tab2[k] = i;
+	  k++;
+	  for(int j = i*2; j < TAILLE; j=j+i)
+	    tab[j] = -1;
+	}
+    }
+  /*int m = ceil(sqrt(TAILLE));
+  for(int i = m; i < TAILLE; i++)
+    {
+      if(tab[i] == 1)
+	{
+	  tab2[k] = i;
+	  k++;
+	}
+	}*/
+  for(int i = 0; i < k; i++)
+    printf("%d ",tab2[i]);
+  free(tab);
+  return tab2;
+}
 
 
 
@@ -105,8 +144,11 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
+  int* tab = crible_erat();
+  printf("\n");
   factorisation(n);
   mpz_clear(n);
+  free(tab);
   return EXIT_SUCCESS;
 }
 

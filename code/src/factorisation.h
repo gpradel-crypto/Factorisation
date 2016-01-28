@@ -3,8 +3,7 @@
 
 #include <gmp.h>
 
-#define TAILLE 10000
-
 void factorisation(mpz_t n);
+int* crible_erat();
 
 #endif 
