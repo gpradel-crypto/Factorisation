@@ -1,11 +1,11 @@
 #Variables
-EXE = factorisation
-SRC = factorisation.c
-OBJS = $(SRC:.c=.o)
-
 # Compilation flags
 CFLAGS = -Wall -Wextra -std=c99 -g -fprofile-arcs -ftest-coverage
 LDFLAGS = -L/usr/local/lib/ -lgmp -lm
+
+EXE = factorisation
+SRC = factorisation.c
+OBJS = $(SRC:.c=.o)
 
 # Special rules and targets
 .PHONY : clean help all superclean
@@ -17,7 +17,7 @@ $(EXE) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(OBJS) : $(SRC) factorisation.h
-	$(CC) $(CFLAGS) -c $(SRC)
+	$(CC) $(CFLAGS) -c $(SRC) 
 
 help :
 	@echo "Available targets :"

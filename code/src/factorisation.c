@@ -116,6 +116,44 @@ while(a != 1) // à modifier
 // Problème de segmentation avec l'entier 49392123903
 
 
+void step_pollard(mpz_t n)
+{
+  //Initialisation de ce dont on a besoin
+  mpz_t factor;
+  mpz_init(factor);
+  mpz_t pgcd;
+  mpz_init(pgcd);
+  mpz_t cnt;
+  mpz_init(cnt);
+  
+  //Initialisation de l'algo
+  mpz_t rand;
+  mpz_init(rand);
+  gmp_randstate_t state;
+  gmp_randinit_default(state);
+
+  while(mpz_cmp_ui(factor, 0)==0)
+    {
+    mpz_urandomm(rand, state, n);
+    mpz_set_ui(cnt, 2);
+    for(int i =0; i < 100; i++)
+      {
+      mpz_gcd(pgcd,rand - 1,n);
+      if(mpz_cmp_ui(pgcd,1)!=0)
+	mpz_set(factor, pgcd);
+      mpz_powm(rand, rand, cnt, n);
+      mpz_add_ui(cnt, cnt, 1);
+      }
+    }
+  gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
+  mpz_clear(factor);
+  mpz_clear(rand);
+  mpz_clear(pgcd);
+  mpz_clear(cnt);
+  gmp_randclear(state);
+}
+
+
 int
 main(int argc, char *argv[])
 {
@@ -124,6 +162,7 @@ main(int argc, char *argv[])
   mpz_set_ui(n, atoi(argv[1]));
   int* tab = crible_erat();
   factorisation(n);
+  step_pollard(n);
   mpz_clear(n);
   free(tab);
   return EXIT_SUCCESS;
