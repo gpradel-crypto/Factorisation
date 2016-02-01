@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <gmp.h>
+#include <time.h>
 
 #define TAILLE 10000
 
@@ -128,22 +129,26 @@ void step_pollard(mpz_t n)
   
   //Initialisation de l'algo
   mpz_t rand;
-  mpz_init(rand);
+  mpz_init(rand);  
   gmp_randstate_t state;
   gmp_randinit_default(state);
 
   while(mpz_cmp_ui(factor, 0)==0)
     {
-    mpz_urandomm(rand, state, n);
-    mpz_set_ui(cnt, 2);
-    for(int i =0; i < 100; i++)
-      {
-      mpz_gcd(pgcd,rand - 1,n);
-      if(mpz_cmp_ui(pgcd,1)!=0)
-	mpz_set(factor, pgcd);
-      mpz_powm(rand, rand, cnt, n);
-      mpz_add_ui(cnt, cnt, 1);
-      }
+      mpz_urandomm(rand, state, n);
+      gmp_printf("%Zd ", rand);
+      mpz_set_ui(cnt, 2);
+      for(int i = 0; i < 100; i++)
+	{
+	  mpz_gcd(pgcd,rand - 1,n);
+	  if(mpz_cmp_ui(pgcd,1)!=0)
+	    {
+	      //gmp_printf("%Zd ", factor);
+	      mpz_set(factor, pgcd);
+	    }
+	  mpz_powm(rand, rand, cnt, n);
+	  mpz_add_ui(cnt, cnt, 1);
+	}
     }
   gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
   mpz_clear(factor);
@@ -153,6 +158,19 @@ void step_pollard(mpz_t n)
   gmp_randclear(state);
 }
 
+void brand()
+{
+  mpz_t n;
+  mpz_init(n);
+  mpz_set_ui(n, 124213);
+  mpz_t rand;
+  mpz_init(rand);  
+  gmp_randstate_t state;
+  gmp_randinit_default(state);
+  gmp_randseed_ui(state, (double)time(NULL));
+  mpz_urandomm(rand, state, n);
+  gmp_printf("%Zd ", rand);
+}
 
 int
 main(int argc, char *argv[])
@@ -160,6 +178,7 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
+  brand();
   int* tab = crible_erat();
   factorisation(n);
   step_pollard(n);
