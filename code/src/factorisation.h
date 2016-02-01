@@ -3,8 +3,8 @@
 
 #include <gmp.h>
 
+unsigned long int* crible_erat();
 void factorisation(mpz_t n);
-int* crible_erat();
 void factor_pollard(mpz_t n);
 
 #endif 
