@@ -5,6 +5,7 @@
 #include <math.h>
 #include <gmp.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define TAILLE 10000
 
@@ -143,7 +144,8 @@ void step_pollard(mpz_t n)
   mpz_init(rand);  
   gmp_randstate_t state;
   gmp_randinit_default(state);
-
+  gmp_randseed_ui(state, (double)time(NULL));
+  
   while(mpz_cmp_ui(factor, 0)==0)
     {
       mpz_urandomm(rand, state, n);
@@ -171,6 +173,10 @@ void step_pollard(mpz_t n)
 
 void brand()
 {
+  unsigned long int time2;
+  struct timeval t1;
+  gettimeofday(&t1, NULL);
+  time2 = t1.tv_sec*1000000 + t1.tv_usec;
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, 124213);
@@ -178,7 +184,7 @@ void brand()
   mpz_init(rand);  
   gmp_randstate_t state;
   gmp_randinit_default(state);
-  gmp_randseed_ui(state, (double)time(NULL));
+  gmp_randseed_ui(state, time2);
   mpz_urandomm(rand, state, n);
   gmp_printf("%Zd ", rand);
 }
@@ -195,11 +201,7 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
-<<<<<<< HEAD
   brand();
-  int* tab = crible_erat();
-=======
->>>>>>> 0f7eff7010ba314d0661bc39986374b7f5f02ac6
   factorisation(n);
   step_pollard(n);
   mpz_clear(n);
