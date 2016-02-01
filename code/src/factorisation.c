@@ -8,11 +8,11 @@
 
 #define TAILLE 10000
 
-int*
+unsigned long int*
 crible_erat()
 {
-  int* tab = calloc(TAILLE, sizeof(int));
-  int* tab2 = malloc(TAILLE*sizeof(int));
+  unsigned long int* tab = calloc(TAILLE, sizeof(unsigned long int));
+  unsigned long int* tab2 = malloc(TAILLE*sizeof(unsigned long int));
   int k = 0;
   
   for(int i = 2; i < TAILLE; i++)
@@ -26,7 +26,7 @@ crible_erat()
 	    tab[j] = -1;
 	}
     }
-
+  printf("Il y a %d nombres premiers avant %d\n", k, TAILLE);
   free(tab);
   return tab2;
 }
@@ -39,6 +39,7 @@ void factorisation (mpz_t n)
 {
   mpz_t tmp, div, q, r, root;
   //mpz_t cnt;
+  unsigned int cnt2 = 0;
   unsigned long int cnt = 0;
   mpz_init(tmp);
   mpz_set(tmp, n);
@@ -47,6 +48,7 @@ void factorisation (mpz_t n)
   //mpz_init(cnt);
   mpz_init(root);
   mpz_sqrt(root,n);
+  unsigned long int* prime_nbs = crible_erat();
   unsigned long int root_ui = mpz_get_ui(root);
   mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
   for(unsigned long int i = 0; i < root_ui; i++)
@@ -66,7 +68,15 @@ void factorisation (mpz_t n)
 	  cnt++;
 	}
       else
-	mpz_add_ui(div, div, 1);
+	{
+	  if (cnt2 < 1229)
+	    {
+	      mpz_set_ui(div, prime_nbs[cnt2]);
+	      cnt2++;
+	    }
+	  else
+	    mpz_add_ui(div, div, 1);
+	}
     }
 
   for (unsigned long int i = 0; i < cnt; i++)
@@ -82,6 +92,7 @@ void factorisation (mpz_t n)
   mpz_clear(r);
   mpz_clear(q);
   mpz_clear(root);
+  free(prime_nbs);
 }
 
 /*int* 
@@ -175,15 +186,23 @@ void brand()
 int
 main(int argc, char *argv[])
 {
+  if(argc < 2)
+    {
+      printf("Veuillez mettre un nombre à factoriser.\n");
+      return EXIT_FAILURE;
+    }
+  
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
+<<<<<<< HEAD
   brand();
   int* tab = crible_erat();
+=======
+>>>>>>> 0f7eff7010ba314d0661bc39986374b7f5f02ac6
   factorisation(n);
   step_pollard(n);
   mpz_clear(n);
-  free(tab);
   return EXIT_SUCCESS;
 }
 
