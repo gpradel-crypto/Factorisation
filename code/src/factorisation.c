@@ -195,11 +195,7 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
-<<<<<<< HEAD
   brand();
-  int* tab = crible_erat();
-=======
->>>>>>> 0f7eff7010ba314d0661bc39986374b7f5f02ac6
   factorisation(n);
   step_pollard(n);
   mpz_clear(n);
