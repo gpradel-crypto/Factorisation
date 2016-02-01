@@ -136,11 +136,9 @@ while(a != 1) // à modifier
 // Problème de segmentation avec l'entier 49392123903
 
 
-void step_pollard(mpz_t n)
+void step_pollard(mpz_t n, mpz_t factor)
 {
   //Initialisation de ce dont on a besoin
-  mpz_t factor;
-  mpz_init(factor);
   mpz_t pgcd;
   mpz_init(pgcd);
   mpz_set_ui(pgcd,1);
@@ -149,7 +147,7 @@ void step_pollard(mpz_t n)
   mpz_t rand_minus_one;
   mpz_init(rand_minus_one);
   int cnt2 = 0;
-  
+   mpz_set_ui(factor,0);
   //Initialisation de l'algo
   unsigned long int time_tmp;
   struct timeval t_tmp;
@@ -184,23 +182,43 @@ void step_pollard(mpz_t n)
 	}
     }
   gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
-  mpz_clear(factor);
   mpz_clear(rand);
   mpz_clear(pgcd);
   mpz_clear(cnt);
   mpz_clear(rand_minus_one);
   gmp_randclear(state);
+  printf("FIN DE STEP POLLARD");
 }
 
-/*void pollard(mpz_t n)
+void pollard(mpz_t n)
 {
-  unsigned long int cnt;
+  printf("\n POLLARD ALGORITHM \n");
+  mpz_t tmp, root, factor, div;
+  mpz_init(tmp);
+  mpz_set(tmp,n);
+  mpz_init(factor);
+  mpz_init(root);
+  mpz_init(div);
+  mpz_sqrt(root,n);
+  mpz_add_ui(root,root,1);
+  unsigned long int root_ui = mpz_get_ui(root);
+  unsigned long int cnt = 0;
   mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
   for(unsigned long int i = 0; i < root_ui; i++)
     mpz_init(list_factor[i]);
-  
-  mpz_t tmp; 
 
+  while(mpz_cmp_ui(tmp,1)!=0)
+    {
+      gmp_printf("tmp = %Zd \n factor = %Zd \n", tmp, factor);
+      step_pollard(tmp, factor);
+      gmp_printf("2 tmp = %Zd \n factor = %Zd \n", tmp, factor);
+      mpz_cdiv_q(div, tmp, factor);
+      mpz_set(list_factor[cnt], factor);
+      mpz_set(tmp, div);
+      gmp_printf("\n AFTER tmp = %Zd factor = %Zd div = %Zd\n",tmp, factor, div);
+      cnt++;
+    }
+  
   for (unsigned long int i = 0; i < cnt; i++)
     gmp_printf("%Zd ", list_factor[i]);
   gmp_printf("\n");
@@ -208,7 +226,10 @@ void step_pollard(mpz_t n)
   for(unsigned long int i = 0; i < root_ui; i++)
     mpz_clear(list_factor[i]);
   free(list_factor);
-  }*/
+  mpz_clear(tmp);
+  mpz_clear(root);
+  mpz_clear(factor);
+  }
 
 void brand()
 {
@@ -242,7 +263,7 @@ main(int argc, char *argv[])
   mpz_set_ui(n, atoi(argv[1]));
   //brand();
   factorisation(n);
-  step_pollard(n);
+  pollard(n);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }

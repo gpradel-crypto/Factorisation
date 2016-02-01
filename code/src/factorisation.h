@@ -5,6 +5,7 @@
 
 unsigned long int* crible_erat();
 void factorisation(mpz_t n);
-void factor_pollard(mpz_t n);
+void step_pollard(mpz_t n, mpz_t factor);
+void pollard(mpz_t n);
 
 #endif 
