@@ -8,6 +8,7 @@
 #include <sys/time.h>
 
 #define TAILLE 10000
+#define FRIABLE 10
 
 unsigned long int*
 crible_erat()
@@ -49,9 +50,15 @@ void factorisation (mpz_t n)
   //mpz_init(cnt);
   mpz_init(root);
   mpz_sqrt(root,n);
+  mpz_add_ui(root,root,1);
   unsigned long int* prime_nbs = crible_erat();
   unsigned long int root_ui = mpz_get_ui(root);
   mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
+  if (list_factor == NULL)
+    {
+      fprintf (stderr, "Malloc Problem\n");
+      exit(EXIT_FAILURE);
+    }
   for(unsigned long int i = 0; i < root_ui; i++)
     mpz_init(list_factor[i]);
 
@@ -136,24 +143,35 @@ void step_pollard(mpz_t n)
   mpz_init(factor);
   mpz_t pgcd;
   mpz_init(pgcd);
+  mpz_set_ui(pgcd,1);
   mpz_t cnt;
   mpz_init(cnt);
+  mpz_t rand_minus_one;
+  mpz_init(rand_minus_one);
+  int cnt2 = 0;
   
   //Initialisation de l'algo
+  unsigned long int time_tmp;
+  struct timeval t_tmp;
+  gettimeofday(&t_tmp, NULL);
+  time_tmp = t_tmp.tv_sec*1000000 + t_tmp.tv_usec;
   mpz_t rand;
   mpz_init(rand);  
   gmp_randstate_t state;
   gmp_randinit_default(state);
-  gmp_randseed_ui(state, (double)time(NULL));
+  gmp_randseed_ui(state, time_tmp);
+  mpz_set_ui(rand, 2);
   
   while(mpz_cmp_ui(factor, 0)==0)
-    {
-      mpz_urandomm(rand, state, n);
-      gmp_printf("%Zd ", rand);
+      {
+	//mpz_urandomm(rand, state, n);
+      gmp_printf("Rand: %Zd\n", rand);
       mpz_set_ui(cnt, 2);
-      for(int i = 0; i < 100; i++)
+      while(cnt2 < FRIABLE && mpz_cmp_ui(pgcd, 1)==0)
 	{
-	  mpz_gcd(pgcd,rand - 1,n);
+	  mpz_sub_ui(rand_minus_one, rand, 1);
+	  mpz_gcd(pgcd,rand_minus_one,n);
+	  gmp_printf("PGCD %Zd\n", pgcd);
 	  if(mpz_cmp_ui(pgcd,1)!=0)
 	    {
 	      //gmp_printf("%Zd ", factor);
@@ -161,6 +179,8 @@ void step_pollard(mpz_t n)
 	    }
 	  mpz_powm(rand, rand, cnt, n);
 	  mpz_add_ui(cnt, cnt, 1);
+	  gmp_printf("2ème boucle Rand %Zd\n", rand);
+	  cnt2++;
 	}
     }
   gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
@@ -168,8 +188,27 @@ void step_pollard(mpz_t n)
   mpz_clear(rand);
   mpz_clear(pgcd);
   mpz_clear(cnt);
+  mpz_clear(rand_minus_one);
   gmp_randclear(state);
 }
+
+/*void pollard(mpz_t n)
+{
+  unsigned long int cnt;
+  mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
+  for(unsigned long int i = 0; i < root_ui; i++)
+    mpz_init(list_factor[i]);
+  
+  mpz_t tmp; 
+
+  for (unsigned long int i = 0; i < cnt; i++)
+    gmp_printf("%Zd ", list_factor[i]);
+  gmp_printf("\n");
+  
+  for(unsigned long int i = 0; i < root_ui; i++)
+    mpz_clear(list_factor[i]);
+  free(list_factor);
+  }*/
 
 void brand()
 {
@@ -201,7 +240,7 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
-  brand();
+  //brand();
   factorisation(n);
   step_pollard(n);
   mpz_clear(n);
