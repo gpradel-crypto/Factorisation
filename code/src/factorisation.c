@@ -8,7 +8,7 @@
 #include <sys/time.h>
 
 #define TAILLE 10000
-#define FRIABLE 10
+#define FRIABLE 100
 
 unsigned long int*
 crible_erat()
@@ -142,6 +142,8 @@ void step_pollard(mpz_t n, mpz_t factor)
   mpz_t pgcd;
   mpz_init(pgcd);
   mpz_set_ui(pgcd,1);
+  mpz_t rest;
+  mpz_init(rest);
   mpz_t cnt;
   mpz_init(cnt);
   mpz_t rand_minus_one;
@@ -158,18 +160,24 @@ void step_pollard(mpz_t n, mpz_t factor)
   gmp_randstate_t state;
   gmp_randinit_default(state);
   gmp_randseed_ui(state, time_tmp);
-  mpz_set_ui(rand, 2);
   
-  while(mpz_cmp_ui(factor, 0)==0)
+  mpz_set_ui(rand, 2);
+  mpz_cdiv_r_ui(rest, n, 2);
+  if(mpz_cmp_ui(rest, 0)==0)
+    mpz_set_ui(rand,3);
+  
+  while(cnt2 < FRIABLE && mpz_cmp_ui(factor, 0)==0)
       {
-	//mpz_urandomm(rand, state, n);
-      gmp_printf("Rand: %Zd\n", rand);
-      mpz_set_ui(cnt, 2);
-      while(cnt2 < FRIABLE && mpz_cmp_ui(pgcd, 1)==0)
+	if (mpz_cmp_ui(rand,0)==0 || mpz_cmp_ui(rand, 1)==0)
+	  mpz_urandomm(rand, state, n);
+	mpz_set_ui(cnt, 2);
+      while(mpz_cmp_ui(pgcd, 1)==0)
 	{
+	  if (mpz_cmp_ui(rand,1)==0 || mpz_cmp_ui(rand, 0)==0)
+	    mpz_urandomm(rand, state, n);
 	  mpz_sub_ui(rand_minus_one, rand, 1);
 	  mpz_gcd(pgcd,rand_minus_one,n);
-	  gmp_printf("PGCD %Zd\n", pgcd);
+	  //gmp_printf("PGCD %Zd\n", pgcd);
 	  if(mpz_cmp_ui(pgcd,1)!=0)
 	    {
 	      //gmp_printf("%Zd ", factor);
@@ -177,22 +185,23 @@ void step_pollard(mpz_t n, mpz_t factor)
 	    }
 	  mpz_powm(rand, rand, cnt, n);
 	  mpz_add_ui(cnt, cnt, 1);
-	  gmp_printf("2ème boucle Rand %Zd\n", rand);
+	  //gmp_printf("2ème boucle Rand %Zd\n", rand);
 	  cnt2++;
 	}
     }
-  gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
+  //gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
   mpz_clear(rand);
   mpz_clear(pgcd);
+  mpz_clear(rest);
   mpz_clear(cnt);
   mpz_clear(rand_minus_one);
   gmp_randclear(state);
-  printf("FIN DE STEP POLLARD");
+  //printf("FIN DE STEP POLLARD");
 }
 
 void pollard(mpz_t n)
 {
-  printf("\n POLLARD ALGORITHM \n");
+  //printf("\n POLLARD ALGORITHM \n");
   mpz_t tmp, root, factor, div;
   mpz_init(tmp);
   mpz_set(tmp,n);
@@ -209,13 +218,13 @@ void pollard(mpz_t n)
 
   while(mpz_cmp_ui(tmp,1)!=0)
     {
-      gmp_printf("tmp = %Zd \n factor = %Zd \n", tmp, factor);
+      //gmp_printf("tmp = %Zd \n factor = %Zd \n", tmp, factor);
       step_pollard(tmp, factor);
-      gmp_printf("2 tmp = %Zd \n factor = %Zd \n", tmp, factor);
+      //gmp_printf("2 tmp = %Zd \n factor = %Zd \n", tmp, factor);
       mpz_cdiv_q(div, tmp, factor);
       mpz_set(list_factor[cnt], factor);
       mpz_set(tmp, div);
-      gmp_printf("\n AFTER tmp = %Zd factor = %Zd div = %Zd\n",tmp, factor, div);
+      //gmp_printf("\n AFTER tmp = %Zd factor = %Zd div = %Zd\n",tmp, factor, div);
       cnt++;
     }
   
@@ -262,7 +271,9 @@ main(int argc, char *argv[])
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
   //brand();
+  printf("Par l'algorithme naïf de factorisation, nous obtenons:\n");
   factorisation(n);
+  printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   pollard(n);
   mpz_clear(n);
   return EXIT_SUCCESS;
