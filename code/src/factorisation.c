@@ -171,7 +171,8 @@ void step_pollard(mpz_t n, mpz_t factor)
 	if (mpz_cmp_ui(rand,0)==0 || mpz_cmp_ui(rand, 1)==0)
 	  mpz_urandomm(rand, state, n);
 	mpz_set_ui(cnt, 2);
-      while(mpz_cmp_ui(pgcd, 1)==0)
+	//gmp_printf("Rand: %Zd\n", rand);
+	while(cnt2 < FRIABLE && mpz_cmp_ui(pgcd, 1)==0)
 	{
 	  if (mpz_cmp_ui(rand,1)==0 || mpz_cmp_ui(rand, 0)==0)
 	    mpz_urandomm(rand, state, n);
@@ -189,37 +190,59 @@ void step_pollard(mpz_t n, mpz_t factor)
 	  cnt2++;
 	}
     }
-  //gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
+
+  //Aucun facteur trouvé. Sûrement premier ou échec de l'algorithme. On renvoie le même nombre.
+  if(mpz_cmp_ui(factor,0)==0)
+    mpz_set(factor,n);
+  gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
   mpz_clear(rand);
   mpz_clear(pgcd);
   mpz_clear(rest);
   mpz_clear(cnt);
   mpz_clear(rand_minus_one);
   gmp_randclear(state);
-  //printf("FIN DE STEP POLLARD");
+  printf("FIN DE STEP POLLARD\n");
 }
 
 void pollard(mpz_t n)
 {
-  //printf("\n POLLARD ALGORITHM \n");
-  mpz_t tmp, root, factor, div;
+  printf("POLLARD ALGORITHM \n");
+  mpz_t tmp, root, factor, div, check;
   mpz_init(tmp);
   mpz_set(tmp,n);
   mpz_init(factor);
   mpz_init(root);
+  mpz_init(check);
   mpz_init(div);
   mpz_sqrt(root,n);
   mpz_add_ui(root,root,1);
   unsigned long int root_ui = mpz_get_ui(root);
   unsigned long int cnt = 0;
+  int cnt2 = 0;
   mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
   for(unsigned long int i = 0; i < root_ui; i++)
     mpz_init(list_factor[i]);
 
   while(mpz_cmp_ui(tmp,1)!=0)
     {
-      //gmp_printf("tmp = %Zd \n factor = %Zd \n", tmp, factor);
+      //gmp_printf("tmp = %Zd\nfactor = %Zd \n", tmp, factor);
       step_pollard(tmp, factor);
+      //printf("STEP POLLARD POUR CHECK\n");
+      //step_pollard(factor, check);
+      //gmp_printf("check = %Zd\n", check);
+      //gmp_printf("Au début factor %Zd\n", factor);
+      while(cnt2 < FRIABLE && mpz_probab_prime_p(factor, 47)==0)
+	{
+	  //gmp_printf("Avant deuxieme step factor %Zd\n", factor);
+	  mpz_set(check, factor);
+	  step_pollard(check, factor);
+	  // gmp_printf("Factor dans boucle premier %Zd\n", factor);
+	  //mpz_cdiv_q(factor, factor, check);
+	  //mpz_set(check,factor);
+	  //step_pollard(check, check);
+	  cnt2++;
+	}
+      
       //gmp_printf("2 tmp = %Zd \n factor = %Zd \n", tmp, factor);
       mpz_cdiv_q(div, tmp, factor);
       mpz_set(list_factor[cnt], factor);
