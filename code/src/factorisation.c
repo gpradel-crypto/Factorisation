@@ -232,6 +232,9 @@ void pollard(mpz_t n)
   mpz_clear(tmp);
   mpz_clear(root);
   mpz_clear(factor);
+  mpz_clear(check);
+  mpz_clear(div);
+  
   }
 
 unsigned long int*
@@ -256,6 +259,9 @@ friable(int C, mpz_t n)
       primes_list[j] = prime_nbs[j];
       j++;
     }
+
+  free(prime_nbs);
+  
   while(k < j)
     {
       if(m%primes_list[k] == 0)
@@ -266,6 +272,9 @@ friable(int C, mpz_t n)
       else
 	k++;
     }
+
+  free(primes_list);
+  
   if(m == 1)
     {
       smooth_list[0] = 1;
@@ -286,9 +295,16 @@ void dixon(mpz_t n)
   int cnt = 0;
   unsigned long int* prime_nbs = crible_erat();
   unsigned long int* smooth_list = malloc((i+1)*sizeof(unsigned long int));
+  mpz_t rand;
+  mpz_t sq_rand;
+  unsigned long int time_tmp;
+  struct timeval t_tmp;
+  gmp_randstate_t state;
   
   while(prime_nbs[i] < FRIABLE)
     i++;
+
+  free(prime_nbs);
 
   unsigned long int** tab = malloc(i*sizeof(unsigned long int*));
   for(int j = 0; j < i; j++)
@@ -301,15 +317,10 @@ void dixon(mpz_t n)
   // Ne traite pas les doublons
   while(cnt <= i)
     {
-      unsigned long int time_tmp;
-      struct timeval t_tmp;
       gettimeofday(&t_tmp, NULL);
       time_tmp = t_tmp.tv_sec*1000000 + t_tmp.tv_usec;
-      mpz_t rand;
       mpz_init(rand);
-      mpz_t sq_rand;
       mpz_init(sq_rand);
-      gmp_randstate_t state;
       gmp_randinit_default(state);
       gmp_randseed_ui(state, time_tmp);
       mpz_urandomm(rand, state, n);
@@ -332,6 +343,16 @@ void dixon(mpz_t n)
   	printf("%lu ", tab[k][l]);
       printf("\n");
       }
+
+  free(smooth_list);
+  for(int k = 0; k < i; k++)
+    free(tab[k]);
+  free(tab);
+
+  
+  mpz_clear(rand);
+  mpz_clear(sq_rand);
+  gmp_randclear(state);
 }
 
 int
