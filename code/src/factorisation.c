@@ -6,6 +6,7 @@
 #include <gmp.h>
 #include <time.h>
 #include <sys/time.h>
+#include <stdbool.h>
 
 #define TAILLE 10000
 #define FRIABLE 100
@@ -16,7 +17,7 @@ crible_erat()
   unsigned long int* tab = calloc(TAILLE, sizeof(unsigned long int));
   unsigned long int* tab2 = malloc(TAILLE*sizeof(unsigned long int));
   int k = 0;
-  
+
   for(int i = 2; i < TAILLE; i++)
     {
       if(tab[i] == 0)
@@ -28,7 +29,7 @@ crible_erat()
 	    tab[j] = -1;
 	}
     }
-  printf("Il y a %d nombres premiers avant %d\n", k, TAILLE);
+  //printf("Il y a %d nombres premiers avant %d\n", k, TAILLE);
   free(tab);
   return tab2;
 }
@@ -102,36 +103,6 @@ void factorisation (mpz_t n)
   mpz_clear(root);
   free(prime_nbs);
 }
-
-/*int* 
-factorisation(int n)
-{
-  int a = n;
-  int d = 2;
-  int c = 1;
-  int* l = malloc(ceil(sqrt(n))*sizeof(int));
-  
-while(a != 1) // à modifier
-    {
-      printf("a=%d\n",a);
-      printf("d=%d\n",d);
-      printf("c=%d\n",c);
-      if(a%d == 0)
-	{
-	  a = a/d;
-	  l[c] = d;
-	  c++;
-	}
-      else
-	{
-	  d++;
-	}
-    }
-  l[0]=c;
-  return l;
-}
-*/
-
 
 // Problème de segmentation avec l'entier 49392123903
 
@@ -240,22 +211,104 @@ void pollard(mpz_t n)
   mpz_clear(factor);
   }
 
-void brand()
+unsigned long int*
+friable(int C, mpz_t n)
 {
-  unsigned long int time2;
-  struct timeval t1;
-  gettimeofday(&t1, NULL);
-  time2 = t1.tv_sec*1000000 + t1.tv_usec;
-  mpz_t n;
-  mpz_init(n);
-  mpz_set_ui(n, 124213);
-  mpz_t rand;
-  mpz_init(rand);  
-  gmp_randstate_t state;
-  gmp_randinit_default(state);
-  gmp_randseed_ui(state, time2);
-  mpz_urandomm(rand, state, n);
-  gmp_printf("%Zd ", rand);
+  int i = 0;
+  int j = 0;
+  int k = 0;
+  unsigned long int B = C;
+  unsigned long int m = mpz_get_ui(n);
+  unsigned long int* prime_nbs = crible_erat();
+
+  while(prime_nbs[i] < B)
+    i++;
+  
+  
+  unsigned long int* primes_list = malloc(i*sizeof(unsigned long int));
+  unsigned long int* smooth_list = calloc(i+1, sizeof(unsigned long int));
+  
+  while(j < i)
+    {
+      primes_list[j] = prime_nbs[j];
+      j++;
+    }
+  while(k < j)
+    {
+      if(m%primes_list[k] == 0)
+	{
+	  m = m/primes_list[k];
+	  smooth_list[k+1] = (smooth_list[k+1]+1)%2;
+	}
+      else
+	k++;
+    }
+  if(m == 1)
+    {
+      smooth_list[0] = 1;
+      //printf("FRIABLE\n");
+      return(smooth_list);
+    }
+  else
+    {
+      smooth_list[0] = 0;
+      //printf("NON-FRIABLE\n");
+      return(smooth_list);
+    }
+}
+
+void dixon(mpz_t n)
+{
+  int i = 0;
+  int cnt = 0;
+  unsigned long int* prime_nbs = crible_erat();
+  unsigned long int* smooth_list = malloc((i+1)*sizeof(unsigned long int));
+  
+  while(prime_nbs[i] < FRIABLE)
+    i++;
+
+  unsigned long int** tab = malloc(i*sizeof(unsigned long int*));
+  for(int j = 0; j < i; j++)
+    tab[j] = malloc((i+1)*sizeof(unsigned long int)); 
+
+  for(int a = 0; a < i; a++)
+    for(int b = 0; b <= i; b++)
+      tab[a][b] = 7;
+  
+  // Ne traite pas les doublons
+  while(cnt <= i)
+    {
+      unsigned long int time_tmp;
+      struct timeval t_tmp;
+      gettimeofday(&t_tmp, NULL);
+      time_tmp = t_tmp.tv_sec*1000000 + t_tmp.tv_usec;
+      mpz_t rand;
+      mpz_init(rand);
+      mpz_t sq_rand;
+      mpz_init(sq_rand);
+      gmp_randstate_t state;
+      gmp_randinit_default(state);
+      gmp_randseed_ui(state, time_tmp);
+      mpz_urandomm(rand, state, n);
+      mpz_mul(sq_rand, rand, rand);
+      mpz_mod(sq_rand, sq_rand, n);
+      smooth_list = friable(FRIABLE, sq_rand);
+      if(smooth_list[0] == 1)
+	{
+	  for(int j = 0; j < i; j++)
+	    {
+	      tab[j][cnt] = smooth_list[j+1];
+	      //printf("%lu ", tab[j][cnt]); 
+	    }
+	  cnt++;
+	}
+    }
+  for(int k = 0; k < i; k++)
+    {
+      for(int l = 0; l <= i; l++)
+  	printf("%lu ", tab[k][l]);
+      printf("\n");
+      }
 }
 
 int
@@ -270,11 +323,11 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
-  //brand();
-  printf("Par l'algorithme naïf de factorisation, nous obtenons:\n");
+  dixon(n);
+  /*printf("Par l'algorithme naïf de factorisation, nous obtenons:\n");
   factorisation(n);
   printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
-  pollard(n);
+  pollard(n);*/
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
