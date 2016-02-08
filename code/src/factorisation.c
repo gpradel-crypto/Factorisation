@@ -279,15 +279,22 @@ friable(int C, mpz_t n)
     {
       smooth_list[0] = 1;
       //printf("FRIABLE\n");
+<<<<<<< HEAD
       return smooth_list;
+=======
+>>>>>>> 7ce5649e1954f0cd3c23418e8e5f9d77e9a37940
     }
   else
     {
       smooth_list[0] = 0;
       //printf("NON-FRIABLE\n");
+<<<<<<< HEAD
       return smooth_list;
     }
 
+=======
+    }
+>>>>>>> 7ce5649e1954f0cd3c23418e8e5f9d77e9a37940
   return smooth_list;
 }
 
@@ -296,16 +303,27 @@ void dixon(mpz_t n)
   int i = 0;
   int cnt = 0;
   unsigned long int* prime_nbs = crible_erat();
+<<<<<<< HEAD
   unsigned long int* smooth_list;
+=======
+  unsigned long int* smooth_list = friable(FRIABLE, n);
+>>>>>>> 7ce5649e1954f0cd3c23418e8e5f9d77e9a37940
   mpz_t rand;
-  mpz_t sq_rand;
   mpz_init(rand);
+  mpz_t sq_rand;
+<<<<<<< HEAD
+  mpz_init(rand);
+=======
+>>>>>>> 7ce5649e1954f0cd3c23418e8e5f9d77e9a37940
   mpz_init(sq_rand);
   unsigned long int time_tmp;
   struct timeval t_tmp;
   gmp_randstate_t state;
   gmp_randinit_default(state);
+<<<<<<< HEAD
   
+=======
+>>>>>>> 7ce5649e1954f0cd3c23418e8e5f9d77e9a37940
   
   while(prime_nbs[i] < FRIABLE)
     i++;
@@ -339,6 +357,7 @@ void dixon(mpz_t n)
 	    }
 	  cnt++;
 	}
+      free(smooth_list);
     }
   for(int k = 0; k < i; k++)
     {
@@ -347,7 +366,6 @@ void dixon(mpz_t n)
       printf("\n");
     }
 
-  free(smooth_list);
   for(int k = 0; k < i; k++)
     free(tab[k]);
   free(tab);
