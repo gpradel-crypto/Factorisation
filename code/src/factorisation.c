@@ -169,19 +169,19 @@ void step_pollard(mpz_t n, mpz_t factor)
   //Aucun facteur trouvé. Sûrement premier ou échec de l'algorithme. On renvoie le même nombre.
   if(mpz_cmp_ui(factor,0)==0)
     mpz_set(factor,n);
-  gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
+  //gmp_printf("Par pollard: un facteur de %Zd est %Zd \n", n, factor);
   mpz_clear(rand);
   mpz_clear(pgcd);
   mpz_clear(rest);
   mpz_clear(cnt);
   mpz_clear(rand_minus_one);
   gmp_randclear(state);
-  printf("FIN DE STEP POLLARD\n");
+  //printf("FIN DE STEP POLLARD\n");
 }
 
 void pollard(mpz_t n)
 {
-  printf("POLLARD ALGORITHM \n");
+  //printf("POLLARD ALGORITHM \n");
   mpz_t tmp, root, factor, div, check;
   mpz_init(tmp);
   mpz_set(tmp,n);
@@ -224,10 +224,43 @@ void pollard(mpz_t n)
       mpz_set(tmp, div);
       //gmp_printf("\n AFTER tmp = %Zd factor = %Zd div = %Zd\n",tmp, factor, div);
       cnt++;
+      
     }
-  
-  for (unsigned long int i = 0; i < cnt; i++)
-    gmp_printf("%Zd ", list_factor[i]);
+  int nb_divisors = 1;
+  unsigned long int divisor = mpz_get_ui(list_factor[0]);
+  for(unsigned int i = 0; i < cnt; i++)
+    if(mpz_cmp_ui(list_factor[i], divisor)!=0)
+      {
+	nb_divisors++;
+	divisor = mpz_get_ui(list_factor[i]);
+      }
+  //printf("Le nombre de diviseurs est %d\n", nb_divisors);
+  divisor = mpz_get_ui(list_factor[0]);
+  unsigned int cnt_tmp = 0;
+  int cnt_tmp2 = 0;
+  int* coef = calloc(nb_divisors, sizeof(int));
+  while(cnt_tmp < cnt)
+    {
+      if(mpz_cmp_ui(list_factor[cnt_tmp], divisor)==0)
+	coef[cnt_tmp2]++;
+      else
+	{
+	  cnt_tmp2++;
+	  coef[cnt_tmp2]++;
+	}
+      cnt_tmp++;
+      divisor = mpz_get_ui(list_factor[cnt_tmp-1]);
+    }
+
+  //for(int j = 0; j < nb_divisors; j++)
+    //printf("%d ", coef[j]);
+  //printf("\n");
+  cnt_tmp2 = 0;
+  for (int i = 0; i < nb_divisors; i++)
+    {
+      cnt_tmp2 += coef[i];
+      gmp_printf("[%Zd, %d]; ", list_factor[cnt_tmp2 - 1], coef[i]);
+    }
   gmp_printf("\n");
   
   for(unsigned long int i = 0; i < root_ui; i++)
@@ -238,7 +271,7 @@ void pollard(mpz_t n)
   mpz_clear(factor);
   mpz_clear(check);
   mpz_clear(div);
-  
+  free(coef);
   }
 
 mpz_t*
@@ -264,6 +297,7 @@ friable(int a, mpz_t n, int C)
 	{
 	  m = m/prime_nbs[k];
 	  mpz_add_ui(smooth_list[k+1], smooth_list[k+1], 1);
+	  printf(" k = %d\n", k);
 	}
       else
 	k++;
@@ -283,6 +317,7 @@ friable(int a, mpz_t n, int C)
       printf("NON-FRIABLE\n");
       if(a == 0)
 	{
+	  printf("m = %lu\n", m);
 	  mpz_t* list_factor = malloc(m*sizeof(mpz_t));
 	  for(unsigned long int i = 0; i < m; i++)
 	    mpz_init(list_factor[i]);

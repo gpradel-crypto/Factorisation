@@ -7,4 +7,7 @@
 \BOOKMARK [3][-]{subsubsection.2.1.4}{Justification}{subsection.2.1}% 7
 \BOOKMARK [1][-]{section.3}{M\351thode na\357ve de la factorisation}{}% 8
 \BOOKMARK [1][-]{section.4}{L'algorithme p-1 de Pollard}{}% 9
-\BOOKMARK [1][-]{section.5}{Crible x x + N \040mod \040N}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Principe de l'algorithme}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Pseudo-code}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Exemple}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Crible x x + N \040mod \040N}{}% 13

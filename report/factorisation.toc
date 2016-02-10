@@ -8,4 +8,7 @@
 \contentsline {subsubsection}{\numberline {2.1.4}Justification}{3}{subsubsection.2.1.4}
 \contentsline {section}{\numberline {3}M\IeC {\'e}thode na\IeC {\"\i }ve de la factorisation}{3}{section.3}
 \contentsline {section}{\numberline {4}L'algorithme $p-1$ de Pollard}{4}{section.4}
-\contentsline {section}{\numberline {5}Crible $x \equiv x + N \text { mod } N$}{4}{section.5}
+\contentsline {subsection}{\numberline {4.1}Principe de l'algorithme}{4}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Pseudo-code}{5}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Exemple}{5}{subsection.4.3}
+\contentsline {section}{\numberline {5}Crible $x \equiv x + N \text { mod } N$}{6}{section.5}
