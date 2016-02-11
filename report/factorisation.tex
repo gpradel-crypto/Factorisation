@@ -196,7 +196,19 @@ $pgcd(x_k -1, n)$ & 1 & 1 & 1 & 1 & 1 & 1 & ...\\
 
 
 L'algorithme nous renvoie 409 car il ne trouve pas de facteur, c'est normal car il est premier.
-\section{Crible $x \equiv x + N \text{ mod } N$}
+
+\subsection{Les limites}
+
+Dans certains cas, l'algorithme nous renvoie le même nombre mis en entrée ou une factorisation imcomplète de celui-ci, en effet, cela correspond aux cas où les $p-1$ ne sont pas ultrafriables.
+
+Par exemple, avec le nombre $7345461$, l'algorithme nous renvoies une factorisation imcomplète.
+La factorisation naïve nous renvoies $7345461 = 3 \times 563 \times 4349$ tandis que $p-1$ de Pollard nous renvoie $7345461 = 3 \times 2448487.$
+A priori, on suppose donc que $562$ et $4348$ ne sont pas ultrafriables, et en effet:
+$562 = 2 \times 281$ et $4348 = 2 \times 1087.$
+
+
+
+\section{Crible de Dixon}
 
 
 \end{document}
