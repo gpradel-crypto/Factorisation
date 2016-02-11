@@ -297,7 +297,6 @@ friable(int a, mpz_t n, int C)
 	{
 	  m = m/prime_nbs[k];
 	  mpz_add_ui(smooth_list[k+1], smooth_list[k+1], 1);
-	  printf(" k = %d\n", k);
 	}
       else
 	k++;
@@ -319,6 +318,7 @@ friable(int a, mpz_t n, int C)
 	{
 	  printf("m = %lu\n", m);
 	  mpz_t* list_factor = malloc(m*sizeof(mpz_t));
+	  unsigned long int m2 = m;
 	  for(unsigned long int i = 0; i < m; i++)
 	    mpz_init(list_factor[i]);
 	  unsigned long int cnt = prime_nbs[nb_primes - 1] + 1;
@@ -343,7 +343,7 @@ friable(int a, mpz_t n, int C)
 	    if(mpz_cmp_ui(list_factor[l], 0)!=0)
 	      gmp_printf("[%d, %Zd]\n", l+1+prime_nbs[nb_primes-1], list_factor[l]);
 
-	  for(unsigned long int l = 0; l < m; l++)
+	  for(unsigned long int l = 0; l < m2; l++)
 	    mpz_clear(list_factor[l]);
 	  free(list_factor);
 	}
@@ -435,7 +435,7 @@ main(int argc, char *argv[])
   mpz_t n;
   mpz_init(n);
   mpz_set_ui(n, atoi(argv[1]));
-  mpz_t* list = friable(0, n, FRIABLE);
+  mpz_t* list = friable(1, n, FRIABLE);
   for(int k = 0; k < 26; k++)
     mpz_clear(list[k]);
   free(list);
