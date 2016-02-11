@@ -203,7 +203,9 @@ friable(int a, mpz_t n, int C)
   int nb_primes = 0;
   int k = 0;
   unsigned long int B = C;
+  gmp_printf("n = %Zd\n", n);
   unsigned long int m = mpz_get_ui(n);
+  printf("m après conversion = %lu\n", m);
   unsigned long int* prime_nbs = crible_erat();
   
   while(prime_nbs[nb_primes] < B)
@@ -228,15 +230,15 @@ friable(int a, mpz_t n, int C)
   if(m == 1)
     {
       mpz_set_ui(smooth_list[0], 1);
-      /*printf("%d-FRIABLE\n", C);
+      printf("%d-FRIABLE\n", C);
       for(int l = 1; l < nb_primes+1; l++)
 	if(mpz_cmp_ui(smooth_list[l], 0)!=0)
-	gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);*/
+	gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
     }
   else
     {
       mpz_set_ui(smooth_list[0], 0);
-      //printf("NON-FRIABLE\n");
+      printf("NON-FRIABLE\n");
       if(a == 0)
 	{
 	  printf("m = %lu\n", m);
@@ -259,24 +261,24 @@ friable(int a, mpz_t n, int C)
 		  cnt2++;
 		}
 	    }
-	  /*for(int l = 1; l < nb_primes+1; l++)
+	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
 	      gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
 	  for(int l = 0; l < cnt2+1; l++)
 	    if(mpz_cmp_ui(list_factor[l], 0)!=0)
-	    gmp_printf("[%d, %Zd]\n", l+1+prime_nbs[nb_primes-1], list_factor[l]);*/
+	    gmp_printf("[%d, %Zd]\n", l+1+prime_nbs[nb_primes-1], list_factor[l]);
 
 	  for(unsigned long int l = 0; l < m2; l++)
 	    mpz_clear(list_factor[l]);
 	  free(list_factor);
 	}
-      /*if(a == 1)
+      if(a == 1)
 	{
 	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
 		gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
 	  printf("[%lu, ~]\n", m);
-	  }*/
+	  }
     }
   free(prime_nbs);
   return smooth_list;
@@ -300,7 +302,6 @@ void dixon(mpz_t n, int C)
   while(prime_nbs[nb_primes] < B)
     nb_primes++;
   free(prime_nbs);
-  mpz_t* smooth_list = friable(1, n, FRIABLE);
   
   unsigned long int** tab = malloc(nb_primes*sizeof(unsigned long int*));
   
@@ -318,7 +319,7 @@ void dixon(mpz_t n, int C)
 	  mpz_urandomm(rand, state, n);
 	  mpz_powm_ui(sq_rand, rand, 2, n);
 	}
-      smooth_list = friable(1, sq_rand, FRIABLE);
+      mpz_t* smooth_list = friable(1, sq_rand, FRIABLE);
       if(mpz_cmp_ui(smooth_list[0], 1)==0)
 	{
 	  for(int j = 0; j < nb_primes; j++)
@@ -349,25 +350,28 @@ void dixon(mpz_t n, int C)
 int
 main(int argc, char *argv[])
 {
-  if(argc < 2)
+  /*if(argc < 2)
     {
       printf("Veuillez mettre un nombre à factoriser.\n");
       return EXIT_FAILURE;
-    }
+      }*/
   
   mpz_t n;
   mpz_init(n);
-  mpz_set_ui(n, atoi(argv[1]));
-  /*mpz_t* list = friable(1, n, FRIABLE);
+  gmp_printf("Entrez un nombre à factoriser: ", n);
+  gmp_scanf("%Zd", n);
+  gmp_printf("n avec scanf = %Zd\n", n);
+  //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
+  //mpz_set_ui(n, atoi(argv[1]));
+  mpz_t* list = friable(0, n, FRIABLE);
   for(int k = 0; k < 26; k++)
     mpz_clear(list[k]);
-    free(list);*/
-  dixon(n, FRIABLE);
+    free(list);
+  //dixon(n, FRIABLE);
   //printf("Par l'algorithme naïf de factorisation, nous obtenons:\n");
   //factorisation(n);
   //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   //pollard(n);
-
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
