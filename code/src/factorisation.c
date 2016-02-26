@@ -55,8 +55,9 @@ void step_pollard(mpz_t n, mpz_t factor)
   mpz_set_ui(pgcd,1);
   mpz_t rest;
   mpz_init(rest);
-  mpz_t cnt;
+  mpz_t cnt, tmp_prime;
   mpz_init(cnt);
+  mpz_init(tmp_prime);
   mpz_t rand_minus_one;
   mpz_init(rand_minus_one);
   int cnt2 = 0;
@@ -96,8 +97,10 @@ void step_pollard(mpz_t n, mpz_t factor)
 	      mpz_set(factor, pgcd);
 	    }
 	  mpz_powm(rand, rand, cnt, n);
-	  mpz_add_ui(cnt, cnt, 1);
-	  //gmp_printf("2Ã¨me boucle Rand %Zd\n", rand);
+	  mpz_nextprime(cnt, tmp_prime);
+	  mpz_set(tmp_prime, cnt);
+	  //mpz_add_ui(cnt, cnt, 1);
+	  //gmp_printf("2Ã¨me boucle Rand %Zd\n cnt = %Zd\n", rand, cnt);
 	  cnt2++;
 	}
     }
@@ -110,6 +113,7 @@ void step_pollard(mpz_t n, mpz_t factor)
   mpz_clear(pgcd);
   mpz_clear(rest);
   mpz_clear(cnt);
+  mpz_clear(tmp_prime);
   mpz_clear(rand_minus_one);
   gmp_randclear(state);
   //printf("FIN DE STEP POLLARD\n");
@@ -127,11 +131,15 @@ void pollard(mpz_t n)
   mpz_init(div);
   mpz_sqrt(root,n);
   mpz_add_ui(root,root,1);
-  unsigned long int root_ui = mpz_get_ui(root);
   unsigned long int cnt = 0;
   int cnt2 = 0;
-  mpz_t* list_factor = malloc(root_ui*sizeof(mpz_t));
-  for(unsigned long int i = 0; i < root_ui; i++)
+  mpz_t* list_factor = malloc(1000*sizeof(mpz_t));
+  if (list_factor == NULL)
+    {
+      printf("Allocation non réussi dans pollard\n");
+      exit(EXIT_FAILURE);
+    }
+  for(unsigned long int i = 0; i < 1000; i++)
     mpz_init(list_factor[i]);
 
   while(mpz_cmp_ui(tmp,1)!=0)
@@ -175,6 +183,11 @@ void pollard(mpz_t n)
   unsigned int cnt_tmp = 0;
   int cnt_tmp2 = 0;
   int* coef = calloc(nb_divisors, sizeof(int));
+  if (coef== NULL)
+    {
+      printf("Allocation non réussie dans pollard\n");
+      exit(EXIT_FAILURE);
+    }
   while(cnt_tmp < cnt)
     {
       if(mpz_cmp_ui(list_factor[cnt_tmp], divisor)==0)
@@ -199,7 +212,7 @@ void pollard(mpz_t n)
     }
   gmp_printf("\n");
   
-  for(unsigned long int i = 0; i < root_ui; i++)
+  for(unsigned long int i = 0; i < 1000; i++)
     mpz_clear(list_factor[i]);
   free(list_factor);
   mpz_clear(tmp);
@@ -410,7 +423,7 @@ main(int argc, char *argv[])
   mpz_init(n);
   gmp_printf("Entrez un nombre Ã  factoriser: ", n);
   gmp_scanf("%Zd", n);
-  gmp_printf("n avec scanf = %Zd\n", n);
+  //gmp_printf("n avec scanf = %Zd\n", n);
   //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
   //mpz_set_ui(n, atoi(argv[1]));
   mpz_t* list = friable(0, n, FRIABLE);
