@@ -4,7 +4,7 @@
 #include <gmp.h>
 #include <stdbool.h>
 
-unsigned long int* crible_erat();
+unsigned long int* crible_erat(int n);
 mpz_t* factorisation(mpz_t n);
 void step_pollard(mpz_t n, mpz_t factor);
 void pollard(mpz_t n);

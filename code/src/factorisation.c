@@ -11,21 +11,34 @@
 #define TAILLE 10000
 #define FRIABLE 100
 
+// Renvoie la liste des n premiers nombres premiers
 unsigned long int*
-crible_erat()
+crible_erat(int n)
 {
-  unsigned long int* tab = calloc(TAILLE, sizeof(unsigned long int));
-  unsigned long int* tab2 = malloc(TAILLE*sizeof(unsigned long int));
-  int k = 0;
+  unsigned long int* tab = calloc(n, sizeof(unsigned long int));
+  if(tab == NULL)
+    {
+      printf("Dans crible_erat : calloc de tab impossible.\n");
+      exit(EXIT_FAILURE);
+    }
 
-  for(unsigned long int i = 2; i < TAILLE; i++)
+  unsigned long int* tab2 = malloc(n*sizeof(unsigned long int));
+  if(tab2 == NULL)
+    {
+      printf("Dans crible_erat : malloc de tab2 impossible.\n");
+      exit(EXIT_FAILURE);
+    }
+  
+  int k = 0;
+  
+  for(int i = 2; i < n; i++)
     {
       if(tab[i] == 0)
 	{
 	  tab[i] = 1;
 	  tab2[k] = i;
 	  k++;
-	  for(int j = i*2; j < TAILLE; j=j+i)
+	  for(int j = i*2; j < n; j=j+i)
 	    tab[j] = -1;
 	}
     }
@@ -197,21 +210,26 @@ void pollard(mpz_t n)
   free(coef);
   }
 
+// Si a = 0, renvoie les facteurs premiers de n et leurs exposants
+// Si a = 1, renvoie les facteurs premiers de n et leurs exposants jusqu'à C et le facteur restant
 mpz_t*
 friable(int a, mpz_t n, int C)
 {
   int nb_primes = 0;
   int k = 0;
   unsigned long int B = C;
-  gmp_printf("n = %Zd\n", n);
   unsigned long int m = mpz_get_ui(n);
-  printf("m aprÃ¨s conversion = %lu\n", m);
-  unsigned long int* prime_nbs = crible_erat();
+  unsigned long int* prime_nbs = crible_erat(TAILLE);
   
   while(prime_nbs[nb_primes] < B)
     nb_primes++;
 
   mpz_t* smooth_list = malloc((nb_primes+1)*sizeof(mpz_t));
+  if(smooth_list == NULL)
+    {
+      printf("Dans friable : malloc de smooth_list impossible.\n"); 
+      exit(EXIT_FAILURE);
+    }
 
   for(int l = 0; l < nb_primes+1; l++)
     mpz_init(smooth_list[l]);
@@ -229,67 +247,86 @@ friable(int a, mpz_t n, int C)
   
   if(m == 1)
     {
+      printf("m = 1 !\n");
       mpz_set_ui(smooth_list[0], 1);
       printf("%d-FRIABLE\n", C);
       for(int l = 1; l < nb_primes+1; l++)
 	if(mpz_cmp_ui(smooth_list[l], 0)!=0)
-	gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
+	  gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
     }
   else
     {
+      printf("m != 1 ! \n");
       mpz_set_ui(smooth_list[0], 0);
-      printf("NON-FRIABLE\n");
+      //printf("NON-FRIABLE\n");
       if(a == 0)
 	{
-	  printf("m = %lu\n", m);
-	  mpz_t* list_factor = malloc(m*sizeof(mpz_t));
-	  unsigned long int m2 = m;
-	  for(unsigned long int i = 0; i < m; i++)
-	    mpz_init(list_factor[i]);
+	  mpz_t** list_factor = malloc(1000*sizeof(mpz_t*));
+	  if(list_factor == NULL)
+	    {
+	      printf("Dans friable : malloc de list_factor impossible.\n");
+	      exit(EXIT_FAILURE);
+	    }
+	  for(int l = 0; l < 1000; l++)
+	    {
+	      list_factor[l] = malloc(2*sizeof(mpz_t));
+	      if(list_factor[l] == NULL)
+		{
+		  printf("Dans friable : malloc de list_factor[l] impossible.\n");
+		  exit(EXIT_FAILURE);
+		}
+	      for(unsigned long int i = 0; i < 2; i++)
+		mpz_init(list_factor[l][i]);
+	    }
 	  unsigned long int cnt = prime_nbs[nb_primes - 1] + 1;
 	  int cnt2 = 0;
+	  //int m2 = m;
 	  while(m != 1)
 	    {
 	      if(m%cnt == 0)
 		{
 		  m = m/cnt;
-		  mpz_add_ui(list_factor[cnt2], list_factor[cnt2], 1);
+		  mpz_set_ui(list_factor[cnt2][0], cnt);
+		  mpz_add_ui(list_factor[cnt2][1], list_factor[cnt2][1], 1);
+		  if(m%cnt != 0)
+		    cnt2++;
 		}
 	      else
-		{
-		  cnt++;
-		  cnt2++;
-		}
+		cnt++;
 	    }
+	  
 	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
 	      gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
-	  for(int l = 0; l < cnt2+1; l++)
-	    if(mpz_cmp_ui(list_factor[l], 0)!=0)
-	    gmp_printf("[%d, %Zd]\n", l+1+prime_nbs[nb_primes-1], list_factor[l]);
-
-	  for(unsigned long int l = 0; l < m2; l++)
-	    mpz_clear(list_factor[l]);
+	  for(int l = 0; l < cnt2; l++)
+	    gmp_printf("[%Zd, %Zd]\n", list_factor[l][0], list_factor[l][1]);
+	  for(int l = 0; l < 1000; l++)
+	    {
+	      for(int i = 0; i < 2; i++)
+		mpz_clear(list_factor[l][i]);
+	      free(list_factor[l]);
+	    }
 	  free(list_factor);
 	}
       if(a == 1)
 	{
 	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
-		gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
+	      gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
 	  printf("[%lu, ~]\n", m);
-	  }
+	}
     }
   free(prime_nbs);
   return smooth_list;
 }
 
+// Applique le crible de Dixon à n 
 void dixon(mpz_t n, int C)
 {
   int nb_primes = 0;
   unsigned long int B = C;
   int cnt = 0;
-  unsigned long int* prime_nbs = crible_erat();
+  unsigned long int* prime_nbs = crible_erat(TAILLE);
   mpz_t rand;
   mpz_init(rand);
   mpz_t sq_rand;
@@ -298,16 +335,28 @@ void dixon(mpz_t n, int C)
   struct timeval t_tmp;
   gmp_randstate_t state;
   gmp_randinit_default(state);
-
+  
   while(prime_nbs[nb_primes] < B)
     nb_primes++;
   free(prime_nbs);
   
   unsigned long int** tab = malloc(nb_primes*sizeof(unsigned long int*));
+  if(tab == NULL)
+    {
+      printf("Dans dixon : malloc de tab impossible.\n");
+      exit(EXIT_FAILURE);
+    }
   
   for(int j = 0; j < nb_primes; j++)
-    tab[j] = malloc((nb_primes+10)*sizeof(unsigned long int)); 
-
+    {
+      tab[j] = malloc((nb_primes+10)*sizeof(unsigned long int)); 
+      if(tab[j] == NULL)
+	{
+	  printf("Dans dixon : malloc de tab[j] impossible.\n");
+	  exit(EXIT_FAILURE);
+	}
+    }
+  
   while(cnt < nb_primes+10) 
     {
       mpz_set_ui(sq_rand, 0);
@@ -319,6 +368,7 @@ void dixon(mpz_t n, int C)
 	  mpz_urandomm(rand, state, n);
 	  mpz_powm_ui(sq_rand, rand, 2, n);
 	}
+      
       mpz_t* smooth_list = friable(1, sq_rand, FRIABLE);
       if(mpz_cmp_ui(smooth_list[0], 1)==0)
 	{
@@ -326,7 +376,7 @@ void dixon(mpz_t n, int C)
 	    tab[j][cnt] = mpz_get_ui(smooth_list[j+1]); 
 	  cnt++;
 	}
-      for(int j = 0; j < nb_primes; j++)
+      for(int j = 0; j < nb_primes+1; j++)
 	mpz_clear(smooth_list[j]);
       free(smooth_list);
     }
@@ -341,7 +391,7 @@ void dixon(mpz_t n, int C)
   for(int k = 0; k < nb_primes; k++)
     free(tab[k]);
   free(tab);
-
+  
   mpz_clear(rand);
   mpz_clear(sq_rand);
   gmp_randclear(state);
@@ -366,12 +416,10 @@ main(int argc, char *argv[])
   mpz_t* list = friable(0, n, FRIABLE);
   for(int k = 0; k < 26; k++)
     mpz_clear(list[k]);
-    free(list);
+  free(list);
   //dixon(n, FRIABLE);
-  //printf("Par l'algorithme naÃ¯f de factorisation, nous obtenons:\n");
-  //factorisation(n);
-  //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
-  //pollard(n);
+  printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
+  pollard(n);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
