@@ -264,10 +264,6 @@ friable(int a, mpz_t n, int C)
   
   if(m == 1)
     {
-<<<<<<< HEAD
-=======
-      //printf("m = 1 !\n");
->>>>>>> 76e2da55d4f7a1e67056e58235366ef8322bcd7a
       mpz_set_ui(smooth_list[0], 1);
       printf("%d-FRIABLE\n", C);
       for(int l = 1; l < nb_primes+1; l++)
@@ -495,7 +491,6 @@ main(int argc, char *argv[])
   mpz_init(n);
   gmp_printf("Entrez un nombre à factoriser: ", n);
   gmp_scanf("%Zd", n);
-<<<<<<< HEAD
   gmp_printf("n avec scanf = %Zd\n", n);
   int nb_primes = 0;
   //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
@@ -506,25 +501,20 @@ main(int argc, char *argv[])
   free(prime_nbs);
   mpz_t* list = friable(0, n, 13);
   for(int k = 0; k < nb_primes+1; k++)
-=======
   //gmp_printf("n avec scanf = %Zd\n", n);
   //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
   //mpz_set_ui(n, atoi(argv[1]));
   /*mpz_t* list = friable(0, n, FRIABLE);
   for(int k = 0; k < 26; k++)
->>>>>>> 76e2da55d4f7a1e67056e58235366ef8322bcd7a
     mpz_clear(list[k]);
     free(list);*/
   //dixon(n, FRIABLE);
-<<<<<<< HEAD
   //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   //pollard(n);
-=======
   printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   pollard(n);
   printf("Par le crible quadratique, nous obtenons:\n");
   crible_quadratique(n, 14);
->>>>>>> 76e2da55d4f7a1e67056e58235366ef8322bcd7a
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
