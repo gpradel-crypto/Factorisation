@@ -10,5 +10,5 @@ void step_pollard(mpz_t n, mpz_t factor);
 void pollard(mpz_t n);
 mpz_t* friable(int a, mpz_t n, int C);
 void dixon(mpz_t n, int B);
-
+void crible_quadratique(mpz_t b, int B);
 #endif 
