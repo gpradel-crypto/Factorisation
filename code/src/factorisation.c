@@ -11,18 +11,18 @@
 #define TAILLE 10000
 #define FRIABLE 100
 
-// Renvoie la liste des n premiers nombres premiers
+// Renvoie la liste des nombres premiers inférieurs à n
 unsigned long int*
 crible_erat(int n)
 {
-  unsigned long int* tab = calloc(n, sizeof(unsigned long int));
+  unsigned long int* tab = calloc((n+1), sizeof(unsigned long int));
   if(tab == NULL)
     {
       printf("Dans crible_erat : calloc de tab impossible.\n");
       exit(EXIT_FAILURE);
     }
 
-  unsigned long int* tab2 = malloc(n*sizeof(unsigned long int));
+  unsigned long int* tab2 = malloc(((n+1)/2)*sizeof(unsigned long int));
   if(tab2 == NULL)
     {
       printf("Dans crible_erat : malloc de tab2 impossible.\n");
@@ -233,12 +233,11 @@ friable(int a, mpz_t n, int C)
   int k = 0;
   unsigned long int B = C;
   unsigned long int m = mpz_get_ui(n);
-  unsigned long int* prime_nbs = crible_erat(TAILLE);
+  unsigned long int* prime_nbs = crible_erat(C);
   
-  while(prime_nbs[nb_primes] < B)
+  while(prime_nbs[nb_primes] <= B && prime_nbs[nb_primes] != 0)
     nb_primes++;
-
-  //printf("taille du retour de friable - 1 = %d\n", nb_primes);
+  
   mpz_t* smooth_list = malloc((nb_primes+1)*sizeof(mpz_t));
   if(smooth_list == NULL)
     {
@@ -273,7 +272,7 @@ friable(int a, mpz_t n, int C)
   else
     {
       mpz_set_ui(smooth_list[0], 0);
-      //printf("NON-FRIABLE\n");
+      printf("NON-FRIABLE\n");
       if(a == 0)
 	{
 	  mpz_t** list_factor = malloc(1000*sizeof(mpz_t*));
@@ -481,40 +480,25 @@ crible_quadratique(mpz_t n, int B)
 int
 main(int argc, char *argv[])
 {
-  /*if(argc < 2)
-    {
-      printf("Veuillez mettre un nombre Ã  factoriser.\n");
-      return EXIT_FAILURE;
-      }*/
-  
   mpz_t n;
   mpz_init(n);
   gmp_printf("Entrez un nombre Ã  factoriser: ", n);
   gmp_scanf("%Zd", n);
-  gmp_printf("n avec scanf = %Zd\n", n);
   int nb_primes = 0;
-  //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
-  //mpz_set_ui(n, atoi(argv[1]));
-  unsigned long int* prime_nbs = crible_erat(13);
-  while(prime_nbs[nb_primes] < 13)
+  unsigned long int* prime_nbs;
+  prime_nbs = crible_erat(13);
+  while(prime_nbs[nb_primes] <= 13 && prime_nbs[nb_primes] != 0)
     nb_primes++;
   free(prime_nbs);
   mpz_t* list = friable(0, n, 13);
   for(int k = 0; k < nb_primes+1; k++)
-  //gmp_printf("n avec scanf = %Zd\n", n);
-  //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
-  //mpz_set_ui(n, atoi(argv[1]));
-  /*mpz_t* list = friable(0, n, FRIABLE);
-  for(int k = 0; k < 26; k++)
     mpz_clear(list[k]);
-    free(list);*/
+  free(list);
   //dixon(n, FRIABLE);
   //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   //pollard(n);
-  printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
-  pollard(n);
-  printf("Par le crible quadratique, nous obtenons:\n");
-  crible_quadratique(n, 14);
+  //printf("Par le crible quadratique, nous obtenons:\n");
+  //crible_quadratique(n, 13);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }

@@ -217,15 +217,15 @@ différence de deux carrés. On avait alors : \[n = a^2 - b^2 = (a - b)(a + b).\
 
 \subsection{Principe de l'algorithme}
 
-On cherche deux entiers $u$ et $v$ tels que $u^2 = v^2 \pmod n$ et $u
-\neq v \pmod n$. Un facteur de $n$ pourra alors être trouvé en calculant
-$\pgcd(u  - v, n).$
+On cherche deux entiers $u$ et $v$ tels que $u^2 \equiv v^2 \pmod n$ et $u
+\nequiv v \pmod n$. Un facteur de $n$ pourra alors être trouvé en calculant
+$\pgcd(u - v, n).$
 
 Pour cela, on choisit une borne $B$ et on note $k$ le nombre de
 premiers inférieurs à $B.$ 
 
-On prend ensuite un $x$ aléatoirement dans $[\sqrt{n}, n - 1]$ et
-on calcule $y = x^2 \pmod n.$ Si $y$ est $B$-friable, on garde le
+On prend ensuite un $x$ aléatoirement dans $[1, n - 1]$ et
+on calcule $y \equiv x^2 \pmod n.$ Si $y$ est $B$-friable, on garde le
 couple $(x, y)$ appelé $relation.$ Appelons $R$ l'ensemble des
 relations et $m$ son cardinal. On recommence l'opération jusqu'à
 avoir $m > k.$
@@ -234,7 +234,7 @@ On construit ensuite la matrice $M = (v_{i, p} \pmod 2)a_{p \in P, 1
   \leq i \leq m}$, puis on trouve un vecteur non nul $(e_1, ..., e_m)$
 annulant $M.$
 On a alors : \[\prod\limits_{i=1}^m x_i^{2e_i} = \prod\limits_{i=1}^m
-\prod\limits_{p \in P} p^v_{i, p}e^e_i = \prod\limits_{p \in P}
+\prod\limits_{p \in P} p^v_{i, p}e_i = \prod\limits_{p \in P}
 p^{\sum\limits_{i=1}^m v_{i, p}e_i} \pmod n.\]
 
 Or $(e_1, ..., e_m)$ annule $M$, donc : \[\sum\limits_{i=1}^m v_{i,
