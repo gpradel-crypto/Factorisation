@@ -31,14 +31,14 @@ crible_erat(int n)
   
   int k = 0;
   
-  for(int i = 2; i < n; i++)
+  for(int i = 2; i <= n; i++)
     {
       if(tab[i] == 0)
 	{
 	  tab[i] = 1;
 	  tab2[k] = i;
 	  k++;
-	  for(int j = i*2; j < n; j=j+i)
+	  for(int j = i*2; j <= n; j=j+i)
 	    tab[j] = -1;
 	}
     }
@@ -247,7 +247,6 @@ friable(int a, mpz_t n, int C)
   
   if(m == 1)
     {
-      printf("m = 1 !\n");
       mpz_set_ui(smooth_list[0], 1);
       printf("%d-FRIABLE\n", C);
       for(int l = 1; l < nb_primes+1; l++)
@@ -256,7 +255,6 @@ friable(int a, mpz_t n, int C)
     }
   else
     {
-      printf("m != 1 ! \n");
       mpz_set_ui(smooth_list[0], 0);
       //printf("NON-FRIABLE\n");
       if(a == 0)
@@ -411,15 +409,20 @@ main(int argc, char *argv[])
   gmp_printf("Entrez un nombre à factoriser: ", n);
   gmp_scanf("%Zd", n);
   gmp_printf("n avec scanf = %Zd\n", n);
+  int nb_primes = 0;
   //printf("n dans main %s\n n avec atoi = %d\n", argv[1], atoi(argv[1]));
   //mpz_set_ui(n, atoi(argv[1]));
-  mpz_t* list = friable(0, n, FRIABLE);
-  for(int k = 0; k < 26; k++)
+  unsigned long int* prime_nbs = crible_erat(13);
+  while(prime_nbs[nb_primes] < 13)
+    nb_primes++;
+  free(prime_nbs);
+  mpz_t* list = friable(0, n, 13);
+  for(int k = 0; k < nb_primes+1; k++)
     mpz_clear(list[k]);
   free(list);
   //dixon(n, FRIABLE);
-  printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
-  pollard(n);
+  //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
+  //pollard(n);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }

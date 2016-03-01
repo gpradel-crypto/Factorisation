@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2015.11.17)  11 FEB 2016 15:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.2.25)  1 MAR 2016 14:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **factorisation.tex
 (./factorisation.tex
-LaTeX2e <2015/10/01> patch level 1
-Babel <3.9m> and hyphenation patterns for 79 languages loaded.
+LaTeX2e <2016/02/01>
+Babel <3.9n> and hyphenation patterns for 79 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
@@ -29,14 +29,14 @@ Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@posthook=\toks15
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
-File: utf8.def 2015/09/07 v1.1p UTF-8 support for inputenc
+File: utf8.def 2015/12/03 v1.1r UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
-File: t1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+File: t1enc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -106,50 +106,94 @@ File: t1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
    defining Unicode char U+00FD (decimal 253)
    defining Unicode char U+00FE (decimal 254)
    defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0100 (decimal 256)
+   defining Unicode char U+0101 (decimal 257)
    defining Unicode char U+0102 (decimal 258)
    defining Unicode char U+0103 (decimal 259)
    defining Unicode char U+0104 (decimal 260)
    defining Unicode char U+0105 (decimal 261)
    defining Unicode char U+0106 (decimal 262)
    defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+0108 (decimal 264)
+   defining Unicode char U+0109 (decimal 265)
+   defining Unicode char U+010A (decimal 266)
+   defining Unicode char U+010B (decimal 267)
    defining Unicode char U+010C (decimal 268)
    defining Unicode char U+010D (decimal 269)
    defining Unicode char U+010E (decimal 270)
    defining Unicode char U+010F (decimal 271)
    defining Unicode char U+0110 (decimal 272)
    defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0112 (decimal 274)
+   defining Unicode char U+0113 (decimal 275)
+   defining Unicode char U+0114 (decimal 276)
+   defining Unicode char U+0115 (decimal 277)
+   defining Unicode char U+0116 (decimal 278)
+   defining Unicode char U+0117 (decimal 279)
    defining Unicode char U+0118 (decimal 280)
    defining Unicode char U+0119 (decimal 281)
    defining Unicode char U+011A (decimal 282)
    defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011C (decimal 284)
+   defining Unicode char U+011D (decimal 285)
    defining Unicode char U+011E (decimal 286)
    defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0120 (decimal 288)
+   defining Unicode char U+0121 (decimal 289)
+   defining Unicode char U+0122 (decimal 290)
+   defining Unicode char U+0123 (decimal 291)
+   defining Unicode char U+0124 (decimal 292)
+   defining Unicode char U+0125 (decimal 293)
+   defining Unicode char U+0128 (decimal 296)
+   defining Unicode char U+0129 (decimal 297)
+   defining Unicode char U+012A (decimal 298)
+   defining Unicode char U+012B (decimal 299)
+   defining Unicode char U+012C (decimal 300)
+   defining Unicode char U+012D (decimal 301)
+   defining Unicode char U+012E (decimal 302)
+   defining Unicode char U+012F (decimal 303)
    defining Unicode char U+0130 (decimal 304)
    defining Unicode char U+0131 (decimal 305)
    defining Unicode char U+0132 (decimal 306)
    defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0134 (decimal 308)
+   defining Unicode char U+0135 (decimal 309)
+   defining Unicode char U+0136 (decimal 310)
+   defining Unicode char U+0137 (decimal 311)
    defining Unicode char U+0139 (decimal 313)
    defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013B (decimal 315)
+   defining Unicode char U+013C (decimal 316)
    defining Unicode char U+013D (decimal 317)
    defining Unicode char U+013E (decimal 318)
    defining Unicode char U+0141 (decimal 321)
    defining Unicode char U+0142 (decimal 322)
    defining Unicode char U+0143 (decimal 323)
    defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0145 (decimal 325)
+   defining Unicode char U+0146 (decimal 326)
    defining Unicode char U+0147 (decimal 327)
    defining Unicode char U+0148 (decimal 328)
    defining Unicode char U+014A (decimal 330)
    defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+014C (decimal 332)
+   defining Unicode char U+014D (decimal 333)
+   defining Unicode char U+014E (decimal 334)
+   defining Unicode char U+014F (decimal 335)
    defining Unicode char U+0150 (decimal 336)
    defining Unicode char U+0151 (decimal 337)
    defining Unicode char U+0152 (decimal 338)
    defining Unicode char U+0153 (decimal 339)
    defining Unicode char U+0154 (decimal 340)
    defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0156 (decimal 342)
+   defining Unicode char U+0157 (decimal 343)
    defining Unicode char U+0158 (decimal 344)
    defining Unicode char U+0159 (decimal 345)
    defining Unicode char U+015A (decimal 346)
    defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015C (decimal 348)
+   defining Unicode char U+015D (decimal 349)
    defining Unicode char U+015E (decimal 350)
    defining Unicode char U+015F (decimal 351)
    defining Unicode char U+0160 (decimal 352)
@@ -158,10 +202,18 @@ File: t1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
    defining Unicode char U+0163 (decimal 355)
    defining Unicode char U+0164 (decimal 356)
    defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+0168 (decimal 360)
+   defining Unicode char U+0169 (decimal 361)
+   defining Unicode char U+016A (decimal 362)
+   defining Unicode char U+016B (decimal 363)
+   defining Unicode char U+016C (decimal 364)
+   defining Unicode char U+016D (decimal 365)
    defining Unicode char U+016E (decimal 366)
    defining Unicode char U+016F (decimal 367)
    defining Unicode char U+0170 (decimal 368)
    defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0172 (decimal 370)
+   defining Unicode char U+0173 (decimal 371)
    defining Unicode char U+0174 (decimal 372)
    defining Unicode char U+0175 (decimal 373)
    defining Unicode char U+0176 (decimal 374)
@@ -173,10 +225,31 @@ File: t1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
    defining Unicode char U+017C (decimal 380)
    defining Unicode char U+017D (decimal 381)
    defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+01CD (decimal 461)
+   defining Unicode char U+01CE (decimal 462)
+   defining Unicode char U+01CF (decimal 463)
+   defining Unicode char U+01D0 (decimal 464)
+   defining Unicode char U+01D1 (decimal 465)
+   defining Unicode char U+01D2 (decimal 466)
+   defining Unicode char U+01D3 (decimal 467)
+   defining Unicode char U+01D4 (decimal 468)
+   defining Unicode char U+01E2 (decimal 482)
+   defining Unicode char U+01E3 (decimal 483)
+   defining Unicode char U+01E6 (decimal 486)
+   defining Unicode char U+01E7 (decimal 487)
+   defining Unicode char U+01E8 (decimal 488)
+   defining Unicode char U+01E9 (decimal 489)
+   defining Unicode char U+01EA (decimal 490)
+   defining Unicode char U+01EB (decimal 491)
+   defining Unicode char U+01F0 (decimal 496)
+   defining Unicode char U+01F4 (decimal 500)
+   defining Unicode char U+01F5 (decimal 501)
    defining Unicode char U+0218 (decimal 536)
    defining Unicode char U+0219 (decimal 537)
    defining Unicode char U+021A (decimal 538)
    defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+01E02 (decimal 7682)
+   defining Unicode char U+01E03 (decimal 7683)
    defining Unicode char U+200C (decimal 8204)
    defining Unicode char U+2013 (decimal 8211)
    defining Unicode char U+2014 (decimal 8212)
@@ -196,7 +269,7 @@ Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
-File: ot1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+File: ot1enc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -237,7 +310,7 @@ Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
-File: omsenc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+File: omsenc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -268,13 +341,13 @@ File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2015/08/03 3.9m The Babel package
+Package: babel 2016/01/08 3.9n The Babel package
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel-french/frenchb.ldf
-Language: frenchb 2015/10/04 v3.1i French support from the babel system
+Language: frenchb 2016/02/13 v3.1l French support from the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2015/08/03 3.9m Babel common definitions
+File: babel.def 2016/01/08 3.9n Babel common definitions
 \babel@savecnt=\count87
 \U@D=\dimen103
 )
@@ -282,44 +355,44 @@ File: babel.def 2015/08/03 3.9m Babel common definitions
 \l@canadien = a dialect from \language\l@french 
 \FBcolonskip=\skip43
 \FBthinskip=\skip44
-\FB@interchartokenstateORI=\count88
-Package babel Info: Making : an active character on input line 356.
-Package babel Info: Making ; an active character on input line 357.
-Package babel Info: Making ! an active character on input line 358.
-Package babel Info: Making ? an active character on input line 359.
+Package babel Info: Making : an active character on input line 342.
+Package babel Info: Making ; an active character on input line 343.
+Package babel Info: Making ! an active character on input line 344.
+Package babel Info: Making ? an active character on input line 345.
 \FBguillskip=\skip45
-\FBguill@level=\count89
+\FBguill@level=\count88
+\FB@everypar=\toks16
 \FB@Mht=\dimen104
-\std@mcc=\count90
-\dec@mcc=\count91
+\std@mcc=\count89
+\dec@mcc=\count90
 \listindentFB=\skip46
 \labelwidthFB=\skip47
 \leftmarginFB=\skip48
 \parindentFFN=\dimen105
 )
 (/usr/share/texlive/texmf-dist/tex/generic/babel-french/frenchb.ldf
-Language: frenchb 2015/10/04 v3.1i French support from the babel system
+Language: frenchb 2016/02/13 v3.1l French support from the babel system
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/carlisle/scalefnt.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks16
+\KV@toks@=\toks17
 )
 (/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \labelindent=\skip49
 \enit@outerparindent=\dimen106
-\enit@toks=\toks17
+\enit@toks=\toks18
 \enit@inbox=\box26
-\enitdp@description=\count92
+\enitdp@description=\count91
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
-Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
+Package: color 2016/01/03 v1.1b Standard LaTeX Color (DPC)
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: pdftex.def on input line 142.
+Package color Info: Driver file: pdftex.def on input line 143.
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
@@ -330,7 +403,7 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count93
+\Gread@gobject=\count92
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -390,15 +463,15 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen107
-\Hy@linkcounter=\count94
-\Hy@pagecounter=\count95
+\Hy@linkcounter=\count93
+\Hy@pagecounter=\count94
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count96
+\Hy@SavedSpaceFactor=\count95
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -421,7 +494,7 @@ Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 ))
-\c@Hy@tempcnt=\count97
+\c@Hy@tempcnt=\count96
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
@@ -429,7 +502,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen108
-\Fld@menulength=\count98
+\Fld@menulength=\count97
 \Field@Width=\dimen109
 \Fld@charsize=\dimen110
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -441,54 +514,54 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count99
-\c@Item=\count100
-\c@Hfootnote=\count101
+\Hy@abspage=\count98
+\c@Item=\count99
+\c@Hfootnote=\count100
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count102
-\c@bookmark@seq@number=\count103
+\Fld@listcount=\count101
+\c@bookmark@seq@number=\count102
 \Hy@SectionHShift=\skip50
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 94.
+Package graphics Info: Driver file: pdftex.def on input line 95.
 )
 \Gin@req@height=\dimen111
 \Gin@req@width=\dimen112
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count104
+\lst@mode=\count103
 \lst@gtempboxa=\box27
-\lst@token=\toks18
-\lst@length=\count105
+\lst@token=\toks19
+\lst@length=\count104
 \lst@currlwidth=\dimen113
-\lst@column=\count106
-\lst@pos=\count107
+\lst@column=\count105
+\lst@pos=\count106
 \lst@lostspace=\dimen114
 \lst@width=\dimen115
-\lst@newlines=\count108
-\lst@lineno=\count109
+\lst@newlines=\count107
+\lst@lineno=\count108
 \lst@maxwidth=\dimen116
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count110
-\lst@skipnumbers=\count111
+\c@lstnumber=\count109
+\lst@skipnumbers=\count110
 \lst@framebox=\box28
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
@@ -509,7 +582,7 @@ Package: listings 2015/06/04 1.6 (Carsten Heinz)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\@emptytoks=\toks19
+\@emptytoks=\toks20
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
@@ -525,7 +598,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks20
+\@emptytoks=\toks21
 \ex@=\dimen117
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -535,13 +608,13 @@ Package: amsbsy 1999/11/29 v1.2d
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count112
+\inf@bad=\count111
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count113
-\leftroot@=\count114
+\uproot@=\count112
+\leftroot@=\count113
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count115
-\DOTSCASE@=\count116
+\classnum@=\count114
+\DOTSCASE@=\count115
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
@@ -550,55 +623,55 @@ LaTeX Info: Redefining \cdots on input line 466.
 \big@size=\dimen119
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count117
-\c@MaxMatrixCols=\count118
+\macc@depth=\count116
+\c@MaxMatrixCols=\count117
 \dotsspace@=\muskip11
-\c@parentequation=\count119
-\dspbrk@lvl=\count120
-\tag@help=\toks21
-\row@=\count121
-\column@=\count122
-\maxfields@=\count123
-\andhelp@=\toks22
+\c@parentequation=\count118
+\dspbrk@lvl=\count119
+\tag@help=\toks22
+\row@=\count120
+\column@=\count121
+\maxfields@=\count122
+\andhelp@=\toks23
 \eqnshift@=\dimen120
 \alignsep@=\dimen121
 \tagshift@=\dimen122
 \tagwidth@=\dimen123
 \totwidth@=\dimen124
 \lineht@=\dimen125
-\@envbody=\toks23
+\@envbody=\toks24
 \multlinegap=\skip61
 \multlinetaggap=\skip62
-\mathdisplay@stack=\toks24
+\mathdisplay@stack=\toks25
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks25
-\thm@bodyfont=\toks26
-\thm@headfont=\toks27
-\thm@notefont=\toks28
-\thm@headpunct=\toks29
+\thm@style=\toks26
+\thm@bodyfont=\toks27
+\thm@headfont=\toks28
+\thm@notefont=\toks29
+\thm@headpunct=\toks30
 \thm@preskip=\skip63
 \thm@postskip=\skip64
 \thm@headsep=\skip65
-\dth@everypar=\toks30
+\dth@everypar=\toks31
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks31
-\verbatim@line=\toks32
+\every@verbatim=\toks32
+\verbatim@line=\toks33
 \verbatim@in@stream=\read1
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen126
 \extrarowheight=\dimen127
-\NC@list=\toks33
+\NC@list=\toks34
 \extratabsurround=\skip66
 \backup@length=\skip67
 )
@@ -609,8 +682,8 @@ Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
 \TX@old@col=\dimen130
 \TX@target=\dimen131
 \TX@delta=\dimen132
-\TX@cols=\count124
-\TX@ftn=\toks34
+\TX@cols=\count123
+\TX@ftn=\toks35
 )
 (/usr/share/texlive/texmf-dist/tex/generic/mathabx/mathabx.sty
 Package: mathabx 2003/07/29 v0.0 Non-standard LaTeX package mathabx
@@ -878,10 +951,10 @@ LaTeX Font Info:    Redeclaring math symbol \boxplus on input line 683.
 LaTeX Font Info:    Redeclaring math symbol \boxminus on input line 684.
 LaTeX Font Info:    Redeclaring math symbol \boxtimes on input line 686.
 LaTeX Font Info:    Redeclaring math symbol \boxdot on input line 688.
-\mayacnter=\count125
-\mayacnta=\count126
-\mayacntb=\count127
-\mayacntc=\count128
+\mayacnter=\count124
+\mayacnta=\count125
+\mayacntb=\count126
+\mayacntc=\count127
 \mayawidth=\dimen133
 LaTeX Font Info:    Redeclaring math symbol \intop on input line 753.
 LaTeX Font Info:    Redeclaring math symbol \ointop on input line 760.
@@ -914,11 +987,13 @@ LaTeX Font Info:    Redeclaring math accent \widetilde on input line 946.
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
-\c@AlgoLine=\count129
+\c@AlgoLine=\count128
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
+\algocf@hangindent=\skip68
+
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
@@ -926,43 +1001,44 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 Package: relsize 2013/03/29 ver 4.1
 )
 ********************************************************
-Package `algorithm2e' Release 5.0 -- january 06 2013 --
+Package `algorithm2e' Release 5.1 -- october 19 2015 --
 - algorithm2e-announce@lirmm.fr mailing list for announcement about releases
 - algorithm2e-discussion@lirmm.fr mailing list for discussion about package
 subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
-- Author: Christophe Fiorio (cfiorio@um2.fr)
+- Author: Christophe Fiorio (christophe.fiorio@umontpellier.fr)
 ********************************************************
-\skiptotal=\skip68
-\skiplinenumber=\skip69
-\skiprule=\skip70
-\skiphlne=\skip71
-\skiptext=\skip72
-\skiplength=\skip73
-\algomargin=\skip74
-\skipalgocfslide=\skip75
+\skiptotal=\skip69
+\skiplinenumber=\skip70
+\skiprule=\skip71
+\skiphlne=\skip72
+\skiptext=\skip73
+\skiplength=\skip74
+\algomargin=\skip75
+\skipalgocfslide=\skip76
 \algowidth=\dimen134
 \inoutsize=\dimen135
 \inoutindent=\dimen136
 \interspacetitleruled=\dimen137
 \interspacealgoruled=\dimen138
 \interspacetitleboxruled=\dimen139
+\algocf@ruledwidth=\skip77
 \algocf@inoutbox=\box31
 \algocf@inputbox=\box32
-\AlCapSkip=\skip76
-\AlCapHSkip=\skip77
-\algoskipindent=\skip78
+\AlCapSkip=\skip78
+\AlCapHSkip=\skip79
+\algoskipindent=\skip80
 \algocf@nlbox=\box33
 \algocf@hangingbox=\box34
 \algocf@untilbox=\box35
-\algocf@skipuntil=\skip79
+\algocf@skipuntil=\skip81
 \algocf@capbox=\box36
-\algoheightruledefault=\skip80
-\algoheightrule=\skip81
-\algotitleheightruledefault=\skip82
-\algotitleheightrule=\skip83
-\c@algocfline=\count130
-\c@algocfproc=\count131
-\c@algocf=\count132
+\algoheightruledefault=\skip82
+\algoheightrule=\skip83
+\algotitleheightruledefault=\skip84
+\algotitleheightrule=\skip85
+\c@algocfline=\count129
+\c@algocfproc=\count130
+\c@algocf=\count131
 \algocf@algoframe=\box37
 \algocf@algobox=\box38
 ) (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
@@ -970,16 +1046,16 @@ Package: pdfpages 2015/09/18 v0.5d Insert pages of external PDF documents (AM)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count133
-\calc@Bcount=\count134
+\calc@Acount=\count132
+\calc@Bcount=\count133
 \calc@Adimen=\dimen140
 \calc@Bdimen=\dimen141
-\calc@Askip=\skip84
-\calc@Bskip=\skip85
+\calc@Askip=\skip86
+\calc@Bskip=\skip87
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count135
-\calc@Cskip=\skip86
+\calc@Ccount=\count134
+\calc@Cskip=\skip88
 )
 (/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2015/07/21 v2.0g eso-pic (RN)
@@ -991,8 +1067,8 @@ Package: eso-pic 2015/07/21 v2.0g eso-pic (RN)
 File: pppdftex.def 2015/09/18 v0.5d Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box39
-\AM@toc@title=\toks35
-\c@AM@survey=\count136
+\AM@toc@title=\toks36
+\c@AM@survey=\count135
 \AM@templatesizebox=\box40
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -1001,12 +1077,12 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
-\c@definition=\count137
-\c@theoreme=\count138
-\c@these=\count139
-\c@ep=\count140
-\c@notation=\count141
-\c@example=\count142
+\c@definition=\count136
+\c@theoreme=\count137
+\c@these=\count138
+\c@ep=\count139
+\c@notation=\count140
+\c@example=\count141
 
 (./factorisation.aux)
 \openout1 = `factorisation.aux'.
@@ -1037,17 +1113,17 @@ LaTeX Info: Redefining \up on input line 45.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count143
+\scratchcounter=\count142
 \scratchdimen=\dimen144
 \scratchbox=\box41
-\nofMPsegments=\count144
-\nofMParguments=\count145
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count146
+\nofMPsegments=\count143
+\nofMParguments=\count144
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count145
 \MPscratchDim=\dimen145
-\MPnumerator=\count147
-\makeMPintoPDFobject=\count148
-\everyMPtoPDFconversion=\toks37
+\MPnumerator=\count146
+\makeMPintoPDFobject=\count147
+\everyMPtoPDFconversion=\toks38
 )
 \AtBeginShipoutBox=\box42
 Package hyperref Info: Link coloring ON on input line 45.
@@ -1057,7 +1133,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count149
+\c@section@level=\count148
 )
 LaTeX Info: Redefining \ref on input line 45.
 LaTeX Info: Redefining \pageref on input line 45.
@@ -1083,7 +1159,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count150
+\c@lstlisting=\count149
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
 Package: pdflscape 2008/08/11 v0.10 Display of landscape pages in PDF (HO)
@@ -1122,44 +1198,54 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 117.
 
-[3] [4] [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 214.
- [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 214.
+[3] [4] [5] [6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
+
+Overfull \hbox (5.17377pt too wide) in paragraph at lines 243--247
+[]\T1/cmr/m/n/12 On a donc une congruence de car-rés $\OML/cmm/m/it/12 u[] \U/m
+atha/m/n/12 ^^P \OML/cmm/m/it/12 v[]\U/matha/m/n/12 p[]\OML/cmm/m/it/12 n\U/mat
+ha/m/n/12 q[]\OML/cmm/m/it/12 u \U/matha/m/n/12 ^^P [] \OML/cmm/m/it/12 x[][]v 
+\U/matha/m/n/12 ^^P
+ []
+
+[7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
  (./factorisation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 214.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 214.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
 Package rerunfilecheck Info: File `factorisation.out' has not changed.
-(rerunfilecheck)             Checksum: AF323838CE2AF69927D99F91263EC653;947.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 214.
+(rerunfilecheck)             Checksum: 5984F9531CFFF3B4CA345DB5D1A14E92;1021.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
- 12126 strings out of 493050
- 171386 string characters out of 6136824
- 312252 words of memory out of 5000000
- 15422 multiletter control sequences out of 15000+600000
+ 11964 strings out of 493038
+ 170928 string characters out of 6136725
+ 305904 words of memory out of 5000000
+ 15270 multiletter control sequences out of 15000+600000
  28744 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,11n,49p,307b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,11n,49p,314b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-typ
-e1/matha12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/
-matha8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/math
-x10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/
-texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/pu
-blic/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm12
-00.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/t
-exmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/pub
-lic/cm-super/sfti1200.pfb>
-Output written on factorisation.pdf (7 pages, 208617 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/math
+a12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/matha6.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/matha8.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></u
+sr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts
+/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-sup
+er/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sfti1200.pfb>
+Output written on factorisation.pdf (8 pages, 226627 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 113 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 208 PDF objects out of 1000 (max. 8388607)
+ 178 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
