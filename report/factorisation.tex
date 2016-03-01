@@ -37,7 +37,7 @@
 \newcommand{\N}{\mathbb{N}}
 \newtheorem{definition}{D{\'e}finition}
 \newtheorem{theoreme}{Th{\'e}or{\`e}me}
-\newtheorem{these}{Th{\`e}se}
+\newtheorem{lemme}{Lemme}
 \newtheorem{ep}{Esquisse de preuve}
 \newtheorem{notation}{Notation}
 \newtheorem{example}{Exemple}
@@ -119,18 +119,26 @@ Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle c
 L'algorithme $p-1$ de Pollard est un algorithme de décomposition en produit de facteurs premiers. Cette méthode fonctionne seulement avec des nombres qui ont une forme particulière. Il trouve les facteurs $p$ dont $p-1$ est ultrafriable.
 
 \begin{definition}[Entier friable]
-Un entier strictement positif est dit $B$-friable ou $B$-lisse si tous ses facteurs premiers sont inférieurs ou égaux à $B$. 
+Un entier strictement positif $n$ est dit $B$-friable ou $B$-lisse si tous ses facteurs premiers sont inférieurs ou égaux à $B$. 
 \end{definition}
 \begin{example}
 $90 = 2 \times 3^2 \times 5$ est $5$-friable car aucun de ses facteurs premiers ne dépasse 5.
 Cette définition inclut les nombres qui ne figurent pas parmi les facteurs premier: par exemple, 12 est $5$-friable.
 \end{example}
 \begin{definition}[Entier ultrafriable]
-Un nombre est dit $B$-superlisse our $B$-ultrafriable si tous ses diviseurs sont de la forme $p^r$, avec $p$ premier et $r$ entier, satisfont: \[ p^r \leq B .\]
+Un nombre $n$ est dit $B$-superlisse ou $B$-ultrafriable si toute puissance $p^r$ d'un nombre premier qui divise $n$ vérifie: \[ p^r \leq B .\]
 \end{definition}
 \begin{example}
 $720 = 2^4 \times 3^2 \times 5$ est $5$-friable mais pas $5$-ultrafriable ($3^2 = 9 > 5$). Par contre il est $16$-ultrafriable puisque sa plus grande puissance de facteur premier est $2^4 = 16.$
 \end{example}
+
+\begin{lemme}\label{leme}
+Si $m$ est $B$-ultrafriable pour un certain seuil $B$, alors $m | \pgcd(1,...,B)$.
+\end{lemme}
+
+\begin{lemme}[Lemme de Gauss]
+Si un nombre entier $a$w divise le produit de deux autres nombres entiers $b$ et $c$, et si $a$ est premier avec $b$, alors $a$ divise $c$.
+\end{lemme}
 
 \subsection{Principe de l'algorithme}
 
@@ -143,22 +151,29 @@ Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour
 
 Cela implique que pour tout multiple $M$ de $p-1$ on a: \[ a^M - 1 \equiv 0 \pmod p \text{ car } a^{k(p-1)} - 1 = (a^{p-1} - 1 )\sum\limits_{i=0}^{k-1} a^{i(p-1)} . \]
 
-Si $p-1$ est $B$-ultrafriable pour un certain seuil $B$, alors $p-1$ divise le pgcd des entiers de $1$ à $B$. Donc, si l'on pose $M = ppcm(1, ..., M)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
+D'après le lemme \ref{leme} si l'on pose $M = ppcm(1, ..., M)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
 
 Autrement dit, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est supérieur ou égal à $p$.
 En revanche, il est possible que le pgcd soit égal à $n$ lui-même auquel cas, on n'obtient pas de facteur non trivial.
 
 \subsection{Pseudo-code}
 
+Choisir un résidu $x \pmod n$ au hasard et initialier $p$ à $1$ et un compteur $cmp$ à $0.$
+Définir une suite en posant $x_1 = x$, $x_2 = x_1^2 \pmod n$, $x_3 = x_2^3 \pmod n$, ... Ainsi $x_ {k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n$. Autrement dit $x_k = x^{k!}$.
+Choisir une limite pour finir l'algorithme s'il ne trouve pas de résultats après un certain nombre d'essais.
+
 \begin{algorithm}
 \caption{Factorisation de $n$ par $p-1$ de Pollard}
 \KwIn{Un entier $n$}
-\KwOut{Un facteur premier $p$ de $n$ ou $n$ lui-même}
+\KwOut{Un facteur premier $p$ de $n$}
 \BlankLine
-Choisir un résidu $x \pmod n$ au hasard et initialier $p$ à $1$ et un compteur $cmp$ à $0$\;
-Définir une suite en posant $x_1 = x$, $x_2 = x_1^2 \pmod n$, $x_3 = x_2^3 \pmod n$, ... Ainsi $x_ {k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n$. Autrement dit $x_k = x^{k!}$.\;
-\Repeat{$p \neq 1$ ou que $cmp = \text{une certaine limite choisie}$}{$x_k = x^{k!} \pmod n$\;$p = pgcd(x_k - 1, n)$\;$k = k + 1$\;$cmp = cmp + 1$\;}
-\If{Le compteur est égal à la limite et $p$ est toujours égal à $1$}{\Return{$n$}}
+$x \pmod n$\;
+$p = 1$\;
+$cmp = 0$\;
+$x_k = x^{k!}$\;
+$lim$\;
+\Repeat{$p \neq 1$ || $cmp == lim$}{$x_k = x^{k!} \pmod n$\;$p = pgcd(x_k - 1, n)$\;$k = k + 1$\;$cmp = cmp + 1$\;}
+\If{$cmp == lim$ \&\& $p == 1$}{\Return{$n$}}
 \Return{$p$}
 \end{algorithm}
 
@@ -180,7 +195,7 @@ $pgcd(x_k -1, n)$ & 1 & 1 & 1 & 1 & 1 & 1 & 421\\
 \end{tabular}
 \end{center}
 
-Au premier tour on trouve donc $421$. On le fait ensuite sur $172189 \div 421 = 409.$
+Au premier tour on trouve donc $421$. On le fait ensuite sur $172189 \div 421 = 409.$ Or avec un test de primalité, on voit directement que 409 est premier. Mais voici tout de même ce que l'on a en résultat : 
 
 \begin{center}
 \begin{tabular}{|c||c|c|c|c|c|c|c|}
@@ -194,15 +209,14 @@ $pgcd(x_k -1, n)$ & 1 & 1 & 1 & 1 & 1 & 1 & ...\\
 \end{tabular}
 \end{center}
 
-
 L'algorithme nous renvoie 409 car il ne trouve pas de facteur, c'est normal car il est premier.
 
 \subsection{Les limites}
 
-Dans certains cas, l'algorithme nous renvoie le même nombre mis en entrée ou une factorisation imcomplète de celui-ci, en effet, cela correspond aux cas où les $p-1$ ne sont pas ultrafriables.
+Dans certains cas, l'algorithme nous renvoie le même nombre mis en entrée ou une factorisation incomplète de celui-ci, en effet, cela correspond aux cas où les $p-1$ ne sont pas ultrafriables.
 
-Par exemple, avec le nombre $7345461$, l'algorithme nous renvoies une factorisation imcomplète.
-La factorisation naïve nous renvoies $7345461 = 3 \times 563 \times 4349$ tandis que $p-1$ de Pollard nous renvoie $7345461 = 3 \times 2448487.$
+Par exemple, avec le nombre $7345461$, l'algorithme nous renvoie une factorisation incomplète.
+La factorisation naïve nous renvoie $7345461 = 3 \times 563 \times 4349$ tandis que $p-1$ de Pollard nous renvoie $7345461 = 3 \times 2448487.$
 A priori, on suppose donc que $562$ et $4348$ ne sont pas ultrafriables, et en effet:
 $562 = 2 \times 281$ et $4348 = 2 \times 1087.$
 
@@ -244,4 +258,7 @@ On a donc une congruence de carrés $u^2 = v^2 \pmod n \text{ avec } u =
 \prod\limits_{i=1}^m x_i^{e_i} \text{et} v = \prod\limits_{p \in P}
 p^{\frac{1}{2} \sum\limits_{i=1}^m v_{i, p}e_i}$ qui nous donnera un facteur
 de $n$ en calculant $\pgcd(u - v, n).$
+
+
+\section{Crible quadratique}
 \end{document}
