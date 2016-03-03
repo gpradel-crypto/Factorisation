@@ -111,7 +111,7 @@ et de même, si $m$ n'est pas multiple de $q$
 
 \section{Méthode naïve de la factorisation}
 
-Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle consiste à faire les divisions euclidiennes successives de $n$ par $2$ (autant de fois que l'on peut), puis $3$, etc ... jusqu'à la partie entière de $\sqrt[2]{n}$.
+Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle consiste à faire les divisions euclidiennes successives de $n$ par $2$ (autant de fois que l'on peut), puis $3$, etc ... jusqu'à la partie entière de $\sqrt[2]{n}.$
 
 
 \section{L'algorithme $p-1$ de Pollard}
@@ -119,7 +119,7 @@ Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle c
 L'algorithme $p-1$ de Pollard est un algorithme de décomposition en produit de facteurs premiers. Cette méthode fonctionne seulement avec des nombres qui ont une forme particulière. Il trouve les facteurs $p$ dont $p-1$ est ultrafriable.
 
 \begin{definition}[Entier friable]
-Un entier strictement positif $n$ est dit $B$-friable ou $B$-lisse si tous ses facteurs premiers sont inférieurs ou égaux à $B$. 
+Un entier strictement positif $n$ est dit $B$-friable ou $B$-lisse si tous ses facteurs premiers sont inférieurs ou égaux à $B.$ 
 \end{definition}
 \begin{example}
 $90 = 2 \times 3^2 \times 5$ est $5$-friable car aucun de ses facteurs premiers ne dépasse 5.
@@ -133,33 +133,33 @@ $720 = 2^4 \times 3^2 \times 5$ est $5$-friable mais pas $5$-ultrafriable ($3^2 
 \end{example}
 
 \begin{lemme}\label{leme}
-Si $m$ est $B$-ultrafriable pour un certain seuil $B$, alors $m | \pgcd(1,...,B)$.
+Si $m$ est $B$-ultrafriable pour un certain seuil $B$, alors $m | \pgcd(1,...,B).$
 \end{lemme}
 
 \begin{lemme}[Lemme de Gauss]
-Si un nombre entier $a$w divise le produit de deux autres nombres entiers $b$ et $c$, et si $a$ est premier avec $b$, alors $a$ divise $c$.
+Si un nombre entier $a$w divise le produit de deux autres nombres entiers $b$ et $c$, et si $a$ est premier avec $b$, alors $a$ divise $c.$
 \end{lemme}
 
 \subsection{Principe de l'algorithme}
 
-Soit $n$ un entier divisible par un nombre premier $p$, avec $n \neq p$. 
+Soit $n$ un entier divisible par un nombre premier $p$, avec $n \neq p.$ 
 
 \begin{theoreme}[Petit Théorème de Fermat]
-Si $p$ est un nombre premier et si $a$ est un entier non divisible par $p$, alors $a^{p-1} - 1$ est un multiple de $p$. C'est-à-dire : \[a^{p-1} = 1 \pmod p .\]
+Si $p$ est un nombre premier et si $a$ est un entier non divisible par $p$, alors $a^{p-1} - 1$ est un multiple de $p.$ C'est-à-dire : \[a^{p-1} = 1 \pmod p .\]
 \end{theoreme}
-Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour $a$ premier avec $p$. 
+Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour $a$ premier avec $p.$ 
 
 Cela implique que pour tout multiple $M$ de $p-1$ on a: \[ a^M - 1 \equiv 0 \pmod p \text{ car } a^{k(p-1)} - 1 = (a^{p-1} - 1 )\sum\limits_{i=0}^{k-1} a^{i(p-1)} . \]
 
 D'après le lemme \ref{leme} si l'on pose $M = ppcm(1, ..., M)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
 
-Autrement dit, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est supérieur ou égal à $p$.
+Autrement dit, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est supérieur ou égal à $p.$
 En revanche, il est possible que le pgcd soit égal à $n$ lui-même auquel cas, on n'obtient pas de facteur non trivial.
 
 \subsection{Pseudo-code}
 
 Choisir un résidu $x \pmod n$ au hasard et initialier $p$ à $1$ et un compteur $cmp$ à $0.$
-Définir une suite en posant $x_1 = x$, $x_2 = x_1^2 \pmod n$, $x_3 = x_2^3 \pmod n$, ... Ainsi $x_ {k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n$. Autrement dit $x_k = x^{k!}$.
+Définir une suite en posant $x_1 = x$, $x_2 = x_1^2 \pmod n$, $x_3 = x_2^3 \pmod n$, ... Ainsi $x_ {k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n.$ Autrement dit $x_k = x^{k!}.$
 Choisir une limite pour finir l'algorithme s'il ne trouve pas de résultats après un certain nombre d'essais.
 
 \begin{algorithm}
@@ -195,7 +195,7 @@ $pgcd(x_k -1, n)$ & 1 & 1 & 1 & 1 & 1 & 1 & 421\\
 \end{tabular}
 \end{center}
 
-Au premier tour on trouve donc $421$. On le fait ensuite sur $172189 \div 421 = 409.$ Or avec un test de primalité, on voit directement que 409 est premier. Mais voici tout de même ce que l'on a en résultat : 
+Au premier tour on trouve donc $421.$ On le fait ensuite sur $172189 \div 421 = 409.$ Or avec un test de primalité, on voit directement que 409 est premier. Mais voici tout de même ce que l'on a en résultat : 
 
 \begin{center}
 \begin{tabular}{|c||c|c|c|c|c|c|c|}
@@ -232,33 +232,124 @@ différence de deux carrés. On avait alors : \[n = a^2 - b^2 = (a - b)(a + b).\
 \subsection{Principe de l'algorithme}
 
 On cherche deux entiers $u$ et $v$ tels que $u^2 \equiv v^2 \pmod n$ et $u
-\nequiv v \pmod n$. Un facteur de $n$ pourra alors être trouvé en calculant
+\nequiv v \pmod n.$ Un facteur de $n$ pourra alors être trouvé en calculant
 $\pgcd(u - v, n).$
 
 Pour cela, on choisit une borne $B$ et on note $k$ le nombre de
-premiers inférieurs à $B.$ 
+premiers $p$ inférieurs à $B.$ On appelle $P$ l'ensemble de ces
+premiers (de cardinal $k$, donc).
 
 On prend ensuite un $x$ aléatoirement dans $[1, n - 1]$ et
 on calcule $y \equiv x^2 \pmod n.$ Si $y$ est $B$-friable, on garde le
 couple $(x, y)$ appelé $relation.$ Appelons $R$ l'ensemble des
 relations et $m$ son cardinal. On recommence l'opération jusqu'à
-avoir $m > k.$
+avoir $m > k.$ On définit $v_{p, i}$ par $x_i^2 \pmod n = y_i = \prod\limits_{p in P} p^{v_{p, i}}.$
 
-On construit ensuite la matrice $M = (v_{i, p} \pmod 2)a_{p \in P, 1
-  \leq i \leq m}$, puis on trouve un vecteur non nul $(e_1, ..., e_m)$
-annulant $M.$
+On construit ensuite la matrice $M = (v_{p, i} \pmod 2)_{p \in P, 1
+  \leq i \leq m}$, puis on trouve un vecteur non nul $(e_1, ..., e_m)^t$
+dans le noyau de $M.$
 On a alors : \[\prod\limits_{i=1}^m x_i^{2e_i} = \prod\limits_{i=1}^m
-\prod\limits_{p \in P} p^v_{i, p}e_i = \prod\limits_{p \in P}
-p^{\sum\limits_{i=1}^m v_{i, p}e_i} \pmod n.\]
+\prod\limits_{p \in P} p^{v_{p, i}}e_i = \prod\limits_{p \in P}
+p^{\sum\limits_{i=1}^m v_{p, i}e_i} \pmod n.\]
 
-Or $(e_1, ..., e_m)$ annule $M$, donc : \[\sum\limits_{i=1}^m v_{i,
-  p}e_i = 0 \pmod 2.\]
+Or $(e_1, ..., e_m)$ annule $M$, donc : \[\sum\limits_{i=1}^m v_{p,
+  i}e_i = 0 \pmod 2.\]
 
-On a donc une congruence de carrés $u^2 = v^2 \pmod n \text{ avec } u =
-\prod\limits_{i=1}^m x_i^{e_i} \text{et} v = \prod\limits_{p \in P}
-p^{\frac{1}{2} \sum\limits_{i=1}^m v_{i, p}e_i}$ qui nous donnera un facteur
+On a donc une congruence de carrés : \[u^2 = v^2 \pmod n \text{ avec } u =
+\prod\limits_{i=1}^m x_i^{e_i} \text{ et } v = \prod\limits_{p \in P}
+p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}\] qui nous donnera un facteur
 de $n$ en calculant $\pgcd(u - v, n).$
 
+\subsection{Pseudo-code}
+
+\begin{algorithm}
+\caption{Factorisation de $n$ par le crible de Dixon}
+\KwIn{Un entier $n$ et une borne $B$}
+\KwOut{Un facteur premier de $n$, ou 1 ou $n$}
+\BlankLine
+$k = \#\{p \text{ premiers } | p < B\}$\;
+$L = liste\_relations$\;
+\For{$i \in {0, 1, ...,  k + 10}$}{$x \pmod n$\;$y \equiv x^2 \pmod n$\;
+\If{$y \text{ }B \text{ -friable }$}{$L[i] \text{ <- } y$}}
+$M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où }
+x_i^2 \pmod n = y_i = \prod\limits_{p \in P}p^{v_{p,i}}$\;
+$(e_1, ..., e_{k + 10}) \text{ tel que } M(e_1, ..., e_{k + 10})^t =
+0$\;
+$u = \prod\limits_{i = 1}^m x_i^{e_i}$\;
+$v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p,
+    i}e_i}$\;
+\Return{$\pgcd(u - v, n)$}
+\end{algorithm}
+
+\subsection{Précisions sur l'algorithme}
+
+\subsubsection{Facteur non trivial}
+
+L'algorithme présenté retourne un facteur de $n$, éventuellement 1 ou
+$n.$ Toutefois, si $n$ est impair et le produit d'au moins deux
+premiers, le facteur trouvé est différent de 1 et $n$ avec une
+probabilité supérieur à 1/2. Dans les faits, on teste d'abord si $n$
+est premier avec un algorithme de primalité (Rabin-Miller, par
+exemple), et s'il ne l'est (vraisemblablement) pas, on peut alors le
+factoriser avec le crible de Dixon.
+
+\begin{proof}
+Trivial
+\end{proof}
+
+\subsubsection{Choix de $B$}
+
+Le choix de $B$ est crucial. En effet, si $B$ est trop petit, on
+n'aura pas suffisamment de relations différentes pour trouver un
+vecteur non nul dans le noyau de $M$, et plus $B$ augmente, plus
+l'algorithme mettra du temps à trouver des congruences entre carrés. 
+
+\begin{lemme}
+La probabilité qu'un entier $n$ inférieur à un entier $C$ soit
+$B$-friable est à peu près égale à $u^{-u}$, où $u = \frac{\log(C)}{\log(B)}.$
+\end{lemme}
+
+\begin{proof}
+
+Soit $\Psi(C, B) = \#\{x \in [\![1, C]\!]; x \text{ est }
+B\text{-friable}\}.$ La probabilité $P$ qu'un entier $n$ inférieur
+à $C$ soit $B$-friable est donc égale à $\frac{\Psi(C, B)}{C}.$     
+
+\end{proof}
+
+\subsection{Exemple}
+
+Factorisons $n = 7081$ avec $B = 3.$ Considérons $-1$ comme un
+premier. Les entiers $B$-friables sont donc de la forme $\pm2^a3^b$,
+$a, b \in \mathbb{N}.$ 
+
+On trouve trois carrés modulo $n$ qui sont 3-friables :
+\[4486^2 \equiv -2 \times 3 \pmod n,\]
+\[1857^2 \equiv 2 \pmod n,\]
+\[2645^2 \equiv -3 \pmod n.\]
+
+On construit alors \[M = \begin{tabular}{c|ccc}
+                            & 4486 & 1857 & 2645 \\
+                           \hline
+                           -1 & 1 & 0 & 1 \\
+                           2 & 1 & 1 & 0 \\
+                           3 & 1 & 0 & 1 \\
+                         \end{tabular}.\]
+
+Le vecteur colonne $(1, 1, 1)^t$ appartient au noyau de M, on a donc
+: \[(4486 \times 1857 \times 2645)^2 \equiv (-2 \times 3)^2 \pmod
+n.\]
+
+On calcule ensuite $\pgcd(4486 \times 1857 \times 2645 - (-2 \times
+3), 7081).$ On trouve 73 qui est donc un facteur non-trivial de 7081.
+
+\subsection{Limites de l'algorithme}
+
+Contrairement à l'algorithme $p - 1$ de Pollard, la complexité dépend
+ici de $n$ et plus du plus petit facteur premier de $n.$ Le crible de
+Dixon est donc plus efficace pour factoriser des entiers de type $n =
+pq$ avec $p$ et $q$ premiers (comme dans RSA, par exemple) que pour trouver des petits facteurs de
+grands entiers.
 
 \section{Crible quadratique}
 \end{document}
