@@ -237,7 +237,8 @@ friable(int a, mpz_t n, int C)
   
   while(prime_nbs[nb_primes] <= B && prime_nbs[nb_primes] != 0)
     nb_primes++;
-  
+
+  //printf("NOMBRE %d\n", nb_primes);
   mpz_t* smooth_list = malloc((nb_primes+1)*sizeof(mpz_t));
   if(smooth_list == NULL)
     {
@@ -264,15 +265,16 @@ friable(int a, mpz_t n, int C)
   if(m == 1)
     {
       mpz_set_ui(smooth_list[0], 1);
-      printf("%d-FRIABLE\n", C);
-      for(int l = 1; l < nb_primes+1; l++)
+      //printf("%d-FRIABLE\n", C);
+      /*for(int l = 1; l < nb_primes+1; l++)
 	if(mpz_cmp_ui(smooth_list[l], 0)!=0)
 	  gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
+      */
     }
   else
     {
       mpz_set_ui(smooth_list[0], 0);
-      printf("NON-FRIABLE\n");
+      //printf("NON-FRIABLE\n");
       if(a == 0)
 	{
 	  mpz_t** list_factor = malloc(1000*sizeof(mpz_t*));
@@ -311,9 +313,9 @@ friable(int a, mpz_t n, int C)
 	  
 	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
-	      gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
+	      // gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
 	  for(int l = 0; l < cnt2; l++)
-	    gmp_printf("[%Zd, %Zd]\n", list_factor[l][0], list_factor[l][1]);
+	    //gmp_printf("[%Zd, %Zd]\n", list_factor[l][0], list_factor[l][1]);
 	  for(int l = 0; l < 1000; l++)
 	    {
 	      for(int i = 0; i < 2; i++)
@@ -322,13 +324,13 @@ friable(int a, mpz_t n, int C)
 	    }
 	  free(list_factor);
 	}
-      if(a == 1)
+      /*if(a == 1)
 	{
 	  for(int l = 1; l < nb_primes+1; l++)
 	    if(mpz_cmp_ui(smooth_list[l], 0)!=0)
 	      gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
 	  printf("[%lu, ~]\n", m);
-	}
+	  }*/
     }
   free(prime_nbs);
   return smooth_list;
@@ -413,7 +415,7 @@ void dixon(mpz_t n, int C)
 
 
 void
-crible_quadratique(mpz_t n, int B)
+crible_quadratique(mpz_t n, unsigned long int B)
 {
   mpz_t root, m, a, tmp, tmp2, tmp3, two;
   mpz_init(root);
@@ -421,7 +423,7 @@ crible_quadratique(mpz_t n, int B)
   mpz_add_ui(root, root, 1);
   mpz_init(m);
   mpz_pow_ui(m, root, 2);
-  gmp_printf("Root = %Zd\n", root);
+  //gmp_printf("Root = %Zd\n", root);
   mpz_init(a);
   //mpz_set_si(a, -60);
   mpz_init(tmp);
@@ -430,26 +432,54 @@ crible_quadratique(mpz_t n, int B)
   mpz_init(two);
   mpz_set_ui(two, 2);
   mpz_t* list_tmp = friable(1, two, B);
-  int* check = malloc(60*sizeof(int));
-
-  printf("DEBUT DE LA BOUCLE FOR\n");
+  unsigned long int convert;
+  int* check = malloc(61*sizeof(int));
+  if(check == NULL)
+    {
+      printf("Malloc non résolu\n");
+      exit(EXIT_FAILURE);
+    }
+  unsigned long int* prime_nbs = crible_erat(B);
+  int nb_prime = 0;
+  while(prime_nbs[nb_prime] <= B && prime_nbs[nb_prime] != 0)
+    {
+      printf("%lu ", prime_nbs[nb_prime]);
+      nb_prime++;
+    }
+  printf("\n");
+  unsigned long int** matrix = calloc(61, sizeof(unsigned long int*));
+  if(matrix == NULL)
+    {
+      printf("Malloc non résolu\n");
+      exit(EXIT_FAILURE);
+    }
   for(int i = 0; i < 61; i++)
     {
-      gmp_printf("A = %Zd\n", a);
+      matrix[i] = calloc(nb_prime, sizeof(unsigned long int));
+      if(matrix[i] == NULL)
+	{
+      printf("Malloc non résolu\n");
+      exit(EXIT_FAILURE);
+    }
+    }
+    //printf("DEBUT DE LA BOUCLE FOR\n");
+    for(int i = 0; i < 61; i++)
+      {
+      //gmp_printf("A = %Zd\n", a);
       check[i] = 0;
       mpz_pow_ui(tmp2, a, 2);
       mpz_mul(tmp3, a, root);
       mpz_mul(tmp3, tmp3, two);
-      gmp_printf("m^2 = %Zd\na^2 = %Zd\n2am = %Zd\n",m , tmp2, tmp3);
-      gmp_printf("tmp avant calcul = %Zd\n", tmp);
+      //gmp_printf("m^2 = %Zd\na^2 = %Zd\n2am = %Zd\n",m , tmp2, tmp3);
+      //gmp_printf("tmp avant calcul = %Zd\n", tmp);
       mpz_sub(tmp, m, n);
-      gmp_printf("tmp m^2 - n = %Zd\n", tmp);
+      //gmp_printf("tmp m^2 - n = %Zd\n", tmp);
       mpz_add(tmp, tmp, tmp2);
-      gmp_printf("tmp m^2 - n + a^2 = %Zd\n", tmp);
+      //gmp_printf("tmp m^2 - n + a^2 = %Zd\n", tmp);
       mpz_add(tmp, tmp, tmp3);
-      gmp_printf("tmp m^2 - n + a^2 + 2*a*m = %Zd\n", tmp);
+      //gmp_printf("tmp m^2 - n + a^2 + 2*a*m = %Zd\n", tmp);
       mpz_mod(tmp, tmp, n);
-      gmp_printf("Avant friable, tmp = %Zd\n", tmp);
+      //gmp_printf("Avant friable, tmp = %Zd\n", tmp);
       list_tmp = friable(1, tmp, B);
       /*
       printf("La smooth list\n");
@@ -457,17 +487,35 @@ crible_quadratique(mpz_t n, int B)
 	gmp_printf("%d %Zd\n", j, list_tmp[j]);
       */
       if(mpz_cmp_ui(list_tmp[0],1)==0)
-	check[i] = 1;
+	{
+	  check[i] = 1;
+	  for(int j = 1; j <= nb_prime; j++)
+	    {
+	      convert = mpz_get_ui(list_tmp[j]);
+	      matrix[i][j] = convert%2;
+	    }
+	}
       //printf("%d ", i);
       mpz_add_ui(a, a, 1);
     }
+  //for(int i = 0; i < 60; i++)
+  //printf("%d %d\n", i, check[i]);
+
   for(int i = 0; i < 61; i++)
-    printf("%d %d\n", i, check[i]);
+    {
+      for(int j = 0; j < nb_prime; j++)
+	printf("%lu ", matrix[i][j]);
+      printf("\n");
+    }
   
-  for (int j = 0; j < 6; j++)
+for (int j = 0; j < 7; j++)
     mpz_clear(list_tmp[j]);
-  free(list_tmp);
-  free(check);
+free(list_tmp);
+free(check);
+for(int i = 0; i < 61; i++)
+  free(matrix[i]);
+free(matrix);
+  free(prime_nbs);
   mpz_clear(root);
   mpz_clear(m);
   mpz_clear(a);
@@ -484,7 +532,7 @@ main(int argc, char *argv[])
   mpz_init(n);
   gmp_printf("Entrez un nombre Ã  factoriser: ", n);
   gmp_scanf("%Zd", n);
-  int nb_primes = 0;
+  /*int nb_primes = 0;
   unsigned long int* prime_nbs;
   prime_nbs = crible_erat(13);
   while(prime_nbs[nb_primes] <= 13 && prime_nbs[nb_primes] != 0)
@@ -494,11 +542,12 @@ main(int argc, char *argv[])
   for(int k = 0; k < nb_primes+1; k++)
     mpz_clear(list[k]);
   free(list);
+  */
   //dixon(n, FRIABLE);
   //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   //pollard(n);
-  //printf("Par le crible quadratique, nous obtenons:\n");
-  //crible_quadratique(n, 13);
+  printf("Par le crible quadratique, nous obtenons:\n");
+  crible_quadratique(n, 13);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
