@@ -4,11 +4,11 @@
 #include <gmp.h>
 #include <stdbool.h>
 
-unsigned long int* crible_erat(int n);
+signed long int* crible_erat(signed long int n);
 mpz_t* factorisation(mpz_t n);
 void step_pollard(mpz_t n, mpz_t factor);
 void pollard(mpz_t n);
-mpz_t* friable(int a, mpz_t n, int C);
-void dixon(mpz_t n, int B);
-void crible_quadratique(mpz_t b, unsigned long int B);
+mpz_t* friable(int a, mpz_t n, signed long int C);
+void dixon(mpz_t n, signed long int B);
+void crible_quadratique(mpz_t b, signed long int B);
 #endif 
