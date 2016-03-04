@@ -260,6 +260,34 @@ On a donc une congruence de carrés : \[u^2 = v^2 \pmod n \text{ avec } u =
 p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}\] qui nous donnera un facteur
 de $n$ en calculant $\pgcd(u - v, n).$
 
+\subsection{Exemple}
+
+Factorisons $n = 7081$ avec $B = 3.$ Considérons $-1$ comme un
+premier. Les entiers $B$-friables sont donc de la forme $\pm2^a3^b$,
+$a, b \in \mathbb{N}.$ 
+
+On trouve trois carrés modulo $n$ qui sont 3-friables :
+\begin{alignat*}{2}
+4486^2 & \equiv && -\!2 \times 3 \pmod n, \\
+1857^2 & \equiv && \text{ } 2 \pmod n, \\
+2645^2 & \equiv && -\!3 \pmod n.
+\end{alignat*}
+
+On construit alors \[M = \begin{tabular}{c|ccc}
+                            & 4486 & 1857 & 2645 \\
+                           \hline
+                           -1 & 1 & 0 & 1 \\
+                           2 & 1 & 1 & 0 \\
+                           3 & 1 & 0 & 1 \\
+                         \end{tabular}.\]
+
+Le vecteur colonne $(1, 1, 1)^t$ appartient au noyau de M, on a donc
+: \[(4486 \times 1857 \times 2645)^2 \equiv (-2 \times 3)^2 \pmod
+n.\]
+
+On calcule ensuite $\pgcd(4486 \times 1857 \times 2645 - (-2 \times
+3), 7081).$ On trouve 73 qui est donc un facteur non-trivial de 7081.
+
 \subsection{Pseudo-code}
 
 \begin{algorithm}
@@ -294,7 +322,27 @@ exemple), et s'il ne l'est (vraisemblablement) pas, on peut alors le
 factoriser avec le crible de Dixon.
 
 \begin{proof}
-Trivial
+Supposons $n = pq$ avec $p$ et $q$ premiers. Posons $Y \equiv X^2 \pmod n$
+où $X \in [\![1, n-1]\!].$ On a donc le tableau de probabilité
+suivant : 
+\begin{center}
+\begin{tabular}{l|c|c}
+ & $X \equiv Y \pmod p$ & $X \equiv -Y \pmod p$ \\
+\hline
+$X \equiv Y \pmod q$ & 1/4 & 1/4 \\
+\hline
+$X \equiv -Y \pmod q$ & 1/4 & 1/4 \\
+\end{tabular}
+\end{center}
+On obtiendra donc un facteur non trivial de $n$ dans la moitié des cas
+(lorsque $X \equiv Y \pmod p$ et $X \equiv -Y \pmod q$, ou $X \equiv
+-Y \pmod p$ et $X \equiv Y \pmod q$).
+
+En fait, si $n$ a $m$, $m \geq 2$, facteurs premiers, la probabilité d'obtenir un
+facteur non trivial est égale à $1 - \frac{1}{m^2} \geq \frac{1}{2}$
+($1 - \textit{probabilité que } X \equiv Y \pmod {p_1, p_2, ..., p_m}
+\textit{ ou que } X
+\equiv -Y \pmod {p_1, p_2, ..., p_m}$).
 \end{proof}
 
 \subsubsection{Choix de $B$}
@@ -316,32 +364,6 @@ B\text{-friable}\}.$ La probabilité $P$ qu'un entier $n$ inférieur
 à $C$ soit $B$-friable est donc égale à $\frac{\Psi(C, B)}{C}.$     
 
 \end{proof}
-
-\subsection{Exemple}
-
-Factorisons $n = 7081$ avec $B = 3.$ Considérons $-1$ comme un
-premier. Les entiers $B$-friables sont donc de la forme $\pm2^a3^b$,
-$a, b \in \mathbb{N}.$ 
-
-On trouve trois carrés modulo $n$ qui sont 3-friables :
-\[4486^2 \equiv -2 \times 3 \pmod n,\]
-\[1857^2 \equiv 2 \pmod n,\]
-\[2645^2 \equiv -3 \pmod n.\]
-
-On construit alors \[M = \begin{tabular}{c|ccc}
-                            & 4486 & 1857 & 2645 \\
-                           \hline
-                           -1 & 1 & 0 & 1 \\
-                           2 & 1 & 1 & 0 \\
-                           3 & 1 & 0 & 1 \\
-                         \end{tabular}.\]
-
-Le vecteur colonne $(1, 1, 1)^t$ appartient au noyau de M, on a donc
-: \[(4486 \times 1857 \times 2645)^2 \equiv (-2 \times 3)^2 \pmod
-n.\]
-
-On calcule ensuite $\pgcd(4486 \times 1857 \times 2645 - (-2 \times
-3), 7081).$ On trouve 73 qui est donc un facteur non-trivial de 7081.
 
 \subsection{Limites de l'algorithme}
 
