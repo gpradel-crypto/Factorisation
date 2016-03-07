@@ -61,53 +61,45 @@ problème prend une toute autre ampleur. En effet, certains algorithmes
 de chiffrement reposent sur une clef privée qui est la factorisation de
 la clef publique $n$ (RSA par exemple). Réussir à factoriser $n$ implique donc de pouvoir casser ces algorithmes.
 
-Le plus ancien algorithme de factorisation, remontant au \textsc{iii}\ieme ~siècle av. J.-C., est le crible d'{\'E}ratosthène. C'est la méthode de factorisation la plus intuitive. Depuis, par souci d'efficacité, de nombreux
-algorithmes plus rapides ont été trouvés, comme l'algorithme $p - 1$ de Pollard, le crible de Dixon ou encore le crible quadratique.
-
-Nous étudierons par la suite le chiffrement RSA, ainsi que les trois algorithmes sus-mentionnés.
-
 \begin{theoreme}[Théorème fondamental de l'arithmétique]
   Tout entier strictement positif peut être écrit comme un produit de nombres premiers d'une unique façon, à l'ordre près des facteurs.
 \end{theoreme}
 
+Ce théorème implique donc que tout entier $n$ peut être factorisé de manière unique, justifiant alors la recherche d'algorithmes de factorisation.
+Le plus ancien de ces algorithmes est la méthode de factorisation dite naïve. C'est la méthode de factorisation la plus intuitive. Depuis, par souci d'efficacité, de nombreux
+algorithmes plus rapides ont été trouvés, comme l'algorithme $p - 1$ de Pollard, le crible de Dixon ou encore le crible quadratique.
 
-\begin{theoreme}
-  Il existe une infinité de nombres premiers.
-\end{theoreme}
+Nous étudierons par la suite le chiffrement RSA, ainsi que les quatre algorithmes sus-mentionnés.
 
 
-\section{Rappels sur l'utilité des nombres premiers en cryptographie}
-En cryptographie, les nombres premiers sont très utilisés et très utiles car ils apportent, grâce à leurs propriétés, de la sécurité.
+\section{Un algorithme de chiffrement utilisant une clef publique $n = pq$ : RSA}
 
-\subsection{Chiffrement RSA}
-En effet, présentons l'algorithme RSA qui les utilise.
+Le chiffrement RSA est un chiffrement asymétrique, c'est-à-dire qu'il utilise une paire de clefs, qui sont des nombres entiers, composée d'une clef publique pour chiffrer et d'une clef privée pour déchiffrer.
+La clef privée peut être aussi utilisée pour signer un message. La clef publique est de la forme $n = pq$, et la clef privée peut être trouvée à partir de $p$ et $q$. Ainsi, factoriser $n$ revient à casser RSA.
 
-Tout d'abord, le chiffrement RSA est un chiffrement asymétrique, c'est-à-dire qu'il utilise une paire de clés, qui sont des nombres entiers, composée d'une clé publique pour chiffrer et d'une clé privée pour déchiffrer.
-La clé privée peut être aussi utilisée pour signer un message.
-
-\subsubsection{Création des clés}
+\subsection{Création des clefs}
 
 \begin{itemH}
 \item Choisir $p$ et $q$, deux nombres premiers entiers distincts ;
-\item calculer leur produit $n = p*q$
+\item calculer leur produit $n = pq$
 \item calculer $\phi (n) = (p - 1)(q - 1)$ qui est la valeur de l'indicatrice d'Euler en $n$ ;
 \item choisir un entier naturel $e$ premier avec $\phi (n)$ et strictement inférieur à $\phi (n)$ ;
 \item calculer l'entier naturel $d$, inverse de $e$ modulo $ \phi (n)$, et strictement inférieur à $\phi (n)$ ; $d$ peut se calculer efficacement par l'algorithme d'Euclide étendu.
 \end{itemH}
 
-Le couple $(n, e)$ est la clé publique et $d$ est la clé privée.
+Le couple $(n, e)$ est la clef publique et $d$ est la clef privée.
 
 La sécurité de cet algorithme repose sur le fait que la factorisation (de grands nombres) est un problème difficile, c'est-à-dire qu'on ne peut pas le résoudre en temps polynomial.
 
-\subsubsection{Chiffrement}
+\subsection{Chiffrement}
 Soit $m$ un message à chiffrer. Le message chiffré $c$ de $m$ sera :
 \[ c \equiv m^e \pmod n .\]
-\subsubsection{Déchiffrement}
+\subsection{Déchiffrement}
 
 Soit le message chiffré $c$ comme ci-dessus. Pour retrouver le message $m$ on fait:
-\[ c^d \equiv m^{e*d} \equiv m \pmod n.\]
+\[ c^d \equiv m^{ed} \equiv m \pmod n.\]
 
-\subsubsection{Justification}
+\subsection{Justification}
 
 La démonstration repose sur le petit théorème de Fermat, à savoir que comme $p$ et $q$ sont deux nombres premiers, si $m$ n'est pas un multiple de $p$ on a la première égalité ci-dessous, et la seconde s'il n'est pas un multiple de $q$ :
 \[ m^{p-1} \equiv 1 \pmod p\ ,\ \ m^{q-1} \equiv 1 \pmod q.\]
@@ -122,10 +114,9 @@ donc, si $m$ n'est pas multiple de $p$ d'après le petit théorème de Fermat
 et de même, si $m$ n'est pas multiple de $q$
 \[m^{ed}\equiv m \pmod q.\]
 
-\section{Méthode naïve de la factorisation}
+\section{Méthode de factorisation naïve}
 
-Pour factoriser un nombre $n$, la méthode la plus naïve et la plus naturelle consiste à faire les divisions euclidiennes successives de $n$ par $2$ (autant de fois que l'on peut), puis $3$, etc ... jusqu'à la partie entière de $\sqrt[2]{n}.$
-
+Pour factoriser un entier $n$, la méthode la plus naïve et la plus naturelle consiste à faire les divisions euclidiennes successives de $n$ par les entiers $i,$ $2 \leq i \leq \lfloor\sqrt{n}\rfloor.$ Si le reste est égal nul, on garde $i$ de côté et on recommence avec $\frac{n}{i}.$ Sinon, on passe à $i + 1.$
 
 \section{L'algorithme $p-1$ de Pollard}
 
