@@ -421,4 +421,28 @@ pq$ avec $p$ et $q$ premiers (comme dans RSA, par exemple) que pour trouver des 
 grands entiers.
 
 \section{Crible quadratique}
+
+L'algorithme du crible quadratique est un algorithme de factorisation fondé sur l'arithmétique modulaire, c'est-à-dire l'ensembles de méthodes, dérivées de l'étude du reste obtenu par une division euclidienne, permettant la résolution de problèmes sur les nombres entiers. En pratique c'est l'algorithme le plus rapide, sauf pour les nombres d'au moins cent chiffres décimaux, pour lesquels le crible algébrique est plus performant.
+Le temps d'exécution du crible quadratique dépend uniquement de la taille de l'entier à factoriser, et non de propriétés particulières de celui-ci.
+
+\subsection{Principe de l'algorithme}
+
+L'algorithme, mis au point en $1981$ par Carl Pomerance, est un raffinement de la méthode de factorisation de Dixon. Le but est d'essayer d'établir une congruence de carrés modulo $n$ (l'entier à factoriser) qui nous permettra de factoriser $n.$
+
+L'algorithme fonctione en deux phases:
+\begin{itemH}
+\item la phase de collecte des données, où il collecte les informations qui peuvent conduire à une congruence de carrés, et
+\item la phase d'exploitation des données, où il place toutes les données qu'il a collectées dans une matrice et la résout pour obtenir une congruence de carrés.
+\end{itemH}
+
+Por la phase de collecte des données, on choisit un entier $m$ proche de la racine carrée de $n$ \[ m = \lfloor m^{\frac{1}{2}} \rceil .\]
+Ensuite on forme des congruences modulo $n$ en observant que pour tout entier $a,$ \[ (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n , \] où mpn npte qie $m^2 - n$ est de l'ordre de $\sqrt{n}.$
+On se donne une borne $B$ et l'on cherche des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B-$friable.
+{\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friable, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel. On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n$. Pour trouver un facteur $p$ de $n$, on calcule $p = \pgcd(b - c, n).$
+
+\subsection{Pseudo-code}
+
+\subsection{Exemple}
+
+
 \end{document}

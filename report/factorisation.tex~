@@ -53,13 +53,18 @@
 \newpage
 \section{Introduction}
 
-Factoriser un entier de manière efficace est un vieux problème des
-mathématiques. Nombre de célèbres mathématiciens s'y sont confrontés
-(Fermat, Gauss, Mersenne, ...) mais leur intérêt était purement
-mathématique. Toutefois, avec l'apparition de la cryptologie, le
+Factoriser un entier de manière efficace est un vieux problème d'arithmétique. Nombre de célèbres mathématiciens s'y sont confrontés
+({\'E}ratosthène, Fermat, Gauss, Mersenne, ...) mais leur intérêt était purement mathématique.
+
+Toutefois, avec l'apparition de la cryptologie, le
 problème prend une toute autre ampleur. En effet, certains algorithmes
 de chiffrement reposent sur une clef privée qui est la factorisation de
-la clef publique $n$ (RSA par exemple). 
+la clef publique $n$ (RSA par exemple). Réussir à factoriser $n$ implique donc de pouvoir casser ces algorithmes.
+
+Le plus ancien algorithme de factorisation, remontant au \textsc{iii}\ieme ~siècle av. J.-C., est le crible d'{\'E}ratosthène. C'est la méthode de factorisation la plus intuitive. Depuis, par souci d'efficacité, de nombreux
+algorithmes plus rapides ont été trouvés, comme l'algorithme $p - 1$ de Pollard, le crible de Dixon ou encore le crible quadratique.
+
+Nous étudierons par la suite le chiffrement RSA, ainsi que les trois algorithmes sus-mentionnés.
 
 \begin{theoreme}[Théorème fondamental de l'arithmétique]
   Tout entier strictement positif peut être écrit comme un produit de nombres premiers d'une unique façon, à l'ordre près des facteurs.
