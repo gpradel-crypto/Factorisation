@@ -331,7 +331,7 @@ $n.$ Toutefois, si $n$ est impair et le produit d'au moins deux
 premiers, le facteur trouvé est différent de 1 et $n$ avec une
 probabilité supérieure à 1/2. 
 
-En effet, supposons $n = pq$ avec $p$ et $q$ premiers. Posons $a^2 \equiv b^2 \pmod n$
+En effet, supposons $n = pq$ avec $p$ et $q$ premiers. Supposons $a^2 \equiv b^2 \pmod n$
 où $a \in [\![1, n-1]\!].$ On a donc le tableau de probabilités
 suivant : 
 \begin{center}
@@ -429,7 +429,10 @@ Avec un tel $B,$ on peut alors calculer $T.$ On a donc $u = \frac{\log(n)}{\sqrt
  & = && \sqrt{\log(n)} + \sqrt{\log(n)} \times \log(\sqrt{\log(n)}) 
 \end{alignat*}.
 
-$\log(\sqrt{\log(n)}) \text{ est négligeable devant } \sqrt{\log(n)},$ on a donc $T = \text{e}^{2\sqrt{\log(n)}}.$
+$\log(\sqrt{\log(n)}) \text{ est négligeable devant } \sqrt{\log(n)},$
+on a donc
+\[\log(T) \approx 2\sqrt{\log(n)},\] puis
+\[T \approx \text{e}^{2\sqrt{\log(n)}}.\]
 
 \subsection{Limites de l'algorithme}
 
