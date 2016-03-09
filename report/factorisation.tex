@@ -172,11 +172,7 @@ Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour
 
 Cela implique que pour tout multiple $M$ de $p-1$ on a: \[ a^M - 1 \equiv 0 \pmod p \text{ car } a^{k(p-1)} - 1 = (a^{p-1} - 1 )\sum\limits_{i=0}^{k-1} a^{i(p-1)} . \]
 
-<<<<<<< HEAD
 D'après le lemme \ref{leme} si l'on pose $M = ppcm(1, ..., B)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
-=======
-D'après le lemme \ref{leme} si l'on pose $M = ppcm(1, ..., M),$ on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
->>>>>>> 62a9f3992982ec6d488d376ac85aaf70305f790d
 
 Autrement dit, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est supérieur ou égal à $p.$
 En revanche, il est possible que le pgcd soit égal à $n$ lui-même auquel cas, on n'obtient pas de facteur non trivial.
@@ -485,6 +481,8 @@ Por la phase de collecte des données, on choisit un entier $m$ proche de la rac
 Ensuite on forme des congruences modulo $n$ en observant que pour tout entier $a,$ \[ (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n , \] où on note que $m^2 - n$ est de l'ordre de $\sqrt{n}.$
 On se donne une borne $B$ et l'on cherche des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B-$friable.
 {\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friable, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel. On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
+
+La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(e^{\sqrt{\log n \log \log n}}).$
 
 \subsection{Pseudo-code}
 Soit P l'ensemble des premiers inférieurs ou égaux à $B.$
