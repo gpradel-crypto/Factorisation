@@ -154,27 +154,28 @@ $720 = 2^4 \times 3^2 \times 5$ est $5$-friable mais pas $5$-ultrafriable ($3^2 
 \end{example}
 
 \begin{lemme}\label{leme}
-Si $m$ est $B$-ultrafriable pour un certain seuil $B,$ alors $m | \pgcd(1,...,B).$
+Si $m$ est $B$-ultrafriable pour un certain seuil $B,$ alors $m | \ppcm(1,...,B).$
 \end{lemme}
 
 \begin{lemme}[Lemme de Gauss]
-Si un nombre entier $a$w divise le produit de deux autres nombres entiers $b$ et $c,$ et si $a$ est premier avec $b,$ alors $a$ divise $c.$
+Si un nombre entier $a$ divise le produit de deux autres nombres entiers $b$ et $c,$ et si $a$ est premier avec $b,$ alors $a$ divise $c.$
 \end{lemme}
 
 \subsection{Principe de l'algorithme}
 
-Soit $n$ un entier divisible par un nombre premier $p,$ avec $n \neq p.$ 
-
 \begin{theoreme}[Petit Théorème de Fermat]
-Si $p$ est un nombre premier et si $a$ est un entier non divisible par $p,$ alors $a^{p-1} - 1$ est un multiple de $p.$ C'est-à-dire : \[a^{p-1} = 1 \pmod p .\]
+Soient $p$ un nombre premier et $a$ est un entier non divisible par $p.$ Alors $a^{p-1} - 1$ est un multiple de $p.$ C'est-à-dire : \[a^{p-1} = 1 \pmod p .\]
 \end{theoreme}
 Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour $a$ premier avec $p.$ 
 
 Cela implique que pour tout multiple $M$ de $p-1$ on a: \[ a^M - 1 \equiv 0 \pmod p \text{ car } a^{k(p-1)} - 1 = (a^{p-1} - 1 )\sum\limits_{i=0}^{k-1} a^{i(p-1)} . \]
 
-D'après le lemme \ref{leme} si l'on pose $M = ppcm(1, ..., B)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
+Soit $n$ un entier divisible par un nombre premier $p,$ avec $n \neq p$
+et $p-1 \text{ } B\text{-ultrafriable}.$
+D'après le lemme \ref{leme}, si l'on pose $M = ppcm(1, ..., B)$, on a: \[ a^M \equiv 1 \pmod p \text{ pour tout } a \text{ premier avec } p . \]
 
-Autrement dit, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est supérieur ou égal à $p.$
+Ainsi, $p$ divise $a^M - 1$ et donc le pgcd de $n$ et $a^M - 1$ est
+divisible par $p.$
 En revanche, il est possible que le pgcd soit égal à $n$ lui-même auquel cas, on n'obtient pas de facteur non trivial.
 
 \subsection{Pseudo-code}
@@ -249,8 +250,8 @@ Elle aboutit si $p - 1$ est $(B, C)-$friable.
   Soit $n, B, C$ des nombres entiers. On dit que n est $(B, C)-$friable s'il est le produit de premiers $\leq B$ et d'au plus un premier dans l'intervalle $]B, C]$.
 \end{definition}
 On démarre l'algorithme comme précédemment. On calcule $x_{k + 1} = x^{k + 1} \mod n$ jusqu'à $x_B.$ Ensuite on calcule $y_1 = x_B^{l_1} \mod n$, $y_2 = x_B^{l_2},$ ...; où les $l_i$ sont les premiers dans $]B,C]$ par ordre croissant.
-Or l'avantage de cette méthode est que pour calculer $y_2$ on n'a pas besoin d'une exponentiation modulaire. En effet \[ y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n.\]
-Or la différence entre deux nombres premiers consécutifs est très petite. On calcule donc une fois pour toute les premières puissances de $x_B$ soit $z_j = x_B^j$ et on a \[ y_{k + 1} = y_k z_{l_{k+1}} \mod n \] qui se calcule au prix d'une seule multiplication.
+L'avantage de cette méthode est que pour calculer $y_2$ on n'a pas besoin d'une exponentiation modulaire. En effet \[ y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n.\]
+Or, la différence entre deux nombres premiers consécutifs est très petite. On calcule donc une fois pour toutes les premières puissances de $x_B$ soit $z_j = x_B^j$ et on a \[ y_{k + 1} = y_k z_{l_{k+1}} \mod n \] qui se calcule au prix d'une seule multiplication.
 \subsubsection{Exemple}
 
 Soit $n = 2721749 = pq$ avec $p = 2671$ et $q = 1019$. On a: $p - 1 = 2 \times 3 \times 5 \times 89$ est $(B, C)-$friable avec $B = 7$ et $C = 100$ par exemple.
