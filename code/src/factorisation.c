@@ -275,10 +275,10 @@ friable(int a, mpz_t n, signed long int C)
   if(m == 1)
     {
       mpz_set_ui(smooth_list[0], 1);
-      printf("%ld-FRIABLE\n", C);
-      for(int l = 1; l < nb_primes+1; l++)
-	if(mpz_cmp_ui(smooth_list[l], 0)!=0)
-	  gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
+      //printf("%ld-FRIABLE\n", C);
+      //for(int l = 1; l < nb_primes+1; l++)
+      //if(mpz_cmp_ui(smooth_list[l], 0)!=0)
+      //  gmp_printf("[%d, %Zd]\n", prime_nbs[l-1], smooth_list[l]);
     }
   else
     {
@@ -349,7 +349,6 @@ friable(int a, mpz_t n, signed long int C)
 void dixon(mpz_t n, signed long int C)
 {
   int nb_primes = 0;
-  //unsigned long int B = C;
   int cnt = 0;
   signed long int* prime_nbs = crible_erat(C);
   mpz_t rand;
@@ -360,10 +359,11 @@ void dixon(mpz_t n, signed long int C)
   struct timeval t_tmp;
   gmp_randstate_t state;
   gmp_randinit_default(state);
-  
-  while(prime_nbs[nb_primes] < C)
+  while(prime_nbs[nb_primes] <= C && prime_nbs[nb_primes] != 0)
     nb_primes++;
-  free(prime_nbs);
+  /* while(prime_nbs[nb_primes] < C) */
+  /*   nb_primes++; */
+  /* free(prime_nbs); */
   
   unsigned long int** tab = malloc(nb_primes*sizeof(unsigned long int*));
   if(tab == NULL)
@@ -394,7 +394,7 @@ void dixon(mpz_t n, signed long int C)
 	  mpz_powm_ui(sq_rand, rand, 2, n);
 	}
       
-      mpz_t* smooth_list = friable(1, sq_rand, FRIABLE);
+      mpz_t* smooth_list = friable(1, sq_rand, C);
       if(mpz_cmp_ui(smooth_list[0], 1)==0)
 	{
 	  for(int j = 0; j < nb_primes; j++)
@@ -408,8 +408,11 @@ void dixon(mpz_t n, signed long int C)
   
   for(int k = 0; k < nb_primes; k++)
     {
-      for(int l = 0; l < nb_primes+10; l++)
-  	printf("%lu  ", tab[k][l]);
+      printf("[");
+      for(int l = 0; l < nb_primes+9; l++)
+  	printf("%lu, ", tab[k][l]%2);
+      printf("%lu", tab[k][nb_primes+9]%2);
+      printf("],");
       printf("\n");
     }
   
@@ -520,9 +523,11 @@ crible_quadratique(mpz_t n, signed long int B)
     
     for(int i = 0; i < 121; i++)
       {
-	printf("%d ", i - 60);
-	for(int j = 0; j < nb_prime; j++)
-	  printf("%lu ", matrix[i][j]);
+	printf("[");
+	for(int j = 0; j < nb_prime-1; j++)
+	  printf("%lu,", matrix[i][j]);
+	printf("%lu", matrix[i][nb_prime-1]);
+	printf("],");
 	printf("\n");
       }
     
@@ -560,11 +565,11 @@ main(int argc, char *argv[])
   for(int k = 0; k < nb_primes+1; k++)
     mpz_clear(list[k]);
   free(list);
-  //dixon(n, FRIABLE);
+  dixon(n, FRIABLE);
   //printf("Par l'algorithme p-1 de Pollard, nous obtenons:\n");
   //pollard(n);
-  printf("Par le crible quadratique, nous obtenons:\n");
-  crible_quadratique(n, 13);
+  //printf("Par le crible quadratique, nous obtenons:\n");
+  //crible_quadratique(n, 13);
   mpz_clear(n);
   return EXIT_SUCCESS;
 }
