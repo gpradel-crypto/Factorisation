@@ -254,12 +254,46 @@ L'avantage de cette méthode est que pour calculer $y_2$ on n'a pas besoin d'une
 Or, la différence entre deux nombres premiers consécutifs est très petite. On calcule donc une fois pour toutes les premières puissances de $x_B$ soit $z_j = x_B^j$ et on a \[ y_{k + 1} = y_k z_{l_{k+1}} \mod n \] qui se calcule au prix d'une seule multiplication.
 \subsubsection{Exemple}
 
-Soit $n = 2721749 = pq$ avec $p = 2671$ et $q = 1019$. On a: $p - 1 = 2 \times 3 \times 5 \times 89$ est $(B, C)-$friable avec $B = 7$ et $C = 100$ par exemple.
+Soit $n = 2721749 = pq$ avec $p = 2671$ et $q = 1019$. On a: \[p - 1 = 2 \times 3 \times 5 \times 89\] est $(B, C)-$friable avec $B = 7$ et $C = 100$ par exemple.
 
-On calcule $x_1 = 2$, $x_2 = x_1^2 = 4$, $x_3 = 64$, $x_4 = 446722$, $x_5 = 1416863$, $x_6 = 715291$, $x_7 = 795854$.
-On pose $y = x_7$. On élève $y$ à la puissance $l_i$ pour tous les premiers $l_i$ entre $11$ et $97$. On voit sans peine que la différence entre deux tels premiers consécutifs est au plus de $8.$
-On calcule donc les huit premières puissances de $y$ soit $z_1 = y = 795854$, $z_2 = y^2 = 2657777$, $z_3 = y^3 = 664706$, $z_4 = 1628037$, $z_5 = 2034144$, $z_6 = 1664270$, $z_7 = 1281471$, $z_8 = 2696942$.
-On peut maintenant calculer $y_1 = y^{11} = 1715449$, $y_2 = y^{13} = y_1 z_2 = 216252$, $y_3 = y^{17} = y_2 z_4 = 2580676$, ..., $y_{20} = y^{89} = y_{19} z_6 = 1279410.$
+On calcule
+\begin{align*}
+  x_1 &= 2 \\
+  x_2 &= x_1^2 = 4\\
+  x_3 &= 64\\
+  x_4 &= 446722\\ 
+  x_5 &= 1416863\\
+  x_6 &= 715291 \\
+  x_7 &= 795854 \\
+\end{align*}
+
+On pose $y = x_7$.
+
+On élève $y$ à la puissance $l_i$ pour tous les premiers $l_i$ entre $11$ et $97$.
+
+On voit sans peine que la différence entre deux tels premiers consécutifs est au plus de $8.$
+
+On calcule donc les huit premières puissances de $y$ soit:
+
+\begin{align*}
+  z_1 &= y = 795854\\
+  z_2 &= y^2 = 2657777\\
+  z_3 &= y^3 = 664706\\
+  z_4 &= 1628037\\
+  z_5 &= 2034144\\
+  z_6 &= 1664270\\
+  z_7 &= 1281471\\
+  z_8 &= 2696942\\
+\end{align*}
+
+On peut maintenant calculer
+\begin{align*}
+  y_1 &= y^{11} = 1715449\\
+  y_2 &= y^{13} = y_1 z_2 = 216252\\
+  y_3 &= y^{17} = y_2 z_4 = 2580676\\
+  & ... \\
+  y_{20} &= y^{89} = y_{19} z_6 = 1279410\\
+\end{align*}
 On trouve que $ \pgcd (y_{20} - 1, n) = 2671.$
 
 
