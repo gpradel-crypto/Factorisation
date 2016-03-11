@@ -371,10 +371,10 @@ On calcule ensuite $\pgcd(4486 \times 1857 \times 2645 - (-2 \times
 $k = \#\{p \text{ premiers } | p < B\}$\;
 $L = liste\_relations$\;
 \For{$i \in \{0, 1, ...,  k + 10\}$}{$x \pmod n$\; $y \equiv x^2 \pmod n$\;
-\If{$y \text{ }B \text{-friable }$}{$L[i] \gets  y$}}
-$M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où } x_i^2 \pmod n = y_i = \prod\limits_{p \in P}p^{v_{p,i}}$\;
+\If{$y \text{ }B \text{-friable }$}{$L[i] \gets  x$}}
+$M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où } L[i]^2 \pmod n = \prod\limits_{p \in P}p^{v_{p,i}}$\;
 $(e_1, ..., e_{k + 10}) \text{ tel que } M(e_1, ..., e_{k + 10})^t = 0$\;
-$u = \prod\limits_{i = 1}^m x_i^{e_i}$\;
+$u = \prod\limits_{i = 1}^m L[i]^{e_i}$\;
 $v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
 \Return{$\pgcd(u - v, n)$}
 \end{algorithm}
