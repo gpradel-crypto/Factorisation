@@ -516,9 +516,16 @@ L'algorithme fonctionne en deux phases:
 \end{itemH}
 
 Pour la phase de collecte des données, on choisit un entier $m$ proche de la racine carrée de $n$ \[ m = \lfloor n^{\frac{1}{2}} \rceil .\]
+
 Ensuite on forme des congruences modulo $n$ en observant que pour tout entier $a,$ \[ (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n , \] où on note que $m^2 - n$ est de l'ordre de $\sqrt{n}.$
+
 On se donne une borne $B$ et l'on cherche des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B-$friable.
-{\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friable, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel. On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
+
+{\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friable on forme ce qu'on appelle des relations, qui sont de la forme \[(m^2 - n) + a^2 + 2am = b^r.c^s... \pmod n\] avec $b$, $c$ des premiers et $r$, $s$ des entiers.
+
+Grâce à ces relations, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel.
+
+On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
 
 La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(e^{\sqrt{\log n \log \log n}}).$
 
@@ -535,7 +542,7 @@ $L = liste\_relations$\;
 \For{$a \in \{-60,..., 60\}$}{$y = (m^2 - n) + a^2 + 2am \pmod n$\;
 \If{$y \text{ }B \text{-friable }$}{$L[i] \gets  y$}}
 $M = (v_{a, p} \pmod 2)_{a, p \in P} \text{ où } y_i = \prod\limits_{p \in P}p^{v_{a,p}}$\;
-$(e_1, ..., e_{\#P}) \text{ tel que } M(e_1, ..., e_{\#P})^t = 0$\;
+$(e_1, ..., e_{\#P}) \text{ tel que } (e_1, ..., e_{\#P})M = 0$\;
 $u = \prod\limits_{i = 1}^{\#P} y_i^{e_i}$\;
 $v = \prod\limits_{\substack{a | e_i \neq 0 \\ 1 \leq i \leq \#P}}^{} (m + a)^2$\;
 \Return{$\pgcd(u - v, n)$}
@@ -574,7 +581,7 @@ $60$ & $0$ & $0$ & $1$ & $0$ & $0$\\
 \end{tabular}
 \]
 
-Grâce aux lignes annulés par cette matrice, qui forment un espace vectoriel dont une base est donnée par les trois lignes de la matrice suivant, on forme des carrés:
+Grâce aux lignes annulées par cette matrice, qui forment un espace vectoriel dont une base est donnée par les trois lignes de la matrice suivante, on forme des carrés:
 
 \begin{center}
 \begin{tabular}{ccccc}
