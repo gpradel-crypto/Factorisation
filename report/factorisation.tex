@@ -566,7 +566,9 @@ Grâce à ces relations, on porte dans une matrice la parité des valuations et 
 
 On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
 
-La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(\exp(\sqrt{\log n \log \log n})).$
+Le choix de $B$ est aussi immportant pour l'optimisation de l'algorithme. On dira seulement la valeur de $B$ qui est \[ B = \exp \left( \frac{1}{\sqrt{2}} \sqrt{\log(n)\log\log(n)} \right) . \]
+
+La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(\exp\left(\sqrt{\log (n) \log \log (n)}\right)).$
 
 \subsection{Pseudo-code}
 Soit P l'ensemble des premiers inférieurs ou égaux à $B.$
@@ -588,7 +590,8 @@ $v = \prod\limits_{\substack{a | e_i \neq 0 \\ 1 \leq i \leq k}} (m + a)^2$\;
 \Return{$\pgcd(u - v, n)$}
 \end{algorithm}
 
-\subsection{Exemple}
+\subsection{Exemples}
+\subsubsection{Exemple simple}
 
 Soit \[n = 21311 = 101 \times 211\] le nombre à factoriser. On choisit l'entier $m$ proche de la racine carrée de $n$ \[ m = \lfloor n^{\frac{1}{2}} \rceil = 146 .\]
 On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n = 5 + a^2 + 292a \pmod{21311} .\]
@@ -638,6 +641,7 @@ La première ligne du tableau donne la congruence \[ (2.5.11.13)^2 \equiv (146 -
 On calcule donc le pgcd de \[ 2.5.11.13 - (146 - 27).(146 - 1) = -15825 \] et de $21311.$ On trouve le facteur $p = 211$ de $n = 21311$ et son cofacteur $q = 101.$
 Après un test de primalité, on prouve que $p$ et $q$ sont premiers.
 
+\subsubsection{Exemple plus complexe effectué avec notre code}
 \section{Conclusion}
 
 Les algorithmes de factorisation d'entiers ont beaucoup évolué au fil du temps, notamment depuis l'apparition de la cryptologie.
