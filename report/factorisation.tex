@@ -640,14 +640,17 @@ Après un test de primalité, on prouve que $p$ et $q$ sont premiers.
 
 \section{Conclusion}
 
-Les algorithmes de factorisation d'entiers ont beaucoup évolué au fil du temps, notamment depuis l'apparition de la cryptologie. Actuellement, l'algorithme le plus performant pour les très grands entiers (plus de cent chiffres décimaux)
-est le crible algébrique.
+Les algorithmes de factorisation d'entiers ont beaucoup évolué au fil du temps, notamment depuis l'apparition de la cryptologie.
+Actuellement, l'algorithme le plus performant pour les très grands entiers (plus de cent chiffres décimaux) est le crible algébrique, appelé aussi crible général de corps des nombres,
+qui est une amélioration du crible quadratique.
+Sa complexité est en $O(\exp(\sqrt[3]{\frac{64}{9}\log n (\log \log n)^2})).$
 
 Afin de motiver la recherche d'algorithmes de factorisation plus performants, RSA Laboratories a mis en place le 18 mars 1991 le ``RSA Factoring Challenge'', une compétition de factorisation d'entiers RSA.
 Un entier RSA est un entier $n$ de la forme $n = pq$ avec $p$ et $q$ premiers.
 RSA Laboratories a donc publié une liste d'entiers RSA de tailles allant de cent décimaux (trois cent trente bits) à six cent dix-sept (deux mille quarante-huit bits),
-ainsi qu'une récompense financière pour la factorisation réussie de ces entiers. Le plus grand entier RSA a avoir été factorisé (le 12 décembre 2009) faisait deux cent trente-deux décimaux (soit sept cent soixante-huit bits).
-C'est pour cette raison que les clefs RSA sont de taille allant de mille vingt-quatre bits à deux mille quarante-huit, car des clefs de cette taille ne semblent pas près d'être factorisées.
+ainsi qu'une récompense financière pour la factorisation réussie de ces entiers.
+Le plus grand entier RSA a avoir été factorisé (le 12 décembre 2009) faisait deux cent trente-deux décimaux (soit sept cent soixante-huit bits).
+C'est pour cette raison que les clefs RSA sont de taille allant de mille vingt-quatre bits à deux mille quarante-huit bits, car des clefs de cette taille ne semblent pas près d'être factorisées.
 
 Toutefois, le développement d'ordinateurs quantiques pourrait remettre tout ceci en question. En effet, avec de tels ordinateurs, il serait alors possible de factoriser des entiers RSA en temps polynomial,
 rendant alors le chiffrement RSA quasiment inutile.
