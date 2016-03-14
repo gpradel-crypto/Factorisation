@@ -192,19 +192,58 @@ $n$ est dit $(B, C)$-friable s’il est le produit de premiers inférieurs à $B
 \section{Crible de Dixon}
 \subsection{}
 \begin{frame}{Principe}
-Se base sur la recherche de congruences de carrés : \pause
+Se base sur la recherche de congruences de carrés :
 On cherche $a$ et $b$ tels que
 \begin{center}
 $a^2 \equiv b^2 \pmod n$ et $a \not\equiv \pm{b} \pmod n$
 \end{center} \pause
-On a alors $a - b \equiv 0 \pmod n.$
+On a alors $(a - b)(a + b) \equiv 0 \pmod n.$
 Il nous suffit ensuite de calculer $\pgcd(a - b, n)$ pour trouver un facteur de $n.$
 \end{frame}
 
 \begin{frame}{Pseudo-code}
-
+\scalebox{0.8}{
+\begin{algorithm}[H]
+\caption{Factorisation de $n$ par le crible de Dixon}
+\KwIn{Un entier $n$ et une borne $B$}
+\KwOut{Un facteur de $n,$ ou 1 ou $n$}
+\BlankLine
+$P = \{p \text{ premiers } | p < B\}$\;
+$k = \#P$\;
+$L = liste\_relations$\;
+\For{$i \in \{0, 1, ...,  k + 10\}$}{$x \gets Random([\![1,n-1]\!])$\; $y \equiv x^2 \pmod n$\;
+\If{$y \text{ }B \text{-friable }$}{$L[i] \gets  x$}}
+$M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où } L[i]^2 \pmod n = \prod\limits_{p \in P}p^{v_{p,i}}$\;
+Calculer le noyau de M. Soit $e = (e_1, ..., e_{k + 10}) \in \ker(M),$ c'est-à-dire :\\
+$(e_1, ..., e_{k + 10}) \text{ tel que } M(e_1, ..., e_{k + 10})^t \equiv 0 \pmod 2$\;
+$u = \prod\limits_{i = 1}^m L[i]^{e_i}$\;
+$v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
+\Return{$\pgcd(u - v, n)$}
+\end{algorithm}
+}
 \end{frame}
-  
+
+\begin{frame}{Quelques précisions}
+\begin{itemize}
+\item Si $n$ est impair et a $m$ facteurs premiers, $m \leq 2,$ alors la probabilité que l'algorithme renvoie un facteur trivial est égale à $\frac{1}{m^2} \leq \frac{1}{2}.$ \pause
+\item La valeur optimale de $B$ est $\exp(\sqrt{\log(n)}).$
+\item On a alors $T = \exp(\sqrt{2\log(n)\log\log(n)}.$
+\item La complexité dépend de $n$ et non de son plus petit facteur premier.  
+\end{itemize}
+\end{frame}
+
+\section{Crible quadratique}
+\subsection{}
+\begin{frame}{Principe}
+Est une amélioration du crible de Dixon au niveau de la recherche des congruences : \pause
+On choisit un entier $m \approx \lfloor\sqrt{n}\rceil.$ Ainsi, $m^2 - n$ est de l'ordre de $\sqrt{n}.$ \pause
+On remarque que pour tout $a \in \N :$
+\begin{center}
+$(m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n.$
+\end{center} \pause
+On cherche donc des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B$-friable.
+\end{frame}
+
 \section{Conclusion}
 \begin{frame}
   \frametitle{Conclusion}

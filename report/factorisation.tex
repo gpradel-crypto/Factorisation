@@ -533,7 +533,7 @@ Une analyse plus fine montre que $T = \exp(\sqrt{2\log(n)\log\log(n)}).$
 \subsection{Limites de l'algorithme}
 
 Contrairement à l'algorithme $p - 1$ de Pollard, la complexité dépend
-ici de $n$ et plus du plus petit facteur premier de $n.$ Le crible de
+ici de $n$ et plus de son plus petit facteur premier. Le crible de
 Dixon est donc plus efficace pour factoriser des entiers de type $n =
 pq$ avec $p$ et $q$ premiers (comme dans RSA, par exemple) que pour trouver des petits facteurs de
 grands entiers.
@@ -560,13 +560,13 @@ Ensuite on forme des congruences modulo $n$ en observant que pour tout entier $a
 
 On se donne une borne $B$ et l'on cherche des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B-$friable.
 
-{\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friable on forme ce qu'on appelle des relations, qui sont de la forme \[(m^2 - n) + a^2 + 2am = b^r.c^s... \pmod n\] avec $b$, $c$ des premiers et $r$, $s$ des entiers.
+{\`A} partir de la décomposition en facteurs premiers des nombres trouvés $B-$friables, on forme des relations, qui sont de la forme \[(m^2 - n) + a^2 + 2am = b^r.c^s... \pmod n\] avec $b$, $c$ des premiers et $r$, $s$ des entiers.
 
 Grâce à ces relations, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel.
 
 On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
 
-Le choix de $B$ est aussi immportant pour l'optimisation de l'algorithme. On dira seulement la valeur de $B$ qui est \[ B = \exp \left( \frac{1}{\sqrt{2}} \sqrt{\log(n)\log\log(n)} \right) . \]
+Le choix de $B$ est aussi important pour l'optimisation de l'algorithme. On dira seulement la valeur de $B$ qui est \[ B = \exp \left( \frac{1}{\sqrt{2}} \sqrt{\log(n)\log\log(n)} \right) . \]
 
 La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(\exp\left(\sqrt{\log (n) \log \log (n)}\right)).$
 
