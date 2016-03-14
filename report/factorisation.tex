@@ -247,7 +247,7 @@ Il existe une variante de la méthode $p - 1$ de Pollard, appelée \textit{large
 Elle aboutit si $p - 1$ est $(B, C)-$friable.
 
 \begin{definition}
-  Soit $n, B, C$ des nombres entiers. On dit que n est $(B, C)-$friable s'il est le produit de premiers $\leq B$ et d'au plus un premier dans l'intervalle $]B, C]$.
+  Soient $n, B, C$ des nombres entiers. On dit que n est $(B, C)-$friable s'il est le produit de premiers inférieurs à $B$ et d'au plus un premier dans l'intervalle $]B, C]$.
 \end{definition}
 On démarre l'algorithme comme précédemment. On calcule $x_{k + 1} = x^{k + 1} \mod n$ jusqu'à $x_B.$ Ensuite on calcule $y_1 = x_B^{l_1} \mod n$, $y_2 = x_B^{l_2},$ ...; où les $l_i$ sont les premiers dans $]B,C]$ par ordre croissant.
 L'avantage de cette méthode est que pour calculer $y_2$ on n'a pas besoin d'une exponentiation modulaire. En effet \[ y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n.\]
@@ -309,7 +309,7 @@ différence de deux carrés. On avait alors : \[n = a^2 - b^2 = (a - b)(a + b).\
 
 \subsection{Principe de l'algorithme}
 
-On cherche deux entiers $a$ et $b$ tels que $a^2 \equiv b^2 \pmod n$ et $a \nequiv b \pmod n.$ Un facteur de $n$ pourra alors être trouvé en calculant
+On cherche deux entiers $a$ et $b$ tels que $a^2 \equiv b^2 \pmod n$ et $a \nequiv \pm{b} \pmod n.$ Un facteur de $n$ pourra alors être trouvé en calculant
 $\pgcd(a - b, n).$
 
 Pour cela, on choisit une borne $B$ et on note $k$ le nombre de
