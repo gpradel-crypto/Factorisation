@@ -404,6 +404,7 @@ dixon (mpz_t n, signed long int B)
   for (int k = 0; k < nb_primes; k++)
     free (tab[k]);
   free (tab);
+  free (prime_nbs);
   mpz_clear (rand);
   mpz_clear (sq_rand);
   gmp_randclear (state);
@@ -417,7 +418,6 @@ crible_quadratique (mpz_t n, signed long int B)
   mpz_t root, m, a, tmp, tmp2, tmp3, two;
   mpz_init (root);
   mpz_sqrt (root, n);
-  //mpz_add_ui (root, root, 1);
   mpz_init (m);
   mpz_pow_ui (m, root, 2);
   gmp_printf ("m est egal a %Zd\n", root);
@@ -428,7 +428,6 @@ crible_quadratique (mpz_t n, signed long int B)
   mpz_init (tmp3);
   mpz_init (two);
   mpz_set_ui (two, 2);
-  mpz_t *list_tmp = friable (1, two, B);
   unsigned long int convert;
   signed long int *prime_nbs = crible_erat (B);
   int nb_prime = 0;
@@ -479,7 +478,7 @@ crible_quadratique (mpz_t n, signed long int B)
 	mpz_mod (tmp, tmp, n);
 
       //On regarde si tmp est friable
-      list_tmp = friable (1, tmp, B);
+      mpz_t *list_tmp = friable (1, tmp, B);
 
       //Si tmp est friable on rentre les données qu'il faut dans la matrice
       if (mpz_cmp_ui (list_tmp[0], 1) == 0)
@@ -497,11 +496,17 @@ crible_quadratique (mpz_t n, signed long int B)
 	      a_tmp++;
 	      //On imprime les relations
 	      gmp_printf ("%Zd =", a);
-	      list_tmp = friable (0, tmp, B);
+	      mpz_t *list_tmp2 = friable (0, tmp, B);
+	      for (int j = 0; j < nb_prime + 1; j++)
+		mpz_clear (list_tmp2[j]);
+	      free (list_tmp2);
 	    }
 	  ligne = false;
 	}
       mpz_add_ui (a, a, 1);
+      for (int j = 0; j < nb_prime + 1; j++)
+	mpz_clear (list_tmp[j]);
+      free (list_tmp);
     }
 
 
@@ -517,9 +522,6 @@ crible_quadratique (mpz_t n, signed long int B)
       printf ("\n");
     }
   // On libère toute la mémoire utilisée
-  for (int j = 0; j < nb_prime; j++)
-    mpz_clear (list_tmp[j]);
-  free (list_tmp);
   for (int i = 0; i < 301; i++)
     free (matrix[i]);
   free (matrix);
@@ -556,8 +558,8 @@ main (void)
     {
       B_tmp = mpz_get_si (n);
       double log_tmp = log (log (B_tmp));
-      log_tmp *= log(B_tmp);
-      B = ceil (exp ( sqrt (log_tmp)/2 ));
+      log_tmp *= log (B_tmp);
+      B = ceil (exp (sqrt (log_tmp) / 2));
       printf ("B = %ld\n", B);
     }
   else
@@ -571,7 +573,7 @@ main (void)
   int nb_primes = 0;
   signed long int *prime_nbs = crible_erat (B);
   while (prime_nbs[nb_primes] <= B && prime_nbs[nb_primes] != 0)
-      nb_primes++;
+    nb_primes++;
   free (prime_nbs);
 
   //En fonction de l'algorithme demandé, on fait la factorisation
