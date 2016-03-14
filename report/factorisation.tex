@@ -12,7 +12,6 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
-\usepackage{listings}
 \usepackage{verbatim}
 \usepackage{array}
 \usepackage{tabularx}
@@ -88,7 +87,7 @@ La clef privée peut être aussi utilisée pour signer un message. La clef publi
 
 \begin{itemH}
 \item Choisir $p$ et $q,$ deux nombres premiers entiers distincts ;
-\item calculer leur produit $n = pq$
+\item calculer leur produit $n = pq$ ;
 \item calculer $\phi (n) = (p - 1)(q - 1)$ qui est la valeur de l'indicatrice d'Euler en $n$ ;
 \item choisir un entier naturel $e$ premier avec $\phi (n)$ et strictement inférieur à $\phi (n)$ ;
 \item calculer l'entier naturel $d,$ inverse de $e$ modulo $ \phi (n),$ et strictement inférieur à $\phi (n)$ ; $d$ peut se calculer efficacement par l'algorithme d'Euclide étendu.
@@ -108,7 +107,7 @@ Soit le message chiffré $c$ comme ci-dessus. Pour retrouver le message $m$ on f
 
 \subsection{Justification}
 
-La démonstration repose sur le petit théorème de Fermat, à savoir que comme $p$ et $q$ sont deux nombres premiers, si $m$ n'est pas un multiple de $p$ on a la première égalité ci-dessous, et la seconde s'il n'est pas un multiple de $q$ :
+La démonstration repose sur le petit théorème de Fermat, à savoir que comme $p$ et $q$ sont deux nombres premiers, si $m$ n'est pas un multiple de $p,$ on a la première égalité ci-dessous, et la seconde s'il n'est pas un multiple de $q$ :
 \[ m^{p-1} \equiv 1 \pmod p\ ,\ \ m^{q-1} \equiv 1 \pmod q.\]
 En effet
 \[ c^d \equiv (m^e)^d \equiv m^{ed} \pmod n.\]
@@ -116,7 +115,7 @@ Or
 \[ed \equiv 1 \pmod{(p-1)(q-1)}\]
 ce qui signifie que pour un entier $k$
 \[ed = 1 + k(p-1)(q-1),\]
-donc, si $m$ n'est pas multiple de $p$ d'après le petit théorème de Fermat
+donc, si $m$ n'est pas multiple de $p,$ d'après le petit théorème de Fermat
 \[m^{ed} \equiv m^{1+k(p-1)(q-1) }\equiv m\cdot \left(m^{p-1}\right)^{k(q-1)}\equiv m \pmod p\]
 et de même, si $m$ n'est pas multiple de $q$
 \[m^{ed}\equiv m \pmod q.\]
@@ -144,7 +143,7 @@ Un entier strictement positif $n$ est dit $B$-friable ou $B$-lisse si tous ses f
 \end{definition}
 \begin{example}
 $90 = 2 \times 3^2 \times 5$ est $5$-friable car aucun de ses facteurs premiers ne dépasse 5.
-Cette définition inclut les nombres qui ne figurent pas parmi les facteurs premier: par exemple, 12 est $5$-friable.
+Cette définition inclut les nombres qui ne figurent pas parmi les facteurs premiers: par exemple, 12 est $5$-friable.
 \end{example}
 \begin{definition}[Entier ultrafriable]
 Un nombre $n$ est dit $B$-superlisse ou $B$-ultrafriable si toute puissance $p^r$ d'un nombre premier qui divise $n$ vérifie: \[ p^r \leq B .\]
@@ -164,9 +163,9 @@ Si un nombre entier $a$ divise le produit de deux autres nombres entiers $b$ et 
 \subsection{Principe de l'algorithme}
 
 \begin{theoreme}[Petit Théorème de Fermat]
-Soient $p$ un nombre premier et $a$ est un entier non divisible par $p.$ Alors $a^{p-1} - 1$ est un multiple de $p.$ C'est-à-dire : \[a^{p-1} = 1 \pmod p .\]
+Soient $p$ un nombre premier et $a$ est un entier non divisible par $p.$ Alors $a^{p-1} - 1$ est un multiple de $p.$ C'est-à-dire : \[a^{p-1} \equiv 1 \pmod p .\]
 \end{theoreme}
-Par le petit théorème de Fermat, nous savons que \[a^{p-1} = 1 \pmod p \] pour $a$ premier avec $p.$ 
+Par le petit théorème de Fermat, nous savons que \[a^{p-1} \equiv 1 \pmod p \] pour $a$ premier avec $p.$ 
 
 Cela implique que pour tout multiple $M$ de $p-1$ on a: \[ a^M - 1 \equiv 0 \pmod p \text{ car } a^{k(p-1)} - 1 = (a^{p-1} - 1 )\sum\limits_{i=0}^{k-1} a^{i(p-1)} . \]
 
@@ -305,7 +304,7 @@ On trouve que $ \pgcd (y_{20} - 1, n) = 2671.$
 Le crible de Dixon se base sur la recherche de congruences de
 carrés. Son fonctionnement s'inspire de celui de l'algorithme de
 factorisation de Fermat qui consistait à écrire $n$ comme la
-différence de deux carrés. On avait alors : \[n = a^2 - b^2 = (a - b)(a + b).\]
+différence de deux carrés. On avait alors : \[n = a^2 - b^2 = (a - b).(a + b).\]
 
 \subsection{Principe de l'algorithme}
 
@@ -316,7 +315,7 @@ Pour cela, on choisit une borne $B$ et on note $k$ le nombre de
 premiers $p$ inférieurs à $B.$ On appelle $P$ l'ensemble de ces
 premiers (de cardinal $k,$ donc).
 
-On prend ensuite un $x$ aléatoirement dans $[1, n - 1]$ et
+On prend ensuite un $x$ aléatoirement dans $[\![1, n - 1]\!]$ et
 on calcule $y \equiv x^2 \pmod n.$ Si $y$ est $B$-friable, on garde le
 couple $(x, y)$ appelé \textit{relation}. Appelons $R$ l'ensemble des
 relations et $m$ son cardinal. On recommence l'opération jusqu'à
@@ -330,7 +329,7 @@ On a alors : \[\prod\limits_{i=1}^m x_i^{2e_i} = \prod\limits_{i=1}^m \prod\limi
 Or $(e_1, ..., e_m)$ annule $M,$ donc : \[\sum\limits_{i=1}^m v_{p,
   i}e_i = 0 \pmod 2.\]
 
-On a donc une congruence de carrés : \[a^2 = b^2 \pmod n \text{ avec } a = \prod\limits_{i=1}^m x_i^{e_i} \text{ et } b = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}\] qui nous donnera un facteur
+On a donc une congruence de carrés : \[a^2 \equiv b^2 \pmod n \text{ avec } a = \prod\limits_{i=1}^m x_i^{e_i} \text{ et } b = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}\] qui nous donnera un facteur
 de $n$ en calculant $\pgcd(a - b, n).$
 
 \subsection{Exemples}
@@ -445,7 +444,7 @@ facteur non trivial est égale à $1 - \frac{1}{m^2} \geq \frac{1}{2}$
 ($1 - \textit{probabilité que } a \equiv b \pmod {p_1, p_2, ..., p_m} \textit{ ou que } a \equiv -b \pmod {p_1, p_2, ..., p_m}).$
 
 Dans les faits, on teste d'abord si $n$ est une puissance exacte en calculant numériquement les racines de $n$ ($\sqrt{n},$ $\sqrt[3]{n},$ etc), puis s'il est premier avec un algorithme de primalité (Rabin-Miller, par
-exemple), et s'il n'est ni une puissance exacte, ni (vraisemblablement) pas premier, on peut alors le
+exemple), et s'il n'est ni une puissance exacte, ni premier, on peut alors le
 factoriser avec le crible de Dixon.
 
 
@@ -541,7 +540,7 @@ grands entiers.
 
 \section{Crible quadratique}
 
-L'algorithme du crible quadratique est un algorithme de factorisation fondé sur l'arithmétique modulaire, c'est-à-dire l'ensembles de méthodes, dérivées de l'étude du reste obtenu par une division euclidienne, permettant la résolution de problèmes sur les nombres entiers. En pratique c'est l'algorithme le plus rapide, sauf pour les nombres d'au moins cent chiffres décimaux, pour lesquels le crible algébrique est plus performant.
+L'algorithme du crible quadratique est un algorithme de factorisation fondé sur l'arithmétique modulaire, c'est-à-dire l'ensembles de méthodes, dérivées de l'étude du reste obtenu par une division euclidienne, permettant la résolution de problèmes sur les nombres entiers. En pratique, c'est l'algorithme le plus rapide, sauf pour les nombres d'au moins cent chiffres décimaux, pour lesquels le crible algébrique est plus performant.
 Le temps d'exécution du crible quadratique dépend uniquement de la taille de l'entier à factoriser, et non de propriétés particulières de celui-ci.
 
 \subsection{Principe de l'algorithme}
@@ -564,16 +563,17 @@ On se donne une borne $B$ et l'on cherche des petits entiers $a$ tels que $(m^2 
 
 Grâce à ces relations, on porte dans une matrice la parité des valuations et on forme des carrés à partir des lignes annulées par cette matrice. L'ensemble de ces lignes est un espace vectoriel.
 
-On trouve donc une congruence de carrés comme $b^2 = c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
+On trouve donc une congruence de carrés comme $b^2 \equiv c^2 \pmod n.$ Pour trouver un facteur $p$ de $n,$ on calcule $\pgcd(b - c, n).$
 
 Le choix de $B$ est aussi important pour l'optimisation de l'algorithme. On dira seulement la valeur de $B$ qui est \[ B = \exp \left( \frac{1}{\sqrt{2}} \sqrt{\log(n)\log\log(n)} \right) . \]
 
 La durée d'exécution du crible quadratique pour factoriser un entier $n$ est en $O(\exp\left(\sqrt{\log (n) \log \log (n)}\right)).$
 
 \subsection{Pseudo-code}
-Soit P l'ensemble des premiers inférieurs ou égaux à $B.$
+Soit P l'ensemble des premiers inférieurs ou égaux à $B.$ \\
 
-\begin{algorithm}
+\scalebox{0.96}{
+\begin{algorithm}[H]
 \caption{Factorisation de $n$ par le crible quadratique}
 \KwIn{Un entier $n$ et une borne $B$}
 \KwOut{Un facteur de $n$}
@@ -589,12 +589,13 @@ $u = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^k v_{i, p}e_i}$\;
 $v = \prod\limits_{\substack{a | e_i \neq 0 \\ 1 \leq i \leq k}} (m + a)^2$\;
 \Return{$\pgcd(u - v, n)$}
 \end{algorithm}
+}
 
 \subsection{Exemples}
 \subsubsection{Exemple simple}
 
 Soit \[n = 21311 = 101 \times 211\] le nombre à factoriser. On choisit l'entier $m$ proche de la racine carrée de $n$ \[ m = \lfloor n^{\frac{1}{2}} \rceil = 146 .\]
-On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n = 5 + a^2 + 292a \pmod{21311} .\]
+On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n \equiv 5 + a^2 + 292a \pmod{21311} .\]
 On prend comme borne $B = 13$ puis on va donc chercher pour quels $a$ l'entier $5 + a^2 + 292a$ est $B-$friable. Prenons par exemple $a$ compris entre $-60$ et $60$.
 On trouve:
 
@@ -647,7 +648,7 @@ On cherche à factoriser $n = 123456789 = 3^2 \times 3607 \times 3803.$
 
 Soit $ m = \lfloor n^{\frac{1}{2}} \rceil = 11111.$
 
-On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n =  -2468 + a^2 + 22222a \pmod{123456789} .\]
+On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n \equiv  -2468 + a^2 + 22222a \pmod{123456789} .\]
 Voici les relations que l'on obtient:
 
 \begin{center}
@@ -685,7 +686,7 @@ On obtient grâce aux relations la matrice $M$ représentant la parité des valu
 \end{tabular}
   \]
 
-  Nous calculons le noyau de $M$ dont voici la base:
+  Nous calculons le noyau de $M$ dont voici une base:
   \begin{center}
     \begin{tabular}{cccccccccc}
       -128 & -94 & -52 & -8 & -5 & 6 & 57 & 69 & 94 & 116\\
