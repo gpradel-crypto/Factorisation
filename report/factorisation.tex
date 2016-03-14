@@ -642,6 +642,67 @@ On calcule donc le pgcd de \[ 2.5.11.13 - (146 - 27).(146 - 1) = -15825 \] et de
 Après un test de primalité, on prouve que $p$ et $q$ sont premiers.
 
 \subsubsection{Exemple plus complexe effectué avec notre code}
+
+On cherche à factoriser $n = 123456789 = 3^2 \times 3607 \times 3803.$
+
+Soit $ m = \lfloor n^{\frac{1}{2}} \rceil = 11111.$
+
+On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n =  -2468 + a^2 + 22222a \pmod{123456789} .\]
+Voici les relations que l'on obtient:
+
+\begin{center}
+\begin{tabular}{c|c}
+ $a$ & $-2468 + 22222a + a^2$ \\
+\hline
+ $-128$ & $-1.2^2.3^2.5^3.17.37$ \\
+ $-94$ & $-1.2^2.5^4.7^2.17$\\
+ $-52$ & $-1.2^2.7.11^3.31$ \\
+ $-8$ & $-1.2^2.3^2.5.7.11.13$ \\
+ $-5$ & $-1.3^2.11.31.37$\\
+ $6$ & $2^2.5^2.7.11.17$\\
+$57$ & $5.13.17.31.37 $\\
+ $69$ & $7^3.11^2.37$\\
+ $94$ & $2^2.3^2.11^2.13.37$\\
+ $116$ & $2^2.5.7.11.41^2$\\
+\end{tabular}
+\end{center}
+
+On obtient grâce aux relations la matrice $M$ représentant la parité des valuations:
+\[M = 
+  \begin{tabular}{c|cccccccccccccc}
+    & $-1$ &  $2$ & $3$ & $5$ & $7$ & $11$ & $13$ & $17$ & $19$ & $23$ & $29$ & $31$ & $37$ & $41$\\
+    \hline
+    -128 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+    -94 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    -52 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0  \\
+    -8 & 1 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0   \\
+    -5 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0   \\
+    6 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0    \\
+    57 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0   \\
+    69 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0   \\
+    94 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0   \\
+    116 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+\end{tabular}
+  \]
+
+  Nous calculons le noyau de $M$ dont voici la base:
+  \begin{center}
+    \begin{tabular}{cccccccccc}
+      -128 & -94 & -52 & -8 & -5 & 6 & 57 & 69 & 94 & 116\\
+      \hline
+      1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0\\
+      0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1\\
+      0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0\\
+    \end{tabular}
+  \end{center}
+
+  Grâce au dernier vecteur on obtient la congruence:
+  \[ (2.3.7^2.11^3.31.37)^2 \equiv (11111 - 52)^2.(11111 - 5)^2.(11111 + 69)^2.\]
+
+  On calcule le pgcd $d$ de \[ 2.3.7^2.11^3.31.37 - (11111 - 52).(11111 - 5).(11111 + 69)\] et de 123456789.
+
+  
+  On trouve $d = 10821 = 3\times 3607.$ En réitérant le procédé et en faisant quelques tests de primalités, on obtient enfin la factorisation complète de $n.$
 \section{Conclusion}
 
 Les algorithmes de factorisation d'entiers ont beaucoup évolué au fil du temps, notamment depuis l'apparition de la cryptologie.

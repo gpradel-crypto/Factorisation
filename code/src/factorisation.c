@@ -258,11 +258,11 @@ friable (int a, mpz_t n, signed long int B)
       mpz_set_ui (smooth_list[0], 1);
       if (a == 0)
 	{
-	  printf ("%ld-FRIABLE\n", B);
+	  //printf ("%ld-FRIABLE\n", B);
 	  for (int l = 1; l < nb_primes + 1; l++)
 	    if (mpz_cmp_ui (smooth_list[l], 0) != 0)
 	      gmp_printf ("[%d, %Zd] ", prime_nbs[l - 1], smooth_list[l]);
-	  printf("\n");
+	  printf ("\n");
 	}
     }
   //S'il n'est pas B-friable, on fait vraiment naïvement
@@ -382,7 +382,7 @@ dixon (mpz_t n, signed long int B)
 	  for (int j = 0; j < nb_primes; j++)
 	    tab[j][cnt] = mpz_get_ui (smooth_list[j + 1]);
 	  cnt++;
-	  gmp_printf("X_%d = %Zd\n", cnt, rand);
+	  gmp_printf ("X_%d = %Zd\n", cnt, rand);
 	}
       for (int j = 0; j < nb_primes + 1; j++)
 	mpz_clear (smooth_list[j]);
@@ -417,12 +417,12 @@ crible_quadratique (mpz_t n, signed long int B)
   mpz_t root, m, a, tmp, tmp2, tmp3, two;
   mpz_init (root);
   mpz_sqrt (root, n);
-  mpz_add_ui (root, root, 1);
+  //mpz_add_ui (root, root, 1);
   mpz_init (m);
   mpz_pow_ui (m, root, 2);
-  gmp_printf("m est égal à %Zd\n", root);
+  gmp_printf ("m est egal a %Zd\n", root);
   mpz_init (a);
-  mpz_set_si (a, -100);
+  mpz_set_si (a, -150);
   mpz_init (tmp);
   mpz_init (tmp2);
   mpz_init (tmp3);
@@ -434,13 +434,13 @@ crible_quadratique (mpz_t n, signed long int B)
   int nb_prime = 0;
   while (prime_nbs[nb_prime] <= B && prime_nbs[nb_prime] != 0)
     nb_prime++;
-  unsigned long int **matrix = calloc (201, sizeof (unsigned long int *));
+  unsigned long int **matrix = calloc (301, sizeof (unsigned long int *));
   if (matrix == NULL)
     {
       printf ("Dans crible_quadratique : malloc de matrix impossible.\n");
       exit (EXIT_FAILURE);
     }
-  for (int i = 0; i < 201; i++)
+  for (int i = 0; i < 301; i++)
     {
       matrix[i] = calloc (nb_prime, sizeof (unsigned long int));
       if (matrix[i] == NULL)
@@ -451,7 +451,7 @@ crible_quadratique (mpz_t n, signed long int B)
 	}
     }
   int a_tmp = 0;
-  signed long int *list_a = calloc(201, sizeof(signed long int));
+  signed long int *list_a = calloc (301, sizeof (signed long int));
   if (list_a == NULL)
     {
       printf ("Dans crible_quadratique : malloc de list_a impossible.\n");
@@ -461,7 +461,7 @@ crible_quadratique (mpz_t n, signed long int B)
 
   //Début de l'algorithme
   bool ligne = false;
-  for (int i = 0; i < 201; i++)
+  for (int i = 0; i < 301; i++)
     {
       //Calculs initiaux. A la fin, tmp corresponds au calcul de tmp = m^2 - n + a^2 + 2am mod n (voir rapport)
       mpz_pow_ui (tmp2, a, 2);
@@ -496,7 +496,7 @@ crible_quadratique (mpz_t n, signed long int B)
 	      list_a[a_tmp] = i - 100;
 	      a_tmp++;
 	      //On imprime les relations
-	      gmp_printf(" %Zd =", a);
+	      gmp_printf ("%Zd =", a);
 	      list_tmp = friable (0, tmp, B);
 	    }
 	  ligne = false;
@@ -504,15 +504,15 @@ crible_quadratique (mpz_t n, signed long int B)
       mpz_add_ui (a, a, 1);
     }
 
-  
+
   //On imprime seulement les lignes pour lesquels tmp est friable et lorsque au moins une valuation n'est pas pair.
   //Le modèle d'impression est utile pour Sage
   for (int i = 0; i < a_tmp; i++)
     {
       printf ("[");
       for (int j = 0; j < nb_prime - 1; j++)
-	printf ("%lu,", matrix[list_a[i]+100][j]);
-      printf ("%lu", matrix[list_a[i]+100][nb_prime - 1]);
+	printf ("%lu,", matrix[list_a[i] + 100][j]);
+      printf ("%lu", matrix[list_a[i] + 100][nb_prime - 1]);
       printf ("],");
       printf ("\n");
     }
@@ -520,11 +520,11 @@ crible_quadratique (mpz_t n, signed long int B)
   for (int j = 0; j < nb_prime; j++)
     mpz_clear (list_tmp[j]);
   free (list_tmp);
-  for (int i = 0; i < 201; i++)
+  for (int i = 0; i < 301; i++)
     free (matrix[i]);
   free (matrix);
   free (prime_nbs);
-  free(list_a);
+  free (list_a);
   mpz_clear (root);
   mpz_clear (m);
   mpz_clear (a);
@@ -547,28 +547,38 @@ main (void)
   gmp_printf ("Entrez un nombre Ã  factoriser: ", n);
   gmp_scanf ("%Zd", n);
   printf
-    ("Quel algorithme de factorisation voulez vous utilisez?\n[1] Factorisation naïve\n[2] P - 1 de Pollard\n[3] Crible de Dixon\n[4] Crible quadratique\nRentrez le nombre correspondant Ã  l'algorithme choisi.\n");
+    ("Quel algorithme de factorisation voulez vous utilisez?\n[1] Factorisation naive\n[2] P - 1 de Pollard\n[3] Crible de Dixon\n[4] Crible quadratique\nRentrez le nombre correspondant Ã  l'algorithme choisi.\n");
   gmp_scanf ("%Zd", tmp);
   algo = mpz_get_si (tmp);
 
-  //Calcul de la borne B pour qu'elle soit optimale
-  B_tmp = mpz_get_si (n);
-  B_tmp = abs (B_tmp);
-  B = ceil (exp (sqrt (log (B_tmp))));
-  printf ("B = %ld\n", B);
-
+  //Calcul de la borne B pour qu'elle soit optimale (deux méthodes différentes)
+  if (algo == 4)
+    {
+      B_tmp = mpz_get_si (n);
+      double log_tmp = log (log (B_tmp));
+      log_tmp *= log(B_tmp);
+      B = ceil (exp ( sqrt (log_tmp)/2 ));
+      printf ("B = %ld\n", B);
+    }
+  else
+    {
+      B_tmp = mpz_get_si (n);
+      B_tmp = abs (B_tmp);
+      B = ceil (exp (sqrt (log (B_tmp))));
+      printf ("B = %ld\n", B);
+    }
   //Calcule du nombres de premiers avant B
   int nb_primes = 0;
   signed long int *prime_nbs = crible_erat (B);
   while (prime_nbs[nb_primes] <= B && prime_nbs[nb_primes] != 0)
-    nb_primes++;
+      nb_primes++;
   free (prime_nbs);
 
   //En fonction de l'algorithme demandé, on fait la factorisation
   switch (algo)
     {
     case 1:
-      printf ("Par la factorisation naïve, nous obtenons:\n");
+      printf ("Par la factorisation naive, nous obtenons:\n");
       mpz_t *list = friable (0, n, B);
       for (int k = 0; k < nb_primes + 1; k++)
 	mpz_clear (list[k]);
@@ -592,7 +602,7 @@ main (void)
 
     default:
       printf
-	("Les algorithmes sont numérotés de 1 à 4. Choisissez l'un de ces nombres s'il vous plaît.\n");
+	("Les algorithmes sont numerotes de 1 a 4. Choisissez l'un de ces nombres s'il vous plait.\n");
       exit (EXIT_FAILURE);
       break;
     }
