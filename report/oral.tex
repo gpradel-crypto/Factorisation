@@ -20,6 +20,7 @@
 \newcommand{\nam}[1]{\texttt{\color{blue}#1}}
 \newcommand{\com}[1]{\texttt{\color{red}#1}}
 \newcommand{\var}[1]{\textit{\color{green!50!black}#1}}
+\newtheorem{theoreme}{Th{\'e}or{\`e}me}
 
 \title[FdE]{Factorisation des entiers}
 \author[GV]{\textsc{Gaëtan Pradel \& Vincent Dalsheimer}}
@@ -39,15 +40,14 @@
 \section{Introduction}
 \begin{frame}
   \frametitle{Introduction}
-\begin{itemize}
-\item Un ordinateur est déterministe : étant donné des paramètres d'entrée, il produira toujours le même résultat. \pause
-\item Un générateur pseudo-aléatoire est un algorithme qui permet de générer une suite de nombres qui semble aléatoire à partir d'une suite plus courte. Aucune machine ne peut distinguer la suite produite d'une véritable suite aléatoire. \pause
-\item On distingue deux catégorie d'exigences : 
-\begin{itemize}
-\item contexte de simulation simple : éviter les caractères moutonniers avec une loi de probabilité bien distribuée;
-\item contexte cryptographique : non prévisible pour faire face à un adversaire;
-\end{itemize}
-\end{itemize}
+Certains algorithmes de chiffrement reposent sur une clef privée qui est la factorisation de la clef publique $n$ (ex : RSA). \pause
+
+\begin{theoreme}[Théorème fondamental de l'arithmétique]
+Tout entier strictement positif peut être écrit comme un produit de nombres premiers d’une
+unique façon, à l’ordre près des facteurs. \pause
+\end{theoreme}
+
+Plus les algorithmes sont performants, plus les clefs doivent être grandes.
 \end{frame}
 
 \section*{Sommaire}
@@ -56,29 +56,18 @@
   \tableofcontents
 \end{frame}
 
-\section{Methode naïve de génération d'aléa}
-\subsection{Générateur Congruentiel Linéaire}
+\section{Le chiffrement RSA}
+\subsection{Création des clefs}
 \begin{frame}
-  \frametitle{Générateur Congruentiel Linéaire}
-\begin{definition}
-La suite $(X_{n})$ est définie de la façon suivante:
-\begin{center}
-$X_{n+1}=(a\times X_{n} + b) \mod{m} $ 
-\end{center}
-\end{definition}\pause
-  
-\begin{example}
-Soit $a=238$, $b=12$,  $m=1009$ et $X_0=456$  : \\
+  \frametitle{Création des clefs}
 \begin{itemize}
-\item $X_1= a \times X_0 + b = 238 \times 456 + 12 = 577$
-\item $X_2= a \times X_1 + b = 238\times 577 + 12$ = $114$
-\item $X_3= 238 \times 114 + 12$ = $910$
+\item Chiffrement asymétrique $\to$ paire de clefs :\pause
+\begin{itemize}
+\item Clef publique : $n = pq$ \pause
+\item Clef privée : peut être trouvée à partir de $p$ et $q$ \pause
 \end{itemize}
-Nous obtenons la suite suivante :
-\begin{center}
-(577,114,910,666,107,253,...)
-\end{center}
-\end{example}
+\item Factoriser $n$ revient à casser RSA.
+\end{itemize}
 \end{frame}
 
 \subsection{Attaque sur les générateurs}

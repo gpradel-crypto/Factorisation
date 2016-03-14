@@ -47,7 +47,7 @@ crible_erat (signed long int n)
 }
 
 
-//Calcul un facteur (pas forcément premier) de n 
+//Calcule un facteur (pas forcément premier) de n 
 void
 step_pollard (mpz_t n, mpz_t factor, signed long int B)
 {
@@ -102,7 +102,7 @@ step_pollard (mpz_t n, mpz_t factor, signed long int B)
 	}
     }
 
-  //Aucun facteur trouvé. SÃ»rement premier ou Ã©chec de l'algorithme. On renvoie le mÃªme nombre.
+  //Aucun facteur trouvé. Sûrement premier ou échec de l'algorithme. On renvoie le même nombre.
   if (mpz_cmp_ui (factor, 0) == 0)
     mpz_set (factor, n);
 
@@ -211,7 +211,7 @@ pollard (mpz_t n, signed long int B)
 }
 
 // Si a = 0, imprime les facteurs premiers de n, imprime et renvoie leurs multiplicités (factorisation naïve)
-// Si a = 1, renvoie leurs multiplicités
+// Si a = 1, renvoie les multiplicités des facteurs de n inférieurs à B
 mpz_t *
 friable (int a, mpz_t n, signed long int B)
 {
@@ -258,7 +258,7 @@ friable (int a, mpz_t n, signed long int B)
       mpz_set_ui (smooth_list[0], 1);
       if (a == 0)
 	{
-	  //printf ("%ld-FRIABLE\n", B);
+	  printf ("%ld-FRIABLE\n", B);
 	  for (int l = 1; l < nb_primes + 1; l++)
 	    if (mpz_cmp_ui (smooth_list[l], 0) != 0)
 	      gmp_printf ("[%d, %Zd] ", prime_nbs[l - 1], smooth_list[l]);
@@ -327,7 +327,7 @@ friable (int a, mpz_t n, signed long int B)
 }
 
 
-// Applique le crible de Dixon à n (renvoie seulement la matrice, faire avec sage ensuite)
+// Applique le crible de Dixon à n (imprime seulement la matrice et les relations, faire avec Sage ou PARI/GP ensuite)
 void
 dixon (mpz_t n, signed long int B)
 {
@@ -382,7 +382,7 @@ dixon (mpz_t n, signed long int B)
 	  for (int j = 0; j < nb_primes; j++)
 	    tab[j][cnt] = mpz_get_ui (smooth_list[j + 1]);
 	  cnt++;
-	  //gmp_printf("Y = %Zd\n", rand);
+	  gmp_printf("X_%d = %Zd\n", cnt, rand);
 	}
       for (int j = 0; j < nb_primes + 1; j++)
 	mpz_clear (smooth_list[j]);
@@ -409,7 +409,7 @@ dixon (mpz_t n, signed long int B)
   gmp_randclear (state);
 }
 
-//Crible quadratique appliqué à n (renvoie seulement la matrice, faire avec Sage ensuite)
+//Crible quadratique appliqué à n (imprime seulement la matrice, faire avec Sage ou PARI/GP ensuite)
 void
 crible_quadratique (mpz_t n, signed long int B)
 {
@@ -551,21 +551,17 @@ main (void)
   gmp_scanf ("%Zd", tmp);
   algo = mpz_get_si (tmp);
 
-  //Calcule de la borne B pour qu'elle soit optimale
+  //Calcul de la borne B pour qu'elle soit optimale
   B_tmp = mpz_get_si (n);
   B_tmp = abs (B_tmp);
   B = ceil (exp (sqrt (log (B_tmp))));
-  printf ("B est Ã©gale Ã  %ld\n", B);
+  printf ("B = %ld\n", B);
 
   //Calcule du nombres de premiers avant B
   int nb_primes = 0;
   signed long int *prime_nbs = crible_erat (B);
   while (prime_nbs[nb_primes] <= B && prime_nbs[nb_primes] != 0)
-    {
-    printf("%ld ", prime_nbs[nb_primes]);
     nb_primes++;
-    }
-  printf("\n");
   free (prime_nbs);
 
   //En fonction de l'algorithme demandé, on fait la factorisation
@@ -596,11 +592,10 @@ main (void)
 
     default:
       printf
-	("Les algorithmes sont numérotés de 1 à 4. Choisissez entre ces nombres là s'il vous plaît.\n");
+	("Les algorithmes sont numérotés de 1 à 4. Choisissez l'un de ces nombres s'il vous plaît.\n");
       exit (EXIT_FAILURE);
       break;
     }
-
 
   mpz_clear (n);
   mpz_clear (tmp);
