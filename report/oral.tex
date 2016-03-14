@@ -1,0 +1,321 @@
+ \documentclass[utf8,10pt,french]{beamer}
+\usepackage[french]{babel}
+\usepackage{listings}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%\usepackage{listings}
+\usepackage{verbatim}
+%\input{defs.tex}
+
+
+\usetheme{Singapore}
+%\usecolortheme{wolverine}
+%\usetheme{Copenhagen}
+%\usetheme{Hannover}
+
+\newcommand{\nam}[1]{\texttt{\color{blue}#1}}
+\newcommand{\com}[1]{\texttt{\color{red}#1}}
+\newcommand{\var}[1]{\textit{\color{green!50!black}#1}}
+
+\title[FdE]{Factorisation des entiers}
+\author[GV]{\textsc{Gaëtan Pradel \& Vincent Dalsheimer}}
+\institute{Université Bordeaux 1}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\DeclareMathOperator{\pgcd}{pgcd}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+\begin{frame}
+  \frametitle{Introduction}
+\begin{itemize}
+\item Un ordinateur est déterministe : étant donné des paramètres d'entrée, il produira toujours le même résultat. \pause
+\item Un générateur pseudo-aléatoire est un algorithme qui permet de générer une suite de nombres qui semble aléatoire à partir d'une suite plus courte. Aucune machine ne peut distinguer la suite produite d'une véritable suite aléatoire. \pause
+\item On distingue deux catégorie d'exigences : 
+\begin{itemize}
+\item contexte de simulation simple : éviter les caractères moutonniers avec une loi de probabilité bien distribuée;
+\item contexte cryptographique : non prévisible pour faire face à un adversaire;
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section*{Sommaire}
+\begin{frame}
+  \frametitle{Sommaire}
+  \tableofcontents
+\end{frame}
+
+\section{Methode naïve de génération d'aléa}
+\subsection{Générateur Congruentiel Linéaire}
+\begin{frame}
+  \frametitle{Générateur Congruentiel Linéaire}
+\begin{definition}
+La suite $(X_{n})$ est définie de la façon suivante:
+\begin{center}
+$X_{n+1}=(a\times X_{n} + b) \mod{m} $ 
+\end{center}
+\end{definition}\pause
+  
+\begin{example}
+Soit $a=238$, $b=12$,  $m=1009$ et $X_0=456$  : \\
+\begin{itemize}
+\item $X_1= a \times X_0 + b = 238 \times 456 + 12 = 577$
+\item $X_2= a \times X_1 + b = 238\times 577 + 12$ = $114$
+\item $X_3= 238 \times 114 + 12$ = $910$
+\end{itemize}
+Nous obtenons la suite suivante :
+\begin{center}
+(577,114,910,666,107,253,...)
+\end{center}
+\end{example}
+\end{frame}
+
+\subsection{Attaque sur les générateurs}
+\begin{frame}
+  \frametitle{Attaque sur les générateurs}
+ En suppposant que \textit{$m$ soit connus} :
+$$\begin{cases}
+a=(x_{n}-x_{n+1})^{-1}\times(x_{n+1}-x_{n+2}) \mod{m}  \\
+b=(x_{n}-x_{n+1})^{-1}\times(-x_{n+1}^2 + x_{n} \times x_{n+2}) \mod{m}
+\end{cases}$$ \pause
+Maintenant si \textit{m inconnue} : \\
+On pose $\delta_{n}=(x_{n+2}-x_{n+1})(x_{n}-x_{n-1})-(x_{n+1}-x_{n})^2$.
+$\delta_n$ est un multiple de $m$.\\ $m$ sera alors égale au $\pgcd$ des $\delta_{n},\delta_{n+1},\delta_{n+2},...$.\pause
+
+\begin{example}
+Soit la suite : 577,114,910,666,107,253,...
+\begin{itemize}
+\item $\delta_{n} = (666-910) \times (114-577) - (910-114)^2 = -520644$
+\item $\delta_{n+1} = (107-666) \times (910-114) - (666-910)^2 = -504500$
+\item $\delta_{n+2} = (253-107) \times (666-910) - (107-666)^2 = -348105$
+\end{itemize}
+Alors $\pgcd(\delta_n,\delta_{n+1})=4036$, et $\pgcd(4036,\delta_{n+2})=1009$
+\end{example}
+\end{frame}
+
+\section{Notions élémentaires}
+\subsection{Langage}
+\begin{frame}{Langage}
+Un langage est un ensemble de mots sur un alphabet fini.\\
+Un alphabet est un ensemble de symboles et un mots est une suite finie de ces symboles.\\
+Un langage ne modélise pas un calcul mais un problème. En effet, si l'on introduit un langage comme un sous ensemble de $\{0,1\}^*$, un problème associé à celui-ci sera de dire si un mot appartient à ce langage ou non.\\
+Ceci est un \var{problème décisionnel}.
+\end{frame}
+
+\subsection{Deux classes de problèmes}
+
+\begin{frame}{Deux classes de problèmes}
+En informatique, il existe deux grandes classes de problèmes :
+\begin{itemize}
+\item les problèmes décisionnels,
+\item les problèmes fonctionnels.
+\end{itemize}
+Les problèmes fonctionnels consistent à calculer l'image d'un mot par une application de $\{0,1\}^*$ dans $\{0,1\}^*$.\\
+Pour résoudre les problèmes décisionnels, nous introduisons la notion d'\nam{automate}.
+\end{frame}
+
+\subsection{Automates}
+\begin{frame}{Automates}
+Un automate est un système qui permet de résoudre des problèmes décisionnels.\\
+\begin{definition} 
+Un automate fini déterministe $\mathcal{A}$  sur un alphabet A est un quadruplet $\mathcal{A}=(Q,F,I,T)$, où:
+\begin{itemize}
+	\item $Q$ est un ensemble fini d'états,
+	\item $F \subset Q \times A \times Q$ est la \var{règle de transition},
+	\item $I \in Q$ est l'\var{état initial},
+	\item et $T \subset Q$ est un ensemble d'\var{états finaux}, terminaux ou acceptants.
+\end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}{Automates}
+L'automate se place dans l'état initial, passe d'un état à un autre, en lisant les mots lettre par lettre, selon la règle de transition. Lorsque le mot est lu, celui-ci est accepté dans l'automate seulement si le dernier état dans lequel il se trouve est un état final. \\
+\begin{center}
+\end{center}
+Par exemple, le mot $bbbabbbaaaabaabb$ est accepté par cet automate, tandis que $abababbab$ ne l'est pas.\\
+Ces automates présentent néanmoins une faille: en effet, \com{FAUT QUE JE METTE L'EXEMPLE DU PROF AVEC LE FICHIER AUDIO}. Pour faire face à ce problème, Nous avons ce qu'on appelle les machines de Turing, qui sont des automates sous la forme d'une bande infinie à droite et qui possède de la mémoire. Grâce à elles, nous avons les \var{algorithmes}. 
+\end{frame}
+
+\subsection{Complexité}
+\begin{frame}{Complexité}
+Les algorithmes sont des procédures automatiques qui résolvent des problèmes. La \var{complexité} est une caractérisation de la qualité d'un algorithme : c'est l'ordre de grandeur du nombre d'opérations binaires effectuées par la machine de Turing en fontion de la taille des entrées.\\
+Voici quelques complexités : 
+\begin{itemize}
+\item Complexité linéaire: \com{$O(n)$},
+\item Complexité quadratique: \com{$O(n^2)$},
+\item Complexité polynomiale: \com{$O(n^k)$},
+\item Complexité sous-exponentielle si $0 \leq k \leq 1$ et exponentielle si $k \ge 1$: \com{$O(e^{n^k})$}. 
+\end{itemize}
+On considère qu'un algorithme est efficace lorsqu'il opère avec une complexité au plus polynomiale.
+\end{frame}
+
+\begin{frame}{Complexité}
+Voici un exemple de calcul de complexité : le produit matriciel de deux matrices carrés de taille $n$.
+\begin{itemize}
+\item Il y a $n \times n = n^2$ coefficients à calculer.\pause
+\item Pour chaque coefficient, il y a $n$ produits et $n-1$ sommes à faire.\pause
+\item Il y a donc $n^2 \times (n + n - 1) = 2n^3 - 1$ opérations à effectuer.\pause
+\item On dit donc que la complexité est en $O(n^3)$.
+\end{itemize}
+On considère donc le calcul matriciel efficace.
+\end{frame}
+
+\section{Existence de générateurs pseudo-aléatoires}
+\subsection{Fonctions à sens unique}
+\begin{frame}
+ \frametitle{Fonctions à sens unique}
+\begin{definition}
+Une fonction f: $\{0,1\}^* \longmapsto \{0,1\}^*$ est appelée à sens-unique si les conditions suivantes sont vérifiées:
+\begin{itemize}
+\item Facile à calculer: il existe un algorithme polynomial A tel que $A(x) = f(x)$ pour tout $x$ appartenant à $\{0,1\}^*$.
+\item Difficile à inverser : il n'existe pas d'algorithme efficace qui calcule la fonction réciproque de $f$.
+\end{itemize}
+\end{definition} \pause
+\begin{example}
+Un candidat est celui de la factorisation d'un entier. Soient deux nombres premiers $p$ et $q$. Calculer $x=pq$ est facile même si 
+$p$ et $q$ sont très grands. Par contre, les meilleurs algorithmes prouvés aujourd'hui pour retrouver $p$ et $q$ à partir de $x$ a un temps de calcul qui cro{\^i}t en $O(e^{\sqrt{b}})$ ou $O(exp(b^{1/2 + o(1)}))$ où $b$ est le nombre de bits de $x$.
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+Soit $f: \{0,1\}^* \longmapsto \{0,1\}^*$ une fonction à sens unique. Une fonction $b: \{0,1\}^* \longmapsto \{0,1\}$ est un bit difficile pour $f$ si:
+\begin{itemize}
+\item $b(x)$ est calculable en un temps polynomial,
+\item Il n'existe pas d'algorithme probabiliste polynomial efficace $A'$ qui prédit $b(x)$ étant donné $f(x)$. On ne peut pas retrouver d'informations sur un antécédant.
+\end{itemize}
+\end{definition} 
+\end{frame}
+
+\begin{frame}
+\begin{example}
+Prenons comme fonction à sens unique : $f:x \mapsto x^2 \mod{N}$, avec $N=pq$ où $p$ et $q$ sont des premiers distincts plus grands que $2$. Dans ce cas, un bit difficile peut être le bit de parité de $x$. \pause
+ Le théorème chinois nous dit que l'application qui à $x$ associe le couple ($x \pmod{p}$, $x \pmod{q}$) est un isomorphisme d'anneaux: $$ \Z /N \Z \simeq \Z/p \Z \times \Z /q \Z$$ 
+Si on connaît $f(x)$, on peut retrouver $x \pmod{p}$ et $x \pmod{q}$. Ce qui induit 4 systèmes possibles pour trouver une solution modulo $N$ :
+$\begin{cases}
+x=x_p \mod{p}\\
+x=x_q \mod{q} 
+\end{cases}$ \pause
+$\begin{cases}
+x=-x_p \mod{p}\\
+x=x_q \mod{q}
+\end{cases}$ \pause
+$\begin{cases}
+x=x_p \mod{p}\\
+x=-x_q \mod{q}
+\end{cases}$ \pause
+$\begin{cases}
+x=-x_p \mod{p}\\
+x=-x_q \mod{q}
+\end{cases}$ \pause
+ donc 4 solutions distinctes modulo $N$ : 
+\begin{center}
+$x$, $-x$, $y$, $-y$
+\end{center}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+Deux de ces solutions sont paires et les deux autres sont impaires :
+Comme on raisonne modulo $N$, $-x=N-x$. Par construction, $N$ est impair.
+\begin{itemize}
+\item Si $X$ est impair, alors $N-X$ est de la forme $2k+1-2k'-1=2(k-k')$. Ainsi, $N-X$ est clairement pair. \pause
+\item Si $X$ est pair, alors $N-X$ est de la forme $2k+1 - 2k'=2(k-k')+1$. Ainsi, $N-X$ est clairement impair. \pause
+\end{itemize}
+On en conclut que $x^2$ peut avoir été obtenu avec un $x$ pair mais aussi avec un $x$ impair. Ainsi, connaître $x^2$ ne nous informe pas sur la parité de $x$.
+\end{example}
+\end{frame}
+
+\subsection{Construction d'un générateur pseudo-aléatoire}
+
+\begin{frame}
+  \frametitle{Construction d'un générateur pseudo-aléatoire}
+\begin{definition}
+Soit $b$ un bit difficile d'une fonction bijective $f$. Alors, $G(s) = f(s) \cdot b(s)$ est un générateur pseudo-aléatoire.
+\end{definition} \pause
+\begin{example}
+Avec l'exemple ci-dessus : $f:x \mapsto x^2 \mod{N}$ et $b(x)$ le bit de parité de $x$, on obtient après une itération : $G(x)=x^2 \cdot b(x)$. On a vu que $x^2$ possède quatres antécédants dont deux pairs et deux impairs. Ainsi, la connaissance de $x^2$ ne nous dit rien sur $b(x)$, on ne peut donc pas anticiper le prochain bit qui sera ajouté à la prochaine itération. 
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+Voici ce que nous donne ce générateur après trois itérations :
+ \begin{align}
+1^{\mbox{ère}} \mbox{itération}: &G(s)=(s^2 \mod{N}) . b(s)\\
+2^{\mbox{ème}} \mbox{itération}: & G(G(s))= (s^4 \mod{N}) . b(s^2) . b(s) \\
+3^{\mbox{ème}} \mbox{itération}: & G(G(G(s)))=(s^8 \mod{N}). b(s^4) . b(s^2) . b(s)\\
+...
+\end{align}
+\end{example}
+\end{frame}
+
+\subsection{Le générateur de Blum Blum Shub}
+
+\begin{frame}
+\frametitle{Le générateur de Blum Blum Shub}
+\begin{definition}
+On appelle premier de Blum, tout nombre premier congru à $3 \pmod{4}$.
+\end{definition} \pause
+\begin{definition}
+On appelle entier de Blum, tout nombre $N=pq$ tel que $p$ et $q$ soient deux premiers de Blum.
+\end{definition} \pause
+\begin{example}
+$21=3 \times 7$. En effet, $7=3 \pmod{4}$ ainsi $3$ et $7$ sont deux premiers de Blum et leur produit $21$ forme un entier de Blum.
+\end{example} 
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+Soit $N$ un entier de Blum ayant $k$ bits. On définit deux suites à partir d'un germe $X_{0}$: la suite des uniques $X_{i}=X_{i-2}^{2} \pmod{N}$ compris entre $0$ et $N-1$, et enfin celle des uniques $b_{i}=X_{i} \pmod{2}$. La suite des $b_{i}$ correspond à la suite des éléments engendrés par le générateur BBS (de Blum Blum Shub).
+\end{definition} \pause
+\begin{example}
+Prenons $N=21$ et $X_0=3$ donc $b_0=1$, alors 
+\begin{itemize}
+\item $X_1=3^2=9 \mod{21} \mbox{ et } b_1=1 $\\
+\item $X_2=9^2=81=18 \mod{21} \mbox{ et } b_2=0 $\\
+\item $X_3=18^2=324=9 \mod{21} \mbox{ et } b_3=1$
+\end{itemize}
+Ainsi, on obtient la suite suivante : $101$.
+\end{example}
+\end{frame}
+
+\begin{frame}
+Nous avons vu que la suite obtenu avec la fonction à sens unique $f:x \mapsto x^2 \mod{N}$ et $b(x)$ le bit de parité de $x$ après trois itérations ressemble à ceci :
+ \begin{align}
+1^{\mbox{ère}} \mbox{itération}: &G(x)=(x^2 \mod{N}) . b(x)\\
+2^{\mbox{ème}} \mbox{itération}: & G(G(x))= (x^4 \mod{N}) . b(x^2) . b(x) \\
+3^{\mbox{ème}} \mbox{itération}: & G(G(G(x)))=(x^8 \mod{N}). b(x^4) . b(x^2) . b(x)
+\end{align} \pause
+Remarquons que la suite engendrée par le générateur de Blum Blum Shub correspond aux suites que nous venons d'obtenir à la différence près qu'elle est inversée et qu'elle ne garde pas $x^8 \mod{N}$. Après trois itérations, la suite générée par BBS ressemble à ceci : 
+\begin{center}
+$b(x).b(x^2).b(x^4)$
+\end{center} \pause
+Le générateur BBS est donc cryptographiquement sûr mais bien plus lent à calculer que le générateur cronguentiel linéaire.
+\end{frame}
+
+
+
+
+\section{Conclusion}
+\begin{frame}
+  \frametitle{Conclusion}
+Nous avons deux façon de produire une suite de nombres aléatoire :\pause
+\begin{itemize}
+\item Générateur congruentiel linéaire : rapide à l'implémentation mais facile à attaquer.\pause
+\item Blum Blum Shub : cryptographiquement sûr mais bien plus lent que le GCL.
+\end{itemize}
+\end{frame}
+\end{document}
