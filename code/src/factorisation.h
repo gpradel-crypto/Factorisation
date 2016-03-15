@@ -2,7 +2,6 @@
 #define FACTORISATION_H
 
 #include <gmp.h>
-#include <stdbool.h>
 
 signed long int* crible_erat(signed long int n);
 mpz_t* factorisation(mpz_t n);
