@@ -95,7 +95,8 @@ Plus les algorithmes de factorisation sont performants, plus les clefs doivent �
 \begin{itemize}    
 \item $n = 15$ 
 \item $15 \not\equiv 0 \pmod 2$
-\item $15 \equiv 0 \pmod 3$ 
+\item $15 \equiv 0 \pmod 3$
+\item $5 \not\equiv 0 \pmod 3$
 \item $5 \not\equiv 0 \pmod 4$ 
 \item $5 \equiv 0 \pmod 5$
 \item $n = 3 \times 5$
@@ -107,13 +108,12 @@ Plus les algorithmes de factorisation sont performants, plus les clefs doivent �
 \begin{example}[Méthode améliorée avec le crible d'{\'E}ratosthène]
 \begin{itemize}
 \item $n = 28$    
-\item Premiers inférieurs à $\lfloor\sqrt(n)\rfloor : 2, 3, 5$
+\item Premiers inférieurs à $\lfloor\sqrt{n}\rfloor : 2, 3, 5$
 \item $28 \equiv 0 \pmod 2$
+\item Premiers inférieurs à $\lfloor\sqrt{14}\rfloor : 2, 3$
 \item $14 \equiv 0 \pmod 2$
+\item Premiers inférieurs à $\lfloor\sqrt{7}\rfloor : 2$
 \item $7 \not\equiv 0 \pmod 2$
-\item $7 \not\equiv 0 \pmod 3$
-\item $7 \not\equiv 0 \pmod 5$
-\item $7 \equiv 0 \pmod 7$
 \item $n = 2^2 \times 7$
 \end{itemize}
 \end{example}
@@ -165,9 +165,8 @@ Donc $p | a^M - 1,$ et $p | \pgcd(a^M - 1, n).$
 $x \gets Random([\![1,n-1]\!])$\;
 $f = 1$\;
 $k = 2$\;
-$x \gets x^k$\;
 $lim$\;
-\Repeat{$p \neq 1$ // $k == lim$}{$x \gets x^{k!} \pmod n$\;$f = pgcd(x - 1, n)$\;$k = k + 1$\;}
+\Repeat{$f \neq 1$ // $k == lim$}{$x \gets x^k \pmod n$\;$f = pgcd(x - 1, n)$\;$k = k + 1$\;}
 \Return{$f$}
 \end{algorithm}
 \end{frame}
@@ -182,7 +181,7 @@ $n$ est dit $(B, C)$-friable s’il est le produit de premiers inférieurs à $B
 \begin{itemize}
 \item Large prime variation \pause
 \begin{itemize}
-\item On calcule $x_{k + 1} = x^{k+1} \pmod n$ jusqu'à $x_B.$ \pause
+\item On calcule $x_{k + 1} = x_k^{k+1} \pmod n$ jusqu'à $x_B.$ \pause
 \item On calcule ensuite $y_1 = x_B^{l_1} \pmod n, y_2 = x_B^{l_2} \pmod n, ...$ \pause
 \item On a donc  $y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n$
 \item Puis, $y_{k + 1} \equiv  y_kx_B^{l_{k+1} - l_k} \pmod n$
@@ -215,7 +214,7 @@ $L = liste\_relations$\;
 \For{$i \in \{0, 1, ...,  k + 10\}$}{$x \gets Random([\![1,n-1]\!])$\; $y \equiv x^2 \pmod n$\;
 \If{$y \text{ }B \text{-friable }$}{$L[i] \gets  x$}}
 $M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où } L[i]^2 \pmod n = \prod\limits_{p \in P}p^{v_{p,i}}$\;
-Calculer le noyau de M. Soit $e = (e_1, ..., e_{k + 10}) \in \ker(M),$ c'est-à-dire :\\
+Calculer le noyau de $M$. Soit $e = (e_1, ..., e_{k + 10}) \in \ker(M),$ c'est-à-dire :\\
 $(e_1, ..., e_{k + 10}) \text{ tel que } M(e_1, ..., e_{k + 10})^t \equiv 0 \pmod 2$\;
 $u = \prod\limits_{i = 1}^m L[i]^{e_i}$\;
 $v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
@@ -226,8 +225,8 @@ $v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
 
 \begin{frame}{Crible de Dixon \\ Quelques précisions}
 \begin{itemize}
-\item Si $n$ est impair et a $m$ facteurs premiers, $m \leq 2,$ alors la probabilité que l'algorithme renvoie un facteur trivial est égale à $\frac{1}{m^2} \leq \frac{1}{2}.$ \pause
-\item La valeur optimale de $B$ est $\exp(\sqrt{\log(n)}).$ \pause
+\item Si $n$ est impair et a $m$ facteurs premiers, $m \geq 2,$ alors la probabilité que l'algorithme renvoie un facteur trivial est égale à $\frac{1}{2^{m-1}} \leq \frac{1}{2}.$ \pause
+\item La valeur optimale de $B$ est $\exp(\sqrt{\log(n) \log \log(n)}).$ \pause
 \item On a alors une complexité en $O(\exp\left(\sqrt{2\log(n)\log\log(n)}\right)).$ \pause
 \item La complexité dépend de $n$ et non de son plus petit facteur premier.  
 \end{itemize}
@@ -243,28 +242,67 @@ On remarque que pour tout $a \in \N :$
 \begin{center}
 $(m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n.$
 \end{center} \pause
-On cherche donc des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B$-friable.
+On cherche donc des petits entiers $a$ tels que \[(m^2 - n) + a^2 + 2am \pmod n\] soit $B$-friable.
 \end{frame}
 
-\begin{frame}{Crible quadratique \\ Pseudo-code}
-\scalebox{0.7}{
-\begin{algorithm}[H]
-\caption{Factorisation de $n$ par le crible quadratique}
-\KwIn{Un entier $n$ et une borne $B$}
-\KwOut{Un facteur de $n$}
-\BlankLine
-$m = \lfloor n^{\frac{1}{2}} \rceil$\;
-$k = \#P$\;
-$L = liste\_relations$\;
-\For{$a \in \{-60,..., 60\}$}{$y = (m^2 - n) + a^2 + 2am \pmod n$\;
-\If{$y \text{ }B \text{-friable }$}{$L[i] \gets  y$}}
-$M = (v_{i, p} \pmod 2)_{i, p \in P} \text{ où } L[i] = \prod\limits_{p \in P}p^{v_{i,p}}$\;
-$(e_1, ..., e_k) \text{ tel que } (e_1, ..., e_k)M = 0$\;
-$u = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^k v_{i, p}e_i}$\;
-$v = \prod\limits_{\substack{a | e_i \neq 0 \\ 1 \leq i \leq k}} (m + a)^2$\;
-\Return{$\pgcd(u - v, n)$}
-\end{algorithm}
-}
+\begin{frame}{Crible quadratique \\ Exemple}
+\begin{itemize}
+\item $n = 21311 = 101 \times 211$
+\item $m  = \lfloor n^{\frac{1}{2}} \rceil = 146$
+\end{itemize}
+On forme les congruences modulo $n$ tels que \[  (m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n .\]
+C'est-à-dire dans notre cas: \[ 5 + a^2 + 292a \pmod{21311} .\]
+On prend comme borne $B = 13$ puis on va donc chercher pour quels $a$ l'entier $5 + a^2 + 292a$ est $B-$friable.
+
+\begin{center}
+  \begin{tabular}{c|c}
+    $a$ & $5 + 292a + a^2$\\
+    \hline
+    $-27$ & $-2.5^2.11.13$\\
+    $ -5$ & $-2.5.11.13$\\
+    $-1$ & $-2.11.13$\\
+    $0$ & $5$\\
+    $60$ & $5^3.13^2$\\
+  \end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Crible quadratique \\ Exemple}
+  
+D'où la matrice représentant la parité des valuations:
+
+\[ M =
+\begin{tabular}{c|ccccc}
+  & $-1$ & $2$ & $5$ & $11$ & $13$\\
+  \hline
+  $-27$ & $1$ & $1$ & $0$ & $1$ & $1$\\
+  $ -5$ & $1$ & $1$ & $1$ & $1$ & $1$\\
+  $-1$ & $1$ & $1$ & $0$ & $1$ & $1$\\
+  $0$ & $0$ & $0$ & $1$ & $0$ & $0$\\
+  $60$ & $0$ & $0$ & $1$ & $0$ & $0$\\
+\end{tabular}
+\]
+
+On calcule son noyau:
+
+\begin{center}
+  \begin{tabular}{ccccc}
+    $-27$ & $-5$ & $-1$ & $0$ & $60$\\
+    \hline
+    $1$ & $0$ & $1$ & $0$ & $0$\\
+    $1$ & $1$ & $0$ & $1$ & $0$\\
+    $1$ & $1$ & $0$ & $0$ & $1$\\
+  \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}{Crible quadratique \\ Exemple}
+La première ligne du tableau donne la congruence \[ (2.5.11.13)^2 \equiv (146 - 27)^2.(146 - 1)^2 \pmod{21311} .\]
+
+On calcule donc le pgcd de \[ 2.5.11.13 - (146 - 27).(146 - 1) = -15825 \] et de $21311.$
+
+On trouve le facteur $p = 211$ de $n = 21311$ et son cofacteur $q = 101.$
+Après un test de primalité, on prouve que $p$ et $q$ sont premiers.
 \end{frame}
 
 \begin{frame}{Crible quadratique \\ Quelques précisions}

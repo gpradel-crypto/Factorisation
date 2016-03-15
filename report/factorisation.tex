@@ -180,7 +180,7 @@ En revanche, il est possible que le pgcd soit égal à $n$ lui-même auquel cas,
 \subsection{Pseudo-code}
 
 Choisir un résidu $x \pmod n$ au hasard et initialier $f$ à $1.$ $k$ fera office de compteur.
-Définir une suite en posant $x_1 = x,$ $x_2 = x_1^2 \pmod n,$ $x_3 = x_2^3 \pmod n,$ ... Ainsi $x_ {k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n.$ Autrement dit $x_k = x^{k!}.$
+Définir une suite en posant $x_1 = x,$ $x_2 = x_1^2 \pmod n,$ $x_3 = x_2^3 \pmod n,$ ... Ainsi $x_{k+1}$ est obtenu en élevant $x_k$ à la puissance $k+1$ modulo $n.$ Autrement dit $x_k = x^{k!}.$
 Choisir une limite pour finir l'algorithme s'il ne trouve pas de résultats après un certain nombre d'essais.
 
 \begin{algorithm}
@@ -191,9 +191,8 @@ Choisir une limite pour finir l'algorithme s'il ne trouve pas de résultats apr�
 $x \gets Random([\![1,n-1]\!])$\;
 $f = 1$\;
 $k = 2$\;
-$x \gets x^k$\;
 $lim$\;
-\Repeat{$p \neq 1$ || $k == lim$}{$x \gets x^{k!} \pmod n$\;$f = pgcd(x - 1, n)$\;$k = k + 1$\;}
+\Repeat{$f \neq 1$ || $k == lim$}{$x \gets x^k \pmod n$\;$f = pgcd(x - 1, n)$\;$k = k + 1$\;}
 \Return{$f$}
 \end{algorithm}
 
@@ -248,7 +247,7 @@ Elle aboutit si $p - 1$ est $(B, C)-$friable.
 \begin{definition}
   Soient $n, B, C$ des nombres entiers. On dit que n est $(B, C)-$friable s'il est le produit de premiers inférieurs à $B$ et d'au plus un premier dans l'intervalle $]B, C]$.
 \end{definition}
-On démarre l'algorithme comme précédemment. On calcule $x_{k + 1} = x^{k + 1} \mod n$ jusqu'à $x_B.$ Ensuite on calcule $y_1 = x_B^{l_1} \mod n$, $y_2 = x_B^{l_2},$ ...; où les $l_i$ sont les premiers dans $]B,C]$ par ordre croissant.
+On démarre l'algorithme comme précédemment. On calcule $x_{k + 1} = x_k^{k + 1} \mod n$ jusqu'à $x_B.$ Ensuite on calcule $y_1 = x_B^{l_1} \mod n$, $y_2 = x_B^{l_2},$ ...; où les $l_i$ sont les premiers dans $]B,C]$ par ordre croissant.
 L'avantage de cette méthode est que pour calculer $y_2$ on n'a pas besoin d'une exponentiation modulaire. En effet \[ y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n.\]
 Or, la différence entre deux nombres premiers consécutifs est très petite. On calcule donc une fois pour toutes les premières puissances de $x_B$ soit $z_j = x_B^j$ et on a \[ y_{k + 1} = y_k z_{l_{k+1} - l_k} \mod n \] qui se calcule au prix d'une seule multiplication.
 \subsubsection{Exemple}
@@ -408,7 +407,7 @@ $L = liste\_relations$\;
 \For{$i \in \{0, 1, ...,  k + 10\}$}{$x \gets Random([\![1,n-1]\!])$\; $y \equiv x^2 \pmod n$\;
 \If{$y \text{ }B \text{-friable }$}{$L[i] \gets  x$}}
 $M = (v_{p, i} \pmod 2)_{p \in P, 1 \leq i \leq k + 10} \text{ où } L[i]^2 \pmod n = \prod\limits_{p \in P}p^{v_{p,i}}$\;
-Calculer le noyau de M. Soit $e = (e_1, ..., e_{k + 10}) \in \ker(M),$ c'est-à-dire :\\
+Calculer le noyau de $M$. Soit $e = (e_1, ..., e_{k + 10}) \in \ker(M),$ c'est-à-dire :\\
 $(e_1, ..., e_{k + 10}) \text{ tel que } M(e_1, ..., e_{k + 10})^t \equiv 0 \pmod 2$\;
 $u = \prod\limits_{i = 1}^m L[i]^{e_i}$\;
 $v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
@@ -440,7 +439,7 @@ On obtiendra donc un facteur non trivial de $n$ dans la moitié des cas
 (lorsque $a \equiv b \pmod p$ et $a \equiv -b \pmod q,$ ou $a \equiv -b \pmod p$ et $a \equiv b \pmod q$).
 
 En fait, si $n$ a $m,$ $m \geq 2,$ facteurs premiers, la probabilité d'obtenir un
-facteur non trivial est égale à $1 - \frac{1}{m^2} \geq \frac{1}{2}$
+facteur non trivial est égale à $1 - \frac{1}{2^{m-1}} \geq \frac{1}{2}$
 ($1 - \textit{probabilité que } a \equiv b \pmod {p_1, p_2, ..., p_m} \textit{ ou que } a \equiv -b \pmod {p_1, p_2, ..., p_m}).$
 
 Dans les faits, on teste d'abord si $n$ est une puissance exacte en calculant numériquement les racines de $n$ ($\sqrt{n},$ $\sqrt[3]{n},$ etc), puis s'il est premier avec un algorithme de primalité (Rabin-Miller, par
