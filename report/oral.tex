@@ -78,8 +78,8 @@ Plus les algorithmes de factorisation sont performants, plus les clefs doivent �
 \item Création de la clef privée : \pause 
 \begin{itemize}
 \item Calculer $\phi(n) = (p - 1)(q - 1)$ \pause
-\item Choisir $e \in \N, e < \phi(n),$ premier avec $\phi(n)$ \pause
-\item Calculer $d = e^{-1} \pmod \phi(n)$ \pause
+\item Choisir $e \in [\![1, \phi(n)]\!],$ premier avec $\phi(n)$ \pause
+\item Calculer $d = e^{-1} \pmod {\phi(n)}$ \pause
 \end{itemize}
 \item $K_{\text{publique}} = (n, e)$ \pause
 \item $K_{\text{privée}} = d$ \pause
@@ -121,7 +121,7 @@ Plus les algorithmes de factorisation sont performants, plus les clefs doivent �
 
 \section{Algorithme $p - 1$ de Pollard}
 \subsection{}
-\begin{frame}{Quelques données importantes}
+\begin{frame}{Algorithme $p - 1$ de Pollard \\ Quelques données importantes}
 \begin{definition}[Entier friable]
 Un entier $n$ est dit $B$-friable ou $B$-lisse si tous ses facteurs premiers sont inférieurs ou égaux à $B.$
 \end{definition} \pause
@@ -138,7 +138,7 @@ Si $m$ est $B$-ultrafriable pour un certain seuil $B$, alors $m | \ppcm(1, ..., 
 \end{lemme}
 \end{frame}
 
-\begin{frame}{Principe}
+\begin{frame}{Algorithme $p - 1$ de Pollard \\ Principe}
 \begin{theoreme}[Petit théorème de Fermat]
 Soient $p$ un nombre premier et $a$ est un entier non divisible par p. Alors,
 \begin{center}  
@@ -156,7 +156,7 @@ $a^M \equiv 1 \pmod p$ pour tout $a$ premier avec $p.$
 Donc $p | a^M - 1,$ et $p | \pgcd(a^M - 1, n).$
 \end{frame}
 
-\begin{frame}{Pseudo-code}
+\begin{frame}{Algorithme $p - 1$ de Pollard \\ Pseudo-code}
 \begin{algorithm}[H]
 \caption{Factorisation de $n$ par $p-1$ de Pollard}
 \KwIn{Un entier $n$}
@@ -172,7 +172,7 @@ $lim$\;
 \end{algorithm}
 \end{frame}
 
-\begin{frame}{Limites et améliorations}
+\begin{frame}{Algorithme $p - 1$ de Pollard \\ Limites et améliorations}
 \begin{itemize}
 \item $p - 1$ doit être $B$-ultrafriable.
 \end{itemize} \pause
@@ -184,14 +184,15 @@ $n$ est dit $(B, C)$-friable s’il est le produit de premiers inférieurs à $B
 \begin{itemize}
 \item On calcule $x_{k + 1} = x^{k+1} \pmod n$ jusqu'à $x_B.$ \pause
 \item On calcule ensuite $y_1 = x_B^{l_1} \pmod n, y_2 = x_B^{l_2} \pmod n, ...$ \pause
-\item On a donc $y_{k + 1} \equiv  y_kx_B^{l_{k+1} - l_k} \pmod n$
+\item On a donc  $y_2 = x_B^{l_2} = x_B^{l_1 + (l_2 - l_1)} = y_1 x_B^{l_2 - l_1} \mod n$
+\item Puis, $y_{k + 1} \equiv  y_kx_B^{l_{k+1} - l_k} \pmod n$
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \section{Crible de Dixon}
 \subsection{}
-\begin{frame}{Principe}
+\begin{frame}{Crible de Dixon \\ Principe}
 Se base sur la recherche de congruences de carrés :
 On cherche $a$ et $b$ tels que
 \begin{center}
@@ -201,8 +202,8 @@ On a alors $(a - b)(a + b) \equiv 0 \pmod n.$
 Il nous suffit ensuite de calculer $\pgcd(a - b, n)$ pour trouver un facteur de $n.$
 \end{frame}
 
-\begin{frame}{Pseudo-code}
-\scalebox{0.8}{
+\begin{frame}{Crible de Dixon \\ Pseudo-code}
+\scalebox{0.7}{
 \begin{algorithm}[H]
 \caption{Factorisation de $n$ par le crible de Dixon}
 \KwIn{Un entier $n$ et une borne $B$}
@@ -223,20 +224,21 @@ $v = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^m v_{p, i}e_i}$\;
 }
 \end{frame}
 
-\begin{frame}{Quelques précisions}
+\begin{frame}{Crible de Dixon \\ Quelques précisions}
 \begin{itemize}
 \item Si $n$ est impair et a $m$ facteurs premiers, $m \leq 2,$ alors la probabilité que l'algorithme renvoie un facteur trivial est égale à $\frac{1}{m^2} \leq \frac{1}{2}.$ \pause
-\item La valeur optimale de $B$ est $\exp(\sqrt{\log(n)}).$
-\item On a alors $T = \exp(\sqrt{2\log(n)\log\log(n)}.$
+\item La valeur optimale de $B$ est $\exp(\sqrt{\log(n)}).$ \pause
+\item On a alors une complexité en $O(\exp\left(\sqrt{2\log(n)\log\log(n)}\right)).$ \pause
 \item La complexité dépend de $n$ et non de son plus petit facteur premier.  
 \end{itemize}
 \end{frame}
 
 \section{Crible quadratique}
 \subsection{}
-\begin{frame}{Principe}
-Est une amélioration du crible de Dixon au niveau de la recherche des congruences : \pause
-On choisit un entier $m \approx \lfloor\sqrt{n}\rceil.$ Ainsi, $m^2 - n$ est de l'ordre de $\sqrt{n}.$ \pause
+\begin{frame}{Crible quadratique \\ Principe}
+Est une amélioration du crible de Dixon au niveau de la recherche des congruences : \pause \\
+On choisit un entier $m \approx \lfloor\sqrt{n}\rceil.$ \pause \\
+Ainsi, $m^2 - n$ est de l'ordre de $\sqrt{n}.$ \pause \\
 On remarque que pour tout $a \in \N :$
 \begin{center}
 $(m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n.$
@@ -244,7 +246,8 @@ $(m + a)^2 \equiv (m^2 - n) + a^2 + 2am \pmod n.$
 On cherche donc des petits entiers $a$ tels que $(m^2 - n) + a^2 + 2am \pmod n$ soit $B$-friable.
 \end{frame}
 
-\begin{frame}{Pseudo-code}
+\begin{frame}{Crible quadratique \\ Pseudo-code}
+\scalebox{0.7}{
 \begin{algorithm}[H]
 \caption{Factorisation de $n$ par le crible quadratique}
 \KwIn{Un entier $n$ et une borne $B$}
@@ -255,25 +258,38 @@ $k = \#P$\;
 $L = liste\_relations$\;
 \For{$a \in \{-60,..., 60\}$}{$y = (m^2 - n) + a^2 + 2am \pmod n$\;
 \If{$y \text{ }B \text{-friable }$}{$L[i] \gets  y$}}
-$M = (v_{i, p} \pmod 2)_{a, p \in P} \text{ où } L[i] = \prod\limits_{p \in P}p^{v_{i,p}}$\;
+$M = (v_{i, p} \pmod 2)_{i, p \in P} \text{ où } L[i] = \prod\limits_{p \in P}p^{v_{i,p}}$\;
 $(e_1, ..., e_k) \text{ tel que } (e_1, ..., e_k)M = 0$\;
 $u = \prod\limits_{p \in P} p^{\frac{1}{2} \sum\limits_{i=1}^k v_{i, p}e_i}$\;
 $v = \prod\limits_{\substack{a | e_i \neq 0 \\ 1 \leq i \leq k}} (m + a)^2$\;
 \Return{$\pgcd(u - v, n)$}
 \end{algorithm}
+}
 \end{frame}
 
-\begin{frame}
-
+\begin{frame}{Crible quadratique \\ Quelques précisions}
+\begin{itemize}
+\item Le plus rapide actuellement, sauf pour de très grands nombres (plus de cent chiffres décimaux). \pause
+\item La valeur optimale de $B$ est $\exp \left( \frac{1}{\sqrt{2}} \sqrt{\log(n)\log\log(n)} \right).$ \pause
+\item On a alors $T = \exp\left(\sqrt{\log (n) \log \log (n)}\right).$
+\end{itemize}
 \end{frame}
 
 \section{Conclusion}
-\begin{frame}
-  \frametitle{Conclusion}
-Nous avons deux façon de produire une suite de nombres aléatoire :\pause
+\begin{frame}{Conclusion}
 \begin{itemize}
-\item Générateur congruentiel linéaire : rapide à l'implémentation mais facile à attaquer.\pause
-\item Blum Blum Shub : cryptographiquement sûr mais bien plus lent que le GCL.
+\item Complexités des algorithmes de factorisation :
+\begin{itemize}  
+\item Crible de Dixon : $O(\exp\left(\sqrt{2\log(n)\log\log(n)}\right)$
+\item Crible quadratique : $O(\exp\left(\sqrt{\log (n) \log \log (n)}\right))$
+\item Crible algébrique : $O(\exp\left(\sqrt[3]{\frac{64}{9}\log n (\log \log (n))^2}\right))$
+\end{itemize} \pause
+\item RSA Factoring Challenge :
+\begin{itemize}
+\item 12/12/2009 : entier RSA de 768 bits (232 décimaux) a été factorisé
+\item Clefs RSA font donc entre 1024 et 2048 bits
+\end{itemize} \pause
+\item Le développement d'ordinateurs quantiques permettrait une factorisation en temps polynomial
 \end{itemize}
 \end{frame}
 \end{document}
